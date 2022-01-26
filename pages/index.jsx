@@ -2,9 +2,10 @@ import { useState } from 'react';
 import ButtonLink from '../components/ButtonLink';
 import NavBar from '../components/NavBar';
 import TextWriter from '../components/TextWriter';
+import WithWillExit from '../components/WithWillExit';
 import styles from '../styles/Home.module.css';
 
-export default function Home() {
+function Home({ willExit }) {
 
   let [showSocials, setShowSocials] = useState(false);
 
@@ -58,3 +59,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default () => WithWillExit(Home)
