@@ -33,7 +33,7 @@ export default function NavBar({ onClick, delay }) {
                 delay={delay}
                 onStart={() => onClick('/contact')}
             >
-                Skills
+                Contact
             </StyledButton>
         </div>
     );
