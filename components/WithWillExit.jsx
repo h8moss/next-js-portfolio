@@ -2,8 +2,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react"
 import NavBar from "./NavBar";
 
-export default function WithWillExit(Component) {
-
+export default function WithWillExit(Component, props = {}) {
     const [willExit, setWillExit] = useState(false);
     const router = useRouter()
 
@@ -16,7 +15,7 @@ export default function WithWillExit(Component) {
                 if (currentRoute !== route)
                     setWillExit(true)
             }} delay={500} />
-            <Component {...willExitProps} />
+            <Component {...willExitProps} {...props} />
         </div>
     );
 }
