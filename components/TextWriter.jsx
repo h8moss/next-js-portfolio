@@ -49,7 +49,6 @@ export default function TextStreamWriter({ children, delay, onDone }) {
     let [currentIndex, setCurrentIndex] = useState(0);
 
     let maxIndex = getMaxIndex(<div>{children}</div>);
-    console.log(maxIndex);
 
     useEffect(() => {
 
