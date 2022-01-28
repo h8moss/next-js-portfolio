@@ -1,0 +1,31 @@
+.projectDescription 
+{
+    @apply  h-full rounded-xl;
+}
+
+.projectDescription p {
+    position: relative;
+    top: 10px; /* For some reason, margin-top breaks the app */
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.projectDescription > div {
+    @apply transition-all delay-300 duration-500;
+    border-radius: 0.75rem;
+    box-shadow: 5px 10px 20px 5px rgba(0, 0, 0, 0.3) inset;
+    overflow: clip;
+}
+
+.projectDescription > div.active {
+    height: 100%;
+}
+
+.projectDescription > div.inactive
+{
+    height: 0px;
+}
+
+.active {
+    border: 10px;
+}
