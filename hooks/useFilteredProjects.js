@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getUniqueTags } from "../services/projectOperations";
+import { getUniqueTags, projectsWithTags } from "../services/projectOperations";
 
 const tagState = {
     selected: 'selected',
@@ -25,7 +25,7 @@ export function useFilteredProjects(projects) {
     let [selectedTags, setSelectedTags] = useState([]);
     let visibleTags = getUniqueTags(visibleProjects.map((index) => projects[index]));
 
-    let projects = projects.map((project, index) => ({
+    let projectObjects = projects.map((project, index) => ({
         project: project,
         visible: visibleProjects.includes(index),
         isSelected: index == selectedProject,
@@ -47,6 +47,16 @@ export function useFilteredProjects(projects) {
         )
     }
 
+    const _updateTags = (newTags) => {
+        if (selectedTags !== newTags) {
+            if (newTags.length === 0)
+                setVisibleProjects(projects.map((_, i) => i));
+            else
+                setVisibleProjects(projectsWithTags(projects, currentSelected.map((v) => tags[v])))
+            setSelectedTags(newTags);
+        }
+    }
+
     const onTagPressed = (tagIndex) => {
         let currentSelected = [...selectedTags]
         if (currentSelected.includes(tagIndex)) {
@@ -57,16 +67,16 @@ export function useFilteredProjects(projects) {
             }
             currentSelected.push(tagIndex);
         }
-        setVisibleProjects(projects)
-        setSelectedTags(currentSelected);
+        _updateTags(currentSelected);
     }
 
     return {
         selectedProject: selectedProject,
-        hasSelectedProject: selectedProject !== null,
         tags: tags,
-        projects: projects,
+        projects: projectObjects,
         onTagPressed: onTagPressed,
         onProjectPressed: onProjectPressed,
+        clearProjects: () => setSelectedProjectIndex(null),
+        clearTags: () => _updateTags([]),
     }
 }
