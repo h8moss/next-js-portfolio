@@ -3,6 +3,7 @@ import WithWillExit from '../components/WithWillExit';
 import { useEffect, useState } from 'react';
 import ProjectListTile from '../components/ProjectListTile';
 import style from '../styles/Portfolio.module.css'
+import { useFilteredProjects } from '../hooks/useFilteredProjects';
 
 function Portfolio({ projects, willExit }) {
 
@@ -12,24 +13,24 @@ function Portfolio({ projects, willExit }) {
         setTimeout(() => setLoaded(true), 100);
     }, [])
 
-    let [selectedIndex, setSelectedIndex] = useState(null);
-    const selectedProject = selectedIndex === null || willExit ? null : projects[selectedIndex];
+    let projectsObject = useFilteredProjects(projects);
 
-    const projectComponents = projects.map((v, i) =>
+
+    let selectedProject = willExit ? null : projectsObject.selectedProject;
+    const showProjectView = selectedProject !== null;
+
+    const projectComponents = projectsObject.projects.map((v, i) =>
         <ProjectListTile
-            project={v}
-            key={v.title}
-            isSelected={selectedIndex === i}
-            onClick={() => setSelectedIndex(selectedIndex === i ? null : i)}
+            project={v.project}
+            isSelected={v.isSelected}
+            onClick={() => projectsObject.onProjectPressed(i)}
         />
     );
-    let showProjectView = selectedProject !== null;
-
 
     return (
         <div className="h-screen w-screen flex">
             <div className='flex-grow m-20 flex'>
-                <div className={` flex-col transition-all flex mx-3 ${showProjectView ? 'flex-grow flex-1' : 'w-0'}`}>
+                <div className={` flex-col overflow-clip transition-all flex mx-3 ${showProjectView ? 'flex-grow flex-1' : 'w-0'}`}>
                     <h2 className='text-2xl text-center my-2 min-h-[32px]'>{selectedProject?.title}</h2>
                     <div className={style.projectDescription}>
                         <div className={showProjectView ? style.active : style.inactive}>
@@ -37,7 +38,7 @@ function Portfolio({ projects, willExit }) {
                         </div>
                     </div>
                 </div>
-                <div className={"flex flex-1 flex-grow rounded-3xl transition-all bg-gray-300 shadow-xl duration-500 text-gray-800 overflow-clip" + ((!loaded || willExit) ? ' h-0 ' : ' h-full ')}
+                <div className={"flex flex-1 flex-grow rounded-3xl transition-all bg-gray-300 shadow-xl duration-300 delay-200 text-gray-800 overflow-clip" + ((!loaded || willExit) ? ' h-0 ' : ' h-full ')}
                 >
                     {projectComponents}
                 </div>
