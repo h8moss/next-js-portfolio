@@ -10,7 +10,6 @@ function Home({ willExit }) {
   let [showSocials, setShowSocials] = useState(false);
   let [loaded, setLoaded] = useState(false);
   useEffect(() => setTimeout(setLoaded(true), 1000), []);
-  console.log(loaded);
 
   return (
     <div className='overflow-clip w-screen h-screen'>
