@@ -17,7 +17,6 @@ function Portfolio({ projects, willExit }) {
 
     let projectsObject = useFilteredProjects(projects);
 
-
     let selectedProject = willExit ? null : projectsObject.selectedProject;
     const showProjectView = selectedProject !== null;
 
