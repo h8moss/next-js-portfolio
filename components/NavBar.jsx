@@ -12,14 +12,6 @@ export default function NavBar({ onClick, delay }) {
                 About
             </StyledButton>
             <StyledButton
-                extraClass='hover:text-yellow-500'
-                href='/skills'
-                delay={delay}
-                onStart={() => onClick('/skills')}
-            >
-                Skills
-            </StyledButton>
-            <StyledButton
                 extraClass='hover:text-blue-500'
                 href='/portfolio'
                 delay={delay}
@@ -35,6 +27,16 @@ export default function NavBar({ onClick, delay }) {
             >
                 Contact
             </StyledButton>
+
+            <StyledButton
+                extraClass='hover:text-green-500'
+                href='/portfolio'
+                delay={delay}
+                onStart={() => onClick('/portfolio')}
+            >
+                Blog
+            </StyledButton>
+
         </div>
     );
 };
