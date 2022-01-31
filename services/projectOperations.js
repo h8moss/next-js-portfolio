@@ -8,11 +8,18 @@ export function getUniqueTags(projects) {
 }
 
 export function projectsWithTags(projects, tags) {
-    return projects.filter((project) =>
-        project.tags.some((tag) =>
-            tags.some((tag2) =>
-                tag2 === tag
-            )
-        )
-    )
+    let result = [];
+    for (let project of projects) {
+        let allowed = true;
+        for (let tag of tags) {
+            if (!project.tags.includes(tag)) {
+                allowed = false;
+                break;
+            }
+        }
+        if (allowed) result.push(project);
+    }
+    if (result.length !== 3)
+        console.log(result);
+    return result;
 }
