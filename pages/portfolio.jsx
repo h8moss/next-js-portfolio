@@ -3,7 +3,9 @@ import WithWillExit from '../components/WithWillExit';
 import { useEffect, useState } from 'react';
 import ProjectListTile from '../components/ProjectListTile';
 import style from '../styles/Portfolio.module.css'
-import { useFilteredProjects } from '../hooks/useFilteredProjects';
+import { tagState, useFilteredProjects } from '../hooks/useFilteredProjects';
+import { FiX } from 'react-icons/fi';
+import TagsList from '../components/TagsList';
 
 function Portfolio({ projects, willExit }) {
 
@@ -20,25 +22,41 @@ function Portfolio({ projects, willExit }) {
     const showProjectView = selectedProject !== null;
 
     const projectComponents = projectsObject.projects.map((v, i) =>
-        <ProjectListTile
-            project={v.project}
-            isSelected={v.isSelected}
-            onClick={() => projectsObject.onProjectPressed(i)}
-        />
+
+    (<ProjectListTile
+        project={v.project}
+        isSelected={v.isSelected}
+        isVisible={v.visible}
+        onClick={() => projectsObject.onProjectPressed(i)}
+    />)
     );
+    const tagsComponents = projectsObject.tags.map((tag) => {
+        return (
+            <button className={'transition-all duration-500 hover:bg-gray-700 bg-gray-600 text-white rounded-md flex flex-row text-sm ' + (tag.state === tagState.notVisible ? 'scale-0' : 'mx-2 my-auto')}
+                onClick={() => projectsObject.onTagPressed(tag.index)}>
+                {tag.state === tagState.selected && <FiX className='my-auto' />}
+                {tag.state !== tagState.notVisible && <p className='m-1 whitespace-nowrap'>
+                    {tag.tag}
+                </p>}
+            </button>
+        );
+    })
 
     return (
-        <div className="h-screen w-screen flex">
-            <div className='flex-grow m-20 flex'>
-                <div className={` flex-col overflow-clip transition-all flex mx-3 ${showProjectView ? 'flex-grow flex-1' : 'w-0'}`}>
-                    <h2 className='text-2xl text-center my-2 min-h-[32px]'>{selectedProject?.title}</h2>
-                    <div className={style.projectDescription}>
-                        <div className={showProjectView ? style.active : style.inactive}>
-                            <p>{selectedProject?.description}</p>
-                        </div>
+        <div className="h-screen w-screen flex p-20">
+            <div className={`flex-col transition-all flex mx-3 ${showProjectView ? 'flex-grow flex-1' : 'w-0'}`}>
+                <h2 className='text-2xl text-center my-2 min-h-[32px]'>{selectedProject?.title}</h2>
+                <div className={style.projectDescription}>
+                    <div className={showProjectView ? style.active : style.inactive}>
+                        <p>{selectedProject?.description}</p>
                     </div>
                 </div>
-                <div className={"flex flex-1 flex-grow rounded-3xl transition-all bg-gray-300 shadow-xl duration-300 delay-200 text-gray-800 overflow-clip" + ((!loaded || willExit) ? ' h-0 ' : ' h-full ')}
+            </div>
+            <div className='flex flex-col flex-1 flex-grow overflow-clip'>
+                <TagsList show={!(willExit || !loaded)}>
+                    {tagsComponents}
+                </TagsList>
+                <div className={"flex flex-col rounded-3xl transition-all bg-gray-300 shadow-xl duration-300 delay-300 text-gray-800 overflow-clip" + ((!loaded || willExit) ? ' h-0 ' : ' h-full flex-grow flex-1')}
                 >
                     {projectComponents}
                 </div>

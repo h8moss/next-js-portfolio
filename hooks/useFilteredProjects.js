@@ -7,12 +7,25 @@ const tagState = {
     notVisible: 'not_visible',
 }
 
+const sortTags = (tags) => {
+    let result = [];
+    for (let tag of tags) {
+        if (tag.state === tagState.selected) {
+            result.push(tag);
+        }
+    }
+
+    for (let tag of tags) {
+        if (tag.state !== tagState.selected) {
+            result.push(tag);
+        }
+    }
+
+    return result;
+}
+
 export { tagState };
 
-/*
- TODO: must have: selected project, visible project, all projects,
-    selected tags, visible tags and all tags + callbacks 
-*/
 export function useFilteredProjects(projects) {
 
     let [selectedProjectIndex, setSelectedProjectIndex] = useState(null);
@@ -36,8 +49,10 @@ export function useFilteredProjects(projects) {
             ? tagState.selected
             : (visibleTags.includes(tag)
                 ? tagState.unselected
-                : tagState.notVisible)
+                : tagState.notVisible),
+        index: index,
     }));
+    tags = sortTags(tags);
 
     const onProjectPressed = (projectIndex) => {
         setSelectedProjectIndex(
@@ -52,7 +67,7 @@ export function useFilteredProjects(projects) {
             if (newTags.length === 0)
                 setVisibleProjects(projects.map((_, i) => i));
             else
-                setVisibleProjects(projectsWithTags(projects, currentSelected.map((v) => tags[v])))
+                setVisibleProjects(projectsWithTags(projects, newTags.map((v) => tags[v].tag)).map((p) => projects.indexOf(p)))
             setSelectedTags(newTags);
         }
     }
@@ -62,7 +77,7 @@ export function useFilteredProjects(projects) {
         if (currentSelected.includes(tagIndex)) {
             currentSelected.splice(currentSelected.indexOf(tagIndex), 1)
         } else {
-            if (!selectedProject.tags.includes(tags[tagIndex])) {
+            if (selectedProject !== null && !selectedProject.tags.includes(tags[tagIndex].tag)) {
                 setSelectedProjectIndex(null);
             }
             currentSelected.push(tagIndex);
