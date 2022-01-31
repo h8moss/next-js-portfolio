@@ -2,8 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-
-body {
-    @apply text-xl text-white bg-zinc-800
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: black;
 }
 
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(189, 189, 189);
+  border-radius: 10px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply text-xl text-white bg-zinc-800;
+}
