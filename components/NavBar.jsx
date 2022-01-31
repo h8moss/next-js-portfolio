@@ -30,9 +30,9 @@ export default function NavBar({ onClick, delay }) {
 
             <StyledButton
                 extraClass='hover:text-green-500'
-                href='/portfolio'
+                href='/blog'
                 delay={delay}
-                onStart={() => onClick('/portfolio')}
+                onStart={() => onClick('/blog')}
             >
                 Blog
             </StyledButton>
