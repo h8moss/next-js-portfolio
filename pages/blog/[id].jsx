@@ -2,12 +2,10 @@ import WithWillExit from "../../components/WithWillExit"
 import { server } from "../../config";
 
 
-function Blog({ willExit, post }) {
-    console.log(post);
-
+function Blog({ willExit, post: { title, } }) {
     return (
         <div>
-
+            <h1>{title}</h1>
         </div>
     )
 }
@@ -21,7 +19,8 @@ export default (props) => {
 export async function getStaticProps({ params }) {
     let id = params.id;
 
-    const post = JSON.parse(await fetch(`${server}/api/blogs?id=${id}`));
+    const response = await fetch(`${server}/api/blogs?id=${id}`);
+    const post = JSON.parse(await response.text());
 
     return {
         props: {
@@ -31,7 +30,8 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-    const posts = JSON.parse(await fetch(`${server}/api/blogs`))
+    const response = await fetch(`${server}/api/blogs`);
+    const posts = JSON.parse(await response.text())
     const ids = posts.map(post => post.id);
     const paths = ids.map(id => ({ params: { id: id } }));
 
