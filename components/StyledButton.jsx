@@ -1,5 +1,4 @@
 import Router from "next/router";
-import { useEffect } from "react";
 
 const goTo = async (url, delay, onStart) => {
     if (onStart !== undefined)
@@ -9,11 +8,11 @@ const goTo = async (url, delay, onStart) => {
     }, delay);
 }
 
-export default function StyledButton({ children, extraClass, href, delay, onStart }) {
+export default function StyledButton({ children, className, href, delay, onStart }) {
 
     return (
         <button
-            className={`text-base hover:text-xl transition-all cursor-pointer ${extraClass}`}
+            className={`text-base hover:text-xl transition-all cursor-pointer ${className}`}
             onClick={() => goTo(href, delay, onStart)}
         >
             {children}

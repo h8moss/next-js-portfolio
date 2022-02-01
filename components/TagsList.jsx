@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import style from '../styles/Components.module.css';
 
-export default function TagsList({ children, show }) {
+const useTagsList = () => {
     let scroll = useRef(null)
 
     let [hasPageLeft, setHasPageLeft] = useState(false);
@@ -9,19 +10,13 @@ export default function TagsList({ children, show }) {
 
     const calculateHasPages = () => {
         setHasPageLeft(currentPage !== 0);
-        setHasPageRight(currentPage * scroll.current.offsetWidth > scroll.current.scrollWidth);
+        setHasPageRight(
+            currentPage * scroll.current.offsetWidth > scroll.current.scrollWidth
+        );
     }
     useEffect(() => { setTimeout(calculateHasPages, 100) });
 
-
     let currentPage = 0;
-
-    const scroller = () => scroll.current.scroll(100, 0);
-    const getPageSize = () => scroll.current.offsetWidth;
-
-    const pageUp = () => {
-
-    }
 
     const pagePlus = (val) => {
         if (val + currentPage < 0) val = -currentPage;
@@ -42,13 +37,39 @@ export default function TagsList({ children, show }) {
         calculateHasPages();
     }
 
+    return {
+        hasPageLeft: hasPageLeft,
+        hasPageRight: hasPageRight,
+        increasePage: () => pagePlus(1),
+        decreasePage: () => pagePlus(-1),
+        ref: scroll,
+    }
+}
+
+export default function TagsList({ children, show }) {
+
+    const tagsListObj = useTagsList();
+
     return (
         <div className="flex flex-row w-full">
-            <button onClick={() => pagePlus(-1)} className={hasPageLeft && show ? '' : 'scale-0'}><FiArrowLeft /></button>
-            <div ref={scroll} className={"my-3 flex flex-row rounded-3xl overflow-x-hidden overflow-y-clip transition-all bg-gray-300 shadow-xl h-10 " + (show ? 'flex-grow' : 'w-0')}>
+            <button
+                onClick={tagsListObj.decreasePage}
+                className={tagsListObj.hasPageLeft && show ? '' : 'scale-0'}
+            >
+                <FiArrowLeft />
+            </button>
+
+            <div ref={tagsListObj.ref}
+                className={style.tagsList + (show ? ' flex-grow' : ' w-0')}>
                 {children}
             </div>
-            <button onClick={() => pagePlus(1)} className={hasPageRight && show ? '' : 'scale-0'}><FiArrowRight /></button>
+
+            <button
+                onClick={tagsListObj.increasePage}
+                className={tagsListObj.hasPageRight && show ? '' : 'scale-0'}
+            >
+                <FiArrowRight />
+            </button>
         </div>
 
     );

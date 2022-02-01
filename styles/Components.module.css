@@ -1,0 +1,38 @@
+.buttonLink {
+  margin: 0.75rem;
+  transform: scale(1);
+}
+
+.buttonLink > :hover {
+  transform: scale(1.2);
+}
+
+.projectListTile {
+  @apply overflow-clip flex flex-col hover:bg-white 
+    transition-all duration-300;
+}
+
+.projectListTile.pltVisible {
+  @apply h-min border-gray-400 border-b-2;
+}
+
+.projectListTile.pltInvisible {
+  @apply h-0;
+}
+
+.projectListTile.pltSelected {
+  @apply bg-stone-500;
+}
+
+.projectListTile .tag {
+  @apply bg-gray-600 rounded-md 
+    text-xs text-gray-300 
+    ml-2 mb-1 p-1 whitespace-nowrap;
+}
+
+.tagsList {
+  @apply my-3 
+        flex flex-row rounded-3xl 
+        overflow-x-hidden overflow-y-clip 
+        transition-all bg-gray-300 shadow-xl h-10 scroll-smooth;
+}

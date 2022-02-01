@@ -4,7 +4,7 @@ export default function NavBar({ onClick = () => { }, delay = 0 }) {
     return (
         <div className='flex flex-row w-full justify-evenly absolute z-[99] top-3'>
             <StyledButton
-                extraClass='hover:text-red-500'
+                className='hover:text-red-500'
                 href='/'
                 delay={delay}
                 onStart={() => onClick('/')}
@@ -12,7 +12,7 @@ export default function NavBar({ onClick = () => { }, delay = 0 }) {
                 About
             </StyledButton>
             <StyledButton
-                extraClass='hover:text-blue-500'
+                className='hover:text-blue-500'
                 href='/portfolio'
                 delay={delay}
                 onStart={() => onClick('/portfolio')}
@@ -20,7 +20,7 @@ export default function NavBar({ onClick = () => { }, delay = 0 }) {
                 Portfolio
             </StyledButton>
             <StyledButton
-                extraClass='hover:text-purple-500'
+                className='hover:text-purple-500'
                 href='/contact'
                 delay={delay}
                 onStart={() => onClick('/contact')}
@@ -29,7 +29,7 @@ export default function NavBar({ onClick = () => { }, delay = 0 }) {
             </StyledButton>
 
             <StyledButton
-                extraClass='hover:text-green-500'
+                className='hover:text-green-500'
                 href='/blog'
                 delay={delay}
                 onStart={() => onClick('/blog')}

@@ -1,4 +1,4 @@
-import style from '../styles/ButtonLink.module.css';
+import style from '../styles/Components.module.css';
 
 export default function ButtonLink({ image, link, bg, alt, active = true, duration = 500, delay = 0, size }) {
     return (
