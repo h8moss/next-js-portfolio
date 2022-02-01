@@ -1,6 +1,6 @@
 import StyledButton from './StyledButton';
 
-export default function NavBar({ onClick, delay }) {
+export default function NavBar({ onClick = () => { }, delay = 0 }) {
     return (
         <div className='flex flex-row w-full justify-evenly absolute z-[99] top-3'>
             <StyledButton
