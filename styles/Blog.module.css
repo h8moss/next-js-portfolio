@@ -1,0 +1,51 @@
+.title {
+  @apply text-6xl;
+}
+
+.markdown * {
+  @apply my-3;
+}
+
+.markdown code {
+  @apply rounded-md bg-gray-700 text-white font-mono p-1;
+}
+
+.markdown .precode {
+  @apply h-7 w-full bg-white mb-0 rounded-t-lg drop-shadow-lg flex flex-row-reverse;
+}
+
+.markdown .precode > div {
+  @apply w-4 h-4 my-auto rounded-lg mx-3;
+}
+.markdown .precode .btn1 {
+  @apply bg-red-500;
+}
+
+.markdown .precode .btn2 {
+  @apply bg-yellow-500;
+}
+
+.markdown .precode .btn3 {
+  @apply bg-green-500;
+}
+
+.markdown .code {
+  background-color: rgb(47, 47, 47);
+  @apply rounded-b-xl mt-0 drop-shadow-lg;
+}
+
+.markdown li {
+  list-style: circle;
+}
+
+.markdown h2 {
+  @apply text-5xl;
+}
+
+.markdown h3 {
+  @apply text-4xl;
+}
+
+.markdown h4 {
+  @apply text-3xl;
+}

@@ -1,11 +1,49 @@
 import WithWillExit from "../../components/WithWillExit"
 import { server } from "../../config";
+import ReactMarkdown from 'react-markdown'
+import style from '../../styles/Blog.module.css';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { materialDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
 
-function Blog({ willExit, post: { title, } }) {
+
+
+function Blog({ willExit, post: { title, text } }) {
     return (
-        <div>
-            <h1>{title}</h1>
+        <div className="w-screen h-screen p-20">
+            <div className="w-1/2 m-auto">
+                <h1 className={style.title}>{title}</h1>
+                <ReactMarkdown className={style.markdown}
+                    children={text}
+                    components={{
+                        code({ children, className, inline, ...props }) {
+                            const match = /language-(\w+)/.exec(className || '')
+                            return !inline && match ? (
+                                <div className="flex flex-col w-full">
+                                    <div className={style.precode} >
+                                        <div className={style.btn1} /> <div className={style.btn2} /> <div className={style.btn3} />
+                                    </div>
+                                    <div className={style.code}>
+                                        <SyntaxHighlighter
+                                            customStyle={{ backgroundColor: 'transparent' }}
+                                            children={String(children).replace(/\n$/, '')}
+                                            language={match[1]}
+                                            PreTag='div'
+                                            style={materialDark}
+                                            {...props}
+                                        />
+                                    </div>
+                                </div>
+                            )
+                                : (
+                                    <code className={className} {...props}>
+                                        {children}
+                                    </code>
+                                )
+                        }
+                    }}
+                />
+            </div>
         </div>
     )
 }
