@@ -1,8 +1,10 @@
 import style from '../styles/Components.module.css'
 
 export default function ProjectListTile({ project: { title, tags }, onClick, isSelected, isVisible }) {
+
     return (
         <button
+            onClick={onClick}
             className={
                 style.projectListTile + ' '
                 + (isSelected ? style.pltSelected : '') + ' '
