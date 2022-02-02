@@ -1,10 +1,15 @@
 import WithWillExit from "../../components/WithWillExit"
 import { server } from "../../config";
+import { dateFromSeconds, getAgoString } from "../../services/dateOperations";
+
+
 
 function Blogs({ willExit, posts }) {
-    console.log(posts);
+    console.log(dateFromSeconds(posts[0].created.seconds).toLocaleDateString());
     // TODO: get a better font for the title
     const postComponents = posts.map(post => {
+
+        const dateCreated = post.created !== undefined ? dateFromSeconds(post.created.seconds) : null;
 
         let tagComponents = post.tags.map(tag =>
             <a
@@ -17,14 +22,9 @@ function Blogs({ willExit, posts }) {
 
         return (
             <a className="bg-white text-black flex flex-col mx-auto rounded-md shadow-2xl drop-shadow-lg p-3 w-full my-2 hover:scale-x-[1.02] transition-all group" key={post.id} href={`/blog/${post.id}`}>
-                <p className="text-sm text-gray-600">11/01/22 (3 weeks ago)</p>
+                {dateCreated && <p className="text-sm text-gray-600">{`${dateCreated.toLocaleDateString()} (${getAgoString(dateCreated)})`}</p>}
                 <h2 className="text-3xl transition-all group-hover:text-purple-400 whitespace-nowrap">{post.title}</h2>
                 <div className="flex flex-row">{tagComponents}</div>
-                <div className="flex flex-row text-sm">
-                    <p className="mr-2">3 comments</p>
-                    <p className='mr-2'>5 reactions</p>
-                    <p className='mr-2'>100 views</p>
-                </div>
             </a>
         );
     });
