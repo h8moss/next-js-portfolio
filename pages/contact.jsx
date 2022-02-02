@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import WithWillExit from "../components/WithWillExit";
 import style from '../styles/Contact.module.css'
 import { server } from '../config';
+import useLoading from "../hooks/useLoading";
 
 const _validate = values => {
     let errors = {};
@@ -46,9 +47,8 @@ const _send = async (values, { setSubmitting, resetForm, setFieldError }, onSucc
     setSubmitting(false);
 }
 
-function Skills({ willExit }) {
-    const [loaded, setLoaded] = useState(false);
-    useEffect(() => setTimeout(() => setLoaded(true), 50), []);
+function Contact({ willExit }) {
+    const loaded = useLoading(50);
     const [showErrorToast, setShowErrorToast] = useState(false);
     const [showSuccessToast, setShowSuccessToast] = useState(false);
 
@@ -122,5 +122,5 @@ function Skills({ willExit }) {
     );
 }
 
-export default () => WithWillExit(Skills);
+export default () => WithWillExit(Contact);
 

@@ -3,13 +3,13 @@ import ButtonLink from '../components/ButtonLink';
 import NavBar from '../components/NavBar';
 import TextWriter from '../components/TextWriter';
 import WithWillExit from '../components/WithWillExit';
+import useLoading from '../hooks/useLoading';
 import styles from '../styles/Home.module.css';
 
 function Home({ willExit }) {
 
   let [showSocials, setShowSocials] = useState(false);
-  let [loaded, setLoaded] = useState(false);
-  useEffect(() => setTimeout(setLoaded(true), 1000), []);
+  const loaded = useLoading(50);
 
   return (
     <div className='overflow-clip w-screen h-screen'>

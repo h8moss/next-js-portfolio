@@ -6,14 +6,11 @@ import style from '../styles/Portfolio.module.css'
 import { tagState, useFilteredProjects } from '../hooks/useFilteredProjects';
 import { FiX } from 'react-icons/fi';
 import TagsList from '../components/TagsList';
+import useLoading from '../hooks/useLoading';
 
 function Portfolio({ projects, willExit }) {
 
-    let [loaded, setLoaded] = useState(false);
-
-    useEffect(() => {
-        setTimeout(() => setLoaded(true), 100);
-    }, [])
+    let loaded = useLoading(100);
 
     let projectsObject = useFilteredProjects(projects);
 
