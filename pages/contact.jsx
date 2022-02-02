@@ -70,6 +70,8 @@ function Skills({ willExit }) {
     return (
         <div className="w-screen h-screen p-16 px-60">
             <div className="w-full h-full">
+                <h1 className={"text-3xl w-1/2 text-center mx-auto transition-all " + (showForm ? '' : 'text-transparent')}>Wanna talk about a project, wish me a nice day or tell me how my website sucks? You are in the right place!</h1>
+                {/* make the title fade in and out, but whe it fades, the text cycles */}
                 <div className={`bg-red-500 w-80 p-8 rounded-xl absolute bottom-5 left-5 transition-transform ${showErrorToast ? 'translate-x-0' : '-translate-x-96'}`}>
                     <p>Something went wrong! Please try again later</p>
                 </div>
@@ -104,7 +106,7 @@ function Skills({ willExit }) {
                         {showForm && <ErrorMessage name="email" className={style.errorMessage} component={'p'} />}
 
                         <label htmlFor="message" className={`transition-all duration-500 ${!willExit ? 'delay-1000' : ''}  ${(showForm ? '' : 'text-transparent')}`} >What do you want to tell me?</label>
-                        <Field name="message" as='textarea' className={`${style.fieldTransition} duration-500 bg-zinc-700 rounded-xl h-64 ${!willExit ? 'delay-1000' : ''} ${showForm ? ('w-full p-1 ' + style.field) : 'w-0'}`} />
+                        <Field name="message" as='textarea' className={`${style.fieldTransition} duration-500 bg-zinc-700 rounded-xl h-52 ${!willExit ? 'delay-1000' : ''} ${showForm ? ('w-full p-1 ' + style.field) : 'w-0'}`} />
                         {showForm && <ErrorMessage name="message" className={style.errorMessage} component={'p'} />}
                         {
                             isSubmitting ?
