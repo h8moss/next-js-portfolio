@@ -5,7 +5,6 @@ import { dateFromSeconds, getAgoString } from "../../services/dateOperations";
 
 
 function Blogs({ willExit, posts }) {
-    console.log(dateFromSeconds(posts[0].created.seconds).toLocaleDateString());
     // TODO: get a better font for the title
     const postComponents = posts.map(post => {
 

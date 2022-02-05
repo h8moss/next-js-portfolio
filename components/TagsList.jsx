@@ -21,12 +21,6 @@ const useTagsList = () => {
     const pagePlus = (val) => {
         if (val + currentPage < 0) val = -currentPage;
         if ((val + currentPage) * scroll.current.offsetWidth < scroll.current.scrollWidth) {
-            console.log({
-                val: val,
-                currentPage: currentPage,
-                offsetWidth: scroll.current.offsetWidth,
-                left: currentPage * scroll.current.offsetWidth,
-            })
             currentPage += val;
             scroll.current.scroll({
                 top: 0,

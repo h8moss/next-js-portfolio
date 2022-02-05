@@ -19,7 +19,5 @@ export function projectsWithTags(projects, tags) {
         }
         if (allowed) result.push(project);
     }
-    if (result.length !== 3)
-        console.log(result);
     return result;
 }

@@ -110,7 +110,6 @@ export function getAgoString(date: Date) {
   let now = Math.floor(Date.now() / 1000);
   let dateSeconds = Math.floor(date.getTime() / 1000);
   let difference = now - dateSeconds;
-  console.log(difference);
 
   for (let time of timeTexts.values) {
     if (time.value === NaN || difference < time.value) {
