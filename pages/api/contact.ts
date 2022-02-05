@@ -7,7 +7,10 @@ const addContactMessage = async (data) => {
   return await addDoc(col, data);
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function handle(
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<void> {
   if (req.method !== "POST") {
     res.status(405).send("Method is not allowed");
     return;
@@ -23,4 +26,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   await addContactMessage(body);
 
   res.status(200).send("Success");
-};
+}

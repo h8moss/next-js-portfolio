@@ -4,6 +4,7 @@ import { useState } from "react";
 import WithWillExit from "../components/WithWillExit";
 import { getAuthService, useUser } from "../services/firebase/auth";
 import style from '../styles/Login.module.css';
+import { Image } from 'next/image';
 
 function Login({ willExit }) {
     const user = useUser();
@@ -68,7 +69,7 @@ function Login({ willExit }) {
                             </div>
                             <p className="text-center text-gray-600 text-sm">or</p>
                             <button className={style.loginWithGoogle} onClick={googleLogin}>
-                                <img src='/social_icons/google.png' alt='' />
+                                <Image src='/social_icons/google.png' alt='' />
                                 Log in with google
                             </button>
                         </Form>
@@ -79,4 +80,6 @@ function Login({ willExit }) {
     );
 }
 
-export default () => WithWillExit(Login);
+const willExit = () => WithWillExit(login);
+
+export default willExit;

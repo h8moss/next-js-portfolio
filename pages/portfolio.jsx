@@ -20,6 +20,7 @@ function Portfolio({ projects, willExit }) {
     const projectComponents = projectsObject.projects.map((v, i) =>
 
     (<ProjectListTile
+        key={v.project.title}
         project={v.project}
         isSelected={v.isSelected}
         isVisible={v.visible}
@@ -29,6 +30,7 @@ function Portfolio({ projects, willExit }) {
     const tagsComponents = projectsObject.tags.map((tag) => {
         return (
             <button className={'transition-all duration-500 hover:bg-gray-700 bg-gray-600 text-white rounded-md flex flex-row text-sm ' + (tag.state === tagState.notVisible ? 'scale-0' : 'mx-2 my-auto')}
+                key={tag.tag}
                 onClick={() => projectsObject.onTagPressed(tag.index)}>
                 {tag.state === tagState.selected && <FiX className='my-auto' />}
                 {tag.state !== tagState.notVisible && <p className='m-1 whitespace-nowrap'>
@@ -61,11 +63,9 @@ function Portfolio({ projects, willExit }) {
     );
 }
 
-export default (props) => {
-    return (
-        WithWillExit(Portfolio, props)
-    );
-}
+const willExit = (props) => WithWillExit(Portfolio, props)
+
+export default willExit;
 
 export async function getStaticProps(context) {
 

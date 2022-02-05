@@ -14,7 +14,6 @@ function Blog({ willExit, post: { title, text } }) {
             <div className="w-1/2 m-auto">
                 <h1 className={style.title}>{title}</h1>
                 <ReactMarkdown className={style.markdown}
-                    children={text}
                     components={{
                         code({ children, className, inline, ...props }) {
                             const match = /language-(\w+)/.exec(className || '')
@@ -26,12 +25,14 @@ function Blog({ willExit, post: { title, text } }) {
                                     <div className={style.code}>
                                         <SyntaxHighlighter
                                             customStyle={{ backgroundColor: 'transparent' }}
-                                            children={String(children).replace(/\n$/, '')}
                                             language={match[1]}
                                             PreTag='div'
                                             style={materialDark}
                                             {...props}
-                                        />
+                                        >
+                                            {/* for some reason the match leaves a trailing newline */}
+                                            {String(children).replace(/\n$/, '')}
+                                        </SyntaxHighlighter>
                                     </div>
                                 </div>
                             )
@@ -42,13 +43,15 @@ function Blog({ willExit, post: { title, text } }) {
                                 )
                         }
                     }}
-                />
+                >
+                    {text}
+                </ReactMarkdown>
             </div>
         </div>
     )
 }
 
-export default (props) => {
+export default function willExit(props) {
     return (
         WithWillExit(Blog, props)
     );

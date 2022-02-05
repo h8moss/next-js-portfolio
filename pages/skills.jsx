@@ -6,4 +6,5 @@ function Skills() {
     );
 }
 
-export default () => WithWillExit(Skills);
+const willExit = () => WithWillExit(Skills);
+export default willExit;

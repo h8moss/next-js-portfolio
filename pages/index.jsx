@@ -64,4 +64,5 @@ function Home({ willExit }) {
   )
 }
 
-export default () => WithWillExit(Home)
+const willExit = () => WithWillExit(Home);
+export default willExit;

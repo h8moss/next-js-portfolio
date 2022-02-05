@@ -2,8 +2,9 @@ import { useState } from "react";
 import { getAuthService, useUser } from "../services/firebase/auth";
 import StyledButton from "./StyledButton";
 import { useRouter } from "next/router";
+import Image from 'next/image';
 
-export default () => {
+export default function UserButton() {
 
     let user = useUser();
     let router = useRouter();
@@ -21,7 +22,7 @@ export default () => {
         <>
             {user !== null &&
                 <button className="top-0 right-0 mt-3 mr-10 absolute rounded-3xl hover:rounded-md overflow-clip transition-all" onClick={togglePopup}>
-                    <img src={user.photoURL} alt='user profile pic' className="w-8 h-8" />
+                    <Image src={user.photoURL} alt='user profile pic' className="w-8 h-8" />
                 </button>}
             {showPopup &&
                 <div className="bg-black bg-opacity-40 w-screen h-screen top-0 left-0 absolute" onClick={togglePopup} >

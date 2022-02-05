@@ -88,7 +88,7 @@ function Contact({ willExit }) {
                     onSubmit={mySend}
                 >
                     {({ isSubmitting, errors }) => (<Form className="flex flex-col w-full">
-                        <label htmlFor="name" className={`transition-all duration-500 ${(showForm ? '' : 'text-transparent')}`}>What's your name?</label>
+                        <label htmlFor="name" className={`transition-all duration-500 ${(showForm ? '' : 'text-transparent')}`}>What&apos;s your name?</label>
                         <Field name="name" type="text" className={`${style.fieldTransition} bg-zinc-700 rounded-xl  ${showForm ? ('w-full p-1 ' + style.field) : 'w-0'} ${style.field}`} />
                         {showForm && <ErrorMessage name="name" className={style.errorMessage} component={'p'} />}
 
@@ -96,7 +96,7 @@ function Contact({ willExit }) {
                             htmlFor="email"
                             className={`transition-all duration-500  ${!willExit ? 'delay-500' : ''}  ${(showForm ? '' : 'text-transparent')}`}
                         >
-                            What's your email?  <span
+                            What&apos;s your email?  <span
                                 className={`text-sm transition-all duration-500  ${!willExit ? 'delay-500' : ''} ${(showForm ? 'text-gray-300' : 'text-transparent')}`}
                             >
                                 (optional)
@@ -122,5 +122,7 @@ function Contact({ willExit }) {
     );
 }
 
-export default () => WithWillExit(Contact);
+const willExit = () => WithWillExit(Contact);
+
+export default willExit;
 

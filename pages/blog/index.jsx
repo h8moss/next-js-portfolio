@@ -11,7 +11,7 @@ function Blogs({ willExit, posts }) {
         const dateCreated = post.created !== undefined ? dateFromSeconds(post.created.seconds) : null;
 
         let tagComponents = post.tags.map(tag =>
-            <a
+            <a key={tag}
                 className="text-sm text-white bg-slate-700 p-1 m-1 rounded-lg border-4 border-transparent hover:border-slate-500"
                 href={"/blog?tags=" + tag}
             >
@@ -37,7 +37,9 @@ function Blogs({ willExit, posts }) {
     )
 }
 
-export default props => WithWillExit(Blogs, props)
+const willExit = props => WithWillExit(Blogs, props);
+
+export default willExit;
 
 
 export async function getStaticProps() {

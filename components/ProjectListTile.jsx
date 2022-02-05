@@ -10,11 +10,11 @@ export default function ProjectListTile({ project: { title, tags }, onClick, isS
                 + (isSelected ? style.pltSelected : '') + ' '
                 + (isVisible ? style.pltVisible : style.pltInvisible)
             }>
-            {isVisible && [<p className='m-4'>
+            {isVisible && [<p className='m-4' key='title'>
                 {title}
             </p>,
-            <div className="flex">
-                {tags.map((tag) => <p className={style.tag}>{tag}</p>)}
+            <div className="flex" key='tags'>
+                {tags.map((tag) => <p key={tag} className={style.tag}>{tag}</p>)}
             </div>
             ]}
         </button>
