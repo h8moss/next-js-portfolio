@@ -6,8 +6,10 @@ export default function Four0Four() {
         <div>
             <NavBar />
             <div className="overflow-hidden flex-col text-center justify-center">
-                <ParticleText className='m-auto w-1/2' />
-                <h2 className="text-3xl">Are you lost?</h2>
+                <ParticleText className='w-full h-full' />
+                <div className="absolute bottom-20 w-full">
+                    <h2 className="text-3xl  text-center mx-auto">Are you lost?</h2>
+                </div>
             </div>
         </div>
     );

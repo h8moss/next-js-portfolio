@@ -83,9 +83,12 @@ const ParticleText = props => {
                 for (let x = 0, x2 = textCoordinates.width; x < x2; x++) {
                     if (textCoordinates.data[(y * 4 * textCoordinates.width) + (x * 4) + 3] > 128) {
                         const rect = canvas.getBoundingClientRect();
-                        let posX = x + rect.width / 16
+                        let posX = (x) + (canvas.width) / 32;
                         let posY = y + 10;
-                        particles.push(new Particle(posX * 10, posY * 10));
+                        let particle = new Particle(posX * 10, posY * 10)
+                        particle.x = Math.random() * canvas.width;
+                        particle.y = Math.random() * canvas.height;
+                        particles.push(particle);
                     }
                 }
             }
