@@ -1,0 +1,29 @@
+.form {
+  @apply flex flex-col text-left mx-auto w-1/2 my-5;
+}
+
+.form input {
+  @apply rounded-md p-1 px-2 border-2;
+}
+
+.form .loginWithGoogle,
+.form .loginButton {
+  @apply border-2 rounded-md p-3 px-5 w-fit whitespace-nowrap mx-auto transition-all
+    hover:scale-105 my-3;
+}
+
+.form .loginButton {
+  @apply bg-purple-500 border-purple-700 text-white;
+}
+
+.form .createAccount {
+  @apply text-sm text-purple-400 hover:text-purple-600 my-auto font-bold;
+}
+
+.form .loginWithGoogle {
+  @apply flex flex-row;
+}
+
+.form .loginWithGoogle img {
+  @apply w-5 h-5 my-auto mx-1;
+}
