@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react"
-import NavBar from "./NavBar";
+import NavBar from "../NavBar";
 
 export default function WithWillExit(Component, props = {}) {
     const [willExit, setWillExit] = useState(false);
