@@ -4,9 +4,11 @@ import { useState } from "react";
 import WithWillExit from "../components/WithWillExit";
 import { getAuthService, useUser } from "../services/firebase/auth";
 import style from '../styles/Login.module.css';
-import { Image } from 'next/image';
+import Image from 'next/image';
 
 function Login({ willExit }) {
+
+
     const user = useUser();
 
     let [isRegistering, setIsRegistering] = useState(false);
@@ -19,6 +21,7 @@ function Login({ willExit }) {
         router.push({ pathname: nextPage });
     }
 
+
     const googleLogin = async () => {
         let authService = getAuthService();
         try {
@@ -28,10 +31,12 @@ function Login({ willExit }) {
         }
     }
 
+
     return (
         <div className="w-screen h-screen p-20">
             <div className="bg-white mx-auto rounded-lg shadow-xl text-gray-800 text-center w-1/2 h-full flex flex-col">
                 <Formik
+
                     initialValues={{
                         mail: '',
                         password: '',
@@ -69,7 +74,13 @@ function Login({ willExit }) {
                             </div>
                             <p className="text-center text-gray-600 text-sm">or</p>
                             <button className={style.loginWithGoogle} onClick={googleLogin}>
-                                <Image src='/social_icons/google.png' alt='' />
+                                <div className="my-auto mx-5">
+                                    <Image src='/social_icons/google.png' alt=''
+                                        width={20}
+                                        height={20}
+                                        layout='fixed'
+                                    />
+                                </div>
                                 Log in with google
                             </button>
                         </Form>
@@ -80,6 +91,8 @@ function Login({ willExit }) {
     );
 }
 
-const willExit = () => WithWillExit(login);
+// export default Login
 
-export default willExit;
+export default function willExit() {
+    return WithWillExit(Login);
+}

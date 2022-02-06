@@ -23,7 +23,3 @@
 .form .loginWithGoogle {
   @apply flex flex-row;
 }
-
-.form .loginWithGoogle img {
-  @apply w-5 h-5 my-auto mx-1;
-}
