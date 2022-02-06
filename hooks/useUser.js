@@ -6,8 +6,6 @@ export default function useUser() {
     let auth = getAuthService();
     let [user, setUser] = useState(auth.user);
 
-
-
     useEffect(() => {
         const userChanged = () => {
             setUser(auth.user);
