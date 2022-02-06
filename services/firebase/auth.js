@@ -62,29 +62,10 @@ class AuthService {
 
 let authService = null;
 
-export function getAuthService() {
+export default function getAuthService() {
     if (authService === null) {
         authService = new AuthService();
     }
 
     return authService;
-}
-
-export function useUser() {
-    let auth = getAuthService();
-    let [user, setUser] = useState(auth.user);
-
-
-
-    useEffect(() => {
-        const userChanged = () => {
-            setUser(auth.user);
-        }
-
-        auth.addUserListener(userChanged);
-
-        return () => auth.removeUserListener(userChanged);
-    }, [auth]);
-
-    return user;
 }

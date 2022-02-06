@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
-import style from '../styles/Components.module.css';
+import style from './style.module.css';
 
 const useTagsList = () => {
     let scroll = useRef(null)

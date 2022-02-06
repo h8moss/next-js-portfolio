@@ -1,6 +1,6 @@
-import { useUser } from '../services/firebase/auth';
-import StyledButton from './StyledButton';
-import UserButton from './UserButton';
+import useUser from '../../hooks/useUser';
+import StyledButton from '../StyledButton';
+import UserButton from '../UserButton';
 
 export default function NavBar({ onClick = () => { }, delay = 0 }) {
 

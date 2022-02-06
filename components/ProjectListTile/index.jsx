@@ -1,4 +1,4 @@
-import style from '../styles/Components.module.css'
+import style from './style.module.css'
 
 export default function ProjectListTile({ project: { title, tags }, onClick, isSelected, isVisible }) {
 

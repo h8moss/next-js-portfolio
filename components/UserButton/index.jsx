@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { getAuthService, useUser } from "../services/firebase/auth";
-import StyledButton from "./StyledButton";
+import getAuthService from "../../services/firebase/auth";
+import useUser from "../../hooks/useUser";
+import StyledButton from "../StyledButton";
 import { useRouter } from "next/router";
 import Image from 'next/image';
 

@@ -1,4 +1,3 @@
-import { data } from 'autoprefixer'
 import React, { useRef, useEffect } from 'react'
 
 const ParticleText = props => {
