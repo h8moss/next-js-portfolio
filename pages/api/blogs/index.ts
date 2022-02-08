@@ -1,13 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "../../../services/firebase/firestore";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { DocumentData } from "@google-cloud/firestore";
 
 const searchBlogs = async () => {

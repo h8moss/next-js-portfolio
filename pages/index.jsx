@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ButtonLink from '../domain/index/ButtonLink';
-import NavBar from '../components/NavBar';
 import TextWriter from '../domain/index/TextWriter';
 import WithWillExit from '../components/WithWillExit';
 import useLoading from '../hooks/useLoading';
