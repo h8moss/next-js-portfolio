@@ -1,7 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { db } from "../../../services/firebase/firestore";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { DocumentData } from "@google-cloud/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import type { NextApiRequest, NextApiResponse } from "next";
+
+import { db } from "../../../services/firebase/firestore";
 
 const searchBlogs = async () => {
   let docs = await getDocs(collection(db, "blog-posts"));

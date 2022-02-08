@@ -1,6 +1,7 @@
+import { addDoc,collection } from "firebase/firestore";
 import type { NextApiRequest, NextApiResponse } from "next";
+
 import { db } from "../../services/firebase/firestore";
-import { collection, addDoc } from "firebase/firestore";
 
 const addContactMessage = async (data) => {
   const col = collection(db, "/contact");

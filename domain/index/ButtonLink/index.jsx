@@ -1,5 +1,6 @@
-import style from './style.module.css';
 import Image from 'next/image';
+
+import style from './style.module.css';
 
 export default function ButtonLink({ image, link, bg, alt, active = true, duration = 500, delay = 0, size }) {
     return (

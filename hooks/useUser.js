@@ -1,6 +1,7 @@
-import getAuthService from "../services/firebase/auth";
 import { useState } from "react";
 import { useEffect } from "react";
+
+import getAuthService from "../services/firebase/auth";
 
 export default function useUser() {
     let auth = getAuthService();

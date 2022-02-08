@@ -1,10 +1,11 @@
 import { useState } from 'react';
+
+import ScreenDiv from '../components/ScreenDiv'
+import WithWillExit from '../components/WithWillExit';
 import ButtonLink from '../domain/index/ButtonLink';
 import TextWriter from '../domain/index/TextWriter';
-import WithWillExit from '../components/WithWillExit';
 import useLoading from '../hooks/useLoading';
 import styles from '../styles/Home.module.css';
-import ScreenDiv from '../components/ScreenDiv'
 
 function Home({ willExit }) {
 

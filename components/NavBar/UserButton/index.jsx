@@ -1,8 +1,9 @@
-import { useState } from "react";
-import getAuthService from "../../../services/firebase/auth";
-import useUser from "../../../hooks/useUser";
-import { useRouter } from "next/router";
 import Image from 'next/image';
+import { useRouter } from "next/router";
+import { useState } from "react";
+
+import useUser from "../../../hooks/useUser";
+import getAuthService from "../../../services/firebase/auth";
 
 export default function UserButton() {
 

@@ -1,12 +1,13 @@
 import {
+  Auth,
   getAuth,
-  signInWithPopup,
   GoogleAuthProvider,
   onAuthStateChanged,
+  signInWithPopup,
   User,
-  Auth,
 } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
+
 import { AppUser } from "../../types";
 import { app } from "./firebase";
 import { db } from "./firestore";

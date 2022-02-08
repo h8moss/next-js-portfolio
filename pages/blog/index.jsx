@@ -1,7 +1,7 @@
+import ScreenDiv from '../../components/ScreenDiv';
 import WithWillExit from "../../components/WithWillExit"
 import { server } from "../../config";
 import { dateFromSeconds, getAgoString } from "../../services/dateOperations";
-import ScreenDiv from '../../components/ScreenDiv';
 
 
 

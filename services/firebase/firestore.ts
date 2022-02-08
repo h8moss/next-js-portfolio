@@ -1,5 +1,6 @@
+import { getFirestore,initializeFirestore } from "firebase/firestore";
+
 import { app } from "./firebase";
-import { initializeFirestore, getFirestore } from "firebase/firestore";
 
 // TODO: Figure out firebase db type
 // let db: Firestore // <-- this doesnt work (import { Firestore } from "@google-cloud/firestore";)

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+
 import style from './style.module.css';
 
 const useTagsList = () => {

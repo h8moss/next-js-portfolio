@@ -1,6 +1,6 @@
+import BlogViewer from "../../components/BlogViewer";
 import WithWillExit from "../../components/WithWillExit"
 import { server } from "../../config";
-import BlogViewer from "../../components/BlogViewer";
 
 
 

@@ -1,12 +1,13 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import Image from 'next/image';
 import { useRouter } from 'next/router'
 import { useState } from "react";
-import WithWillExit from "../components/WithWillExit";
-import getAuthService from "../services/firebase/auth";
-import useUser from "../hooks/useUser";
-import style from '../styles/Login.module.css';
-import Image from 'next/image';
+
 import ScreenDiv from "../components/ScreenDiv";
+import WithWillExit from "../components/WithWillExit";
+import useUser from "../hooks/useUser";
+import getAuthService from "../services/firebase/auth";
+import style from '../styles/Login.module.css';
 
 function Login({ willExit }) {
     const user = useUser();

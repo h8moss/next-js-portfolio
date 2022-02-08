@@ -1,11 +1,12 @@
-import WithWillExit from "../../components/WithWillExit";
-import useUser from "../../hooks/useUser";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Loading from "../../domain/blog/create/Loading";
-import NotAllowed from "../../domain/blog/create/NotAllowed";
-import MainPage from "../../domain/blog/create/MainPage";
+
 import ScreenDiv from "../../components/ScreenDiv";
+import WithWillExit from "../../components/WithWillExit";
+import Loading from "../../domain/blog/create/Loading";
+import MainPage from "../../domain/blog/create/MainPage";
+import NotAllowed from "../../domain/blog/create/NotAllowed";
+import useUser from "../../hooks/useUser";
 
 const getPage = (isAdmin) => {
     switch (isAdmin) {

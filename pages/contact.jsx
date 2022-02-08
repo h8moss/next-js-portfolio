@@ -1,10 +1,11 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useEffect, useState } from "react";
+
+import ScreenDiv from '../components/ScreenDiv';
 import WithWillExit from "../components/WithWillExit";
-import style from '../styles/Contact.module.css'
 import { server } from '../config';
 import useLoading from "../hooks/useLoading";
-import ScreenDiv from '../components/ScreenDiv';
+import style from '../styles/Contact.module.css'
 
 const _validate = values => {
     let errors = {};

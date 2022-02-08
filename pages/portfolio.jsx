@@ -1,12 +1,13 @@
-import { server } from '../config';
-import WithWillExit from '../components/WithWillExit';
-import ProjectListTile from '../domain/portfolo/ProjectListTile';
-import style from '../styles/Portfolio.module.css'
-import { tagState, useFilteredProjects } from '../hooks/useFilteredProjects';
 import { FiX } from 'react-icons/fi';
-import TagsList from '../domain/portfolo/TagsList';
-import useLoading from '../hooks/useLoading';
+
 import ScreenDiv from '../components/ScreenDiv';
+import WithWillExit from '../components/WithWillExit';
+import { server } from '../config';
+import ProjectListTile from '../domain/portfolo/ProjectListTile';
+import TagsList from '../domain/portfolo/TagsList';
+import { tagState, useFilteredProjects } from '../hooks/useFilteredProjects';
+import useLoading from '../hooks/useLoading';
+import style from '../styles/Portfolio.module.css'
 
 function Portfolio({ projects, willExit }) {
 
