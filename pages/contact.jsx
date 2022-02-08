@@ -4,6 +4,7 @@ import WithWillExit from "../components/WithWillExit";
 import style from '../styles/Contact.module.css'
 import { server } from '../config';
 import useLoading from "../hooks/useLoading";
+import ScreenDiv from '../components/ScreenDiv';
 
 const _validate = values => {
     let errors = {};
@@ -68,7 +69,7 @@ function Contact({ willExit }) {
     const showForm = (!willExit && loaded);
 
     return (
-        <div className="w-screen h-screen p-16 px-60">
+        <ScreenDiv className="p-16 px-60">
             <div className="w-full h-full">
                 <h1 className={"text-3xl w-1/2 text-center mx-auto transition-all " + (showForm ? '' : 'text-transparent')}>Wanna talk about a project, wish me a nice day or tell me how my website sucks? You are in the right place!</h1>
                 {/* make the title fade in and out, but whe it fades, the text cycles */}
@@ -118,7 +119,7 @@ function Contact({ willExit }) {
                     }
                 </Formik >
             </div >
-        </div >
+        </ScreenDiv >
     );
 }
 

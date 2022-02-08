@@ -1,12 +1,12 @@
 import { server } from '../config';
 import WithWillExit from '../components/WithWillExit';
-import { useEffect, useState } from 'react';
 import ProjectListTile from '../components/ProjectListTile';
 import style from '../styles/Portfolio.module.css'
 import { tagState, useFilteredProjects } from '../hooks/useFilteredProjects';
 import { FiX } from 'react-icons/fi';
 import TagsList from '../components/TagsList';
 import useLoading from '../hooks/useLoading';
+import ScreenDiv from '../components/ScreenDiv';
 
 function Portfolio({ projects, willExit }) {
 
@@ -41,7 +41,7 @@ function Portfolio({ projects, willExit }) {
     })
 
     return (
-        <div className="h-screen w-screen flex p-20">
+        <ScreenDiv className='flex'>
             <div className={`flex-col transition-all flex mx-3 ${showProjectView ? 'flex-grow flex-1' : 'w-0'}`}>
                 <h2 className='text-2xl text-center my-2 min-h-[32px]'>{selectedProject?.title}</h2>
                 <div className={style.projectDescription}>
@@ -59,7 +59,7 @@ function Portfolio({ projects, willExit }) {
                     {projectComponents}
                 </div>
             </div>
-        </div>
+        </ScreenDiv>
     );
 }
 

@@ -5,6 +5,7 @@ import TextWriter from '../components/TextWriter';
 import WithWillExit from '../components/WithWillExit';
 import useLoading from '../hooks/useLoading';
 import styles from '../styles/Home.module.css';
+import ScreenDiv from '../components/ScreenDiv'
 
 function Home({ willExit }) {
 
@@ -12,8 +13,8 @@ function Home({ willExit }) {
   const loaded = useLoading(50);
 
   return (
-    <div className='overflow-clip w-screen h-screen'>
-      <div className={`flex flex-col w-screen h-screen text-center transition-all duration-500 justify-evenly ${willExit ? 'ml-[100%]' : ''}`}>
+    <ScreenDiv >
+      <div className={`flex flex-col w-full h-full text-center transition-all duration-500 justify-evenly ${willExit ? 'ml-[100%]' : ''}`}>
         <h1 className={'text-5xl mt-32 flex-1 transition-all delay-200 duration-500 ' + (loaded ? '' : ' text-transparent ') + styles.fontQuicksand}>My name is Daniel Armenta</h1>
         <div className={styles.fontOutfit + ' flex-1 flex-grow'}>
           <TextWriter delay={40} onDone={() => setShowSocials(true)}>
@@ -60,7 +61,7 @@ function Home({ willExit }) {
           </div>
         </div>
       </div>
-    </div>
+    </ScreenDiv>
   )
 }
 

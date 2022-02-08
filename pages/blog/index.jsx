@@ -1,6 +1,7 @@
 import WithWillExit from "../../components/WithWillExit"
 import { server } from "../../config";
 import { dateFromSeconds, getAgoString } from "../../services/dateOperations";
+import ScreenDiv from '../../components/ScreenDiv';
 
 
 
@@ -29,11 +30,11 @@ function Blogs({ willExit, posts }) {
     });
 
     return (
-        <div className="w-screen h-screen p-20">
+        <ScreenDiv>
             <div className="flex flex-col bg-slate-200 p-7 w-[70%] mx-auto rounded-lg h-full overflow-clip">
                 {postComponents}
             </div>
-        </div>
+        </ScreenDiv>
     )
 }
 

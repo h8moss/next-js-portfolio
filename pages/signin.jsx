@@ -6,10 +6,9 @@ import getAuthService from "../services/firebase/auth";
 import useUser from "../hooks/useUser";
 import style from '../styles/Login.module.css';
 import Image from 'next/image';
+import ScreenDiv from "../components/ScreenDiv";
 
 function Login({ willExit }) {
-
-
     const user = useUser();
 
     let [isRegistering, setIsRegistering] = useState(false);
@@ -34,7 +33,7 @@ function Login({ willExit }) {
 
 
     return (
-        <div className="w-screen h-screen p-20">
+        <ScreenDiv>
             <div className="bg-white mx-auto rounded-lg shadow-xl text-gray-800 text-center w-1/2 h-full flex flex-col">
                 <Formik
 
@@ -88,7 +87,7 @@ function Login({ willExit }) {
                     )}
                 </Formik>
             </div>
-        </div>
+        </ScreenDiv>
     );
 }
 
