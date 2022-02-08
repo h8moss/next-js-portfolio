@@ -43,6 +43,7 @@ export default async function handle(
     res.status(400).send("Error understanding request");
     return;
   }
+  console.log(data);
   res.status(200).json(JSON.stringify(data));
   return;
 }
