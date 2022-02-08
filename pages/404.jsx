@@ -1,5 +1,5 @@
 import NavBar from "../components/NavBar";
-import ParticleText from "../components/ParticleText";
+import ParticleText from "../domain/404/ParticleText";
 
 export default function Four0Four() {
     return (

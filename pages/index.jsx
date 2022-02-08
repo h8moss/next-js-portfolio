@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import ButtonLink from '../components/ButtonLink';
+import ButtonLink from '../domain/index/ButtonLink';
 import NavBar from '../components/NavBar';
-import TextWriter from '../components/TextWriter';
+import TextWriter from '../domain/index/TextWriter';
 import WithWillExit from '../components/WithWillExit';
 import useLoading from '../hooks/useLoading';
 import styles from '../styles/Home.module.css';

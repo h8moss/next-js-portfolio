@@ -1,10 +1,10 @@
 import { server } from '../config';
 import WithWillExit from '../components/WithWillExit';
-import ProjectListTile from '../components/ProjectListTile';
+import ProjectListTile from '../domain/portfolo/ProjectListTile';
 import style from '../styles/Portfolio.module.css'
 import { tagState, useFilteredProjects } from '../hooks/useFilteredProjects';
 import { FiX } from 'react-icons/fi';
-import TagsList from '../components/TagsList';
+import TagsList from '../domain/portfolo/TagsList';
 import useLoading from '../hooks/useLoading';
 import ScreenDiv from '../components/ScreenDiv';
 
