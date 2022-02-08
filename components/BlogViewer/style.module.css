@@ -1,5 +1,5 @@
 .title {
-  @apply text-6xl;
+  @apply text-7xl;
 }
 
 .markdown * {
@@ -38,6 +38,10 @@
   list-style: circle;
 }
 
+.markdown h1 {
+  @apply text-6xl;
+}
+
 .markdown h2 {
   @apply text-5xl;
 }
@@ -48,4 +52,8 @@
 
 .markdown h4 {
   @apply text-3xl;
+}
+
+.markdown a {
+  @apply text-blue-400 font-bold hover:underline visited:text-blue-600;
 }
