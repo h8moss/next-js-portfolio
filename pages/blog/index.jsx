@@ -18,7 +18,7 @@ function Blogs({ willExit, posts }) {
             >
                 {tag}
             </a>
-        )
+        );
 
         return (
             <a className="bg-white text-black flex flex-col mx-auto rounded-md shadow-2xl drop-shadow-lg p-3 w-full my-2 hover:scale-x-[1.02] transition-all group" key={post.id} href={`/blog/${post.id}`}>
@@ -31,7 +31,7 @@ function Blogs({ willExit, posts }) {
 
     return (
         <ScreenDiv>
-            <div className="flex flex-col bg-slate-200 p-7 w-[70%] mx-auto rounded-lg h-full overflow-clip">
+            <div className="flex flex-col bg-slate-200 p-7 w-[70%] mx-auto rounded-lg h-full overflow-auto">
                 {postComponents}
             </div>
         </ScreenDiv>
