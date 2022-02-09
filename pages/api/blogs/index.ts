@@ -1,11 +1,20 @@
 import { DocumentData } from "@google-cloud/firestore";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { db } from "../../../services/firebase/firestore";
 
 const searchBlogs = async () => {
-  let docs = await getDocs(collection(db, "blog-posts"));
+  let docs = await getDocs(
+    query(collection(db, "blog-posts"), orderBy("created", "desc"))
+  );
   return docs.docs.map((doc) => {
     return { ...doc.data(), id: doc.id };
   });
@@ -37,7 +46,6 @@ export default async function handle(
     res.status(400).send("Error understanding request");
     return;
   }
-  console.log(data);
   res.status(200).json(JSON.stringify(data));
   return;
 }
