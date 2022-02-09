@@ -24,6 +24,12 @@ const BlogViewer = ({ children, title, ...props }) => {
                     a({ children, ...props }) {
                         return <a {...props} target='_blank' rel="noreferrer">{children}</a>
                     },
+                    blockquote({ children, className, ...props }) {
+                        return <p
+                            className={"border-l-2 border-black text-gray-600 p-1 " + className}
+                            {...props}
+                        >{children}</p>
+                    },
                     code({ children, className, inline, ...props }) {
                         const match = /language-(\w+)/.exec(className || '')
                         return !inline && match ? (
