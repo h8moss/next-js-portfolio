@@ -2,9 +2,6 @@ import BlogViewer from "../../components/BlogViewer";
 import WithWillExit from "../../components/WithWillExit"
 import { server } from "../../config";
 
-
-
-
 function Blog({ willExit, post: { title, text } }) {
     return (
         <div className="w-screen h-screen p-20">
