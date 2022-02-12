@@ -1,39 +1,56 @@
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+
+import Card from '../../components/Card';
+import NavBar from '../../components/NavBar';
 import ScreenDiv from '../../components/ScreenDiv';
 import { server } from "../../config";
-import { dateFromSeconds, getAgoString } from "../../services/dateOperations";
+import ProjectTile from '../../domain/blog/index/ProjectTile';
+import Tag from '../../domain/blog/index/Tag';
+import { dateFromSeconds } from "../../services/dateOperations";
 
 
 
-function Blogs({ willExit, posts }) {
-    // TODO: get a better font for the title
+function Blogs({ posts }) {
+
+    let router = useRouter()
+    let [nextRoute, setNextRoute] = useState(router.pathname);
+
+    let shouldStay = nextRoute === router.pathname;
+
     const postComponents = posts.map(post => {
 
-        const dateCreated = post.created !== undefined ? dateFromSeconds(post.created.seconds) : null;
+        const dateCreated = post.created !== undefined
+            ? dateFromSeconds(post.created.seconds)
+            : null;
 
-        let tagComponents = post.tags.map(tag =>
-            <a key={tag}
-                className="text-sm text-white bg-slate-700 p-1 m-1 rounded-lg border-4 border-transparent hover:border-slate-500"
-                href={"/blog?tags=" + tag}
-            >
-                {tag}
-            </a>
-        );
+        let tagComponents = post.tags.map(tag => <Tag text={tag} key='tag' />);
 
         return (
-            <a className="bg-white text-black flex flex-col mx-auto rounded-md shadow-2xl drop-shadow-lg p-3 w-full my-2 hover:scale-x-[1.02] transition-all group" key={post.id} href={`/blog/${post.id}`}>
-                {dateCreated && <p className="text-sm text-gray-600">{`${dateCreated.toLocaleDateString()} (${getAgoString(dateCreated)})`}</p>}
-                <h2 className="text-3xl transition-all group-hover:text-purple-400 whitespace-nowrap">{post.title}</h2>
-                <div className="flex flex-row">{tagComponents}</div>
-            </a>
+            <ProjectTile
+                key={post.id}
+                dateCreated={dateCreated}
+                id={post.id}
+                tags={tagComponents}
+                title={post.title}
+            />
         );
     });
 
     return (
-        <ScreenDiv>
-            <div className="flex flex-col bg-slate-200 p-7 w-[70%] mx-auto rounded-lg h-full overflow-auto">
-                {postComponents}
-            </div>
-        </ScreenDiv>
+        <>
+            <NavBar
+                onClick={(route) => setNextRoute(route)}
+            />
+            <ScreenDiv>
+                <Card
+                    onExit={() => router.push(nextRoute)}
+                    show={shouldStay}
+                >
+                    {postComponents}
+                </Card>
+            </ScreenDiv>
+        </>
     )
 }
 
