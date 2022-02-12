@@ -1,6 +1,6 @@
-import React, { useEffect,useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 
-const ParticleText = props => {
+const ParticleText = ({ text, ...props }) => {
 
     const canvasRef = useRef(null)
 
@@ -26,7 +26,7 @@ const ParticleText = props => {
 
         context.fillStyle = 'white';
         context.font = '30px Verdana';
-        context.fillText('404', 0, 30);
+        context.fillText(text, 0, 30);
         const textCoordinates = context.getImageData(0, 0, 100, 100);
 
         class Particle {
