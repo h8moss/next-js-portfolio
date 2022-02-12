@@ -2,8 +2,8 @@ import { FiX } from 'react-icons/fi';
 
 import ScreenDiv from '../components/ScreenDiv';
 import { server } from '../config';
-import ProjectListTile from '../domain/portfolo/ProjectListTile';
-import TagsList from '../domain/portfolo/TagsList';
+import ProjectListTile from '../domain/portfolio/ProjectListTile';
+import TagsList from '../domain/portfolio/TagsList';
 import { tagState, useFilteredProjects } from '../hooks/useFilteredProjects';
 import useLoading from '../hooks/useLoading';
 import style from '../styles/Portfolio.module.css'
