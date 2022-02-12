@@ -1,6 +1,6 @@
 import { getAgoString } from "../../../../services/dateOperations";
 
-const ProjectTile = ({ id, dateCreated, title, tags }) => {
+const BlogListTile = ({ id, dateCreated, title, tags }) => {
 
     const agoString = dateCreated !== null
         ? getAgoString(dateCreated)
@@ -32,4 +32,4 @@ const ProjectTile = ({ id, dateCreated, title, tags }) => {
     );
 }
 
-export default ProjectTile;
+export default BlogListTile;

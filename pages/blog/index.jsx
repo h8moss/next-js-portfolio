@@ -5,7 +5,7 @@ import Card from '../../components/Card';
 import NavBar from '../../components/NavBar';
 import ScreenDiv from '../../components/ScreenDiv';
 import { server } from "../../config";
-import ProjectTile from '../../domain/blog/index/ProjectTile';
+import ProjectTile from '../../domain/blog/index/BlogListTile';
 import Tag from '../../domain/blog/index/Tag';
 import { dateFromSeconds } from "../../services/dateOperations";
 
