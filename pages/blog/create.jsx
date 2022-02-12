@@ -1,27 +1,28 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
+import NavBar from "../../components/NavBar";
 import ScreenDiv from "../../components/ScreenDiv";
-import WithWillExit from "../../components/WithWillExit";
 import Loading from "../../domain/blog/create/Loading";
 import MainPage from "../../domain/blog/create/MainPage";
 import NotAllowed from "../../domain/blog/create/NotAllowed";
 import useUser from "../../hooks/useUser";
 
-const getPage = (isAdmin) => {
+const getPage = ({ isAdmin, onExit, shouldStay }) => {
     switch (isAdmin) {
         case null:
             return <Loading />
         case false:
-            return <NotAllowed />
+            return <NotAllowed onExit={onExit} shouldStay={shouldStay} />
         case true:
-            return <MainPage />
+            return <MainPage onExit={onExit} shouldStay={shouldStay} />
     }
 }
 
 function BlogCreate() {
     let user = useUser();
     let router = useRouter();
+    const [nextRoute, setNextRoute] = useState(router.pathname);
 
     let [isAdmin, setIsAdmin] = useState(null);
 
@@ -30,14 +31,21 @@ function BlogCreate() {
     }, [user, router]);
 
     return (
-        <ScreenDiv className='overflow-y-auto'>
-            {getPage(isAdmin)}
-        </ScreenDiv>
+        <>
+            <NavBar
+                onClick={(route) => setNextRoute(route)}
+            />
+            <ScreenDiv className='overflow-y-auto'>
+                {getPage({
+                    isAdmin: isAdmin,
+                    onExit: () => router.push(nextRoute),
+                    shouldStay: nextRoute === router.pathname,
+                })}
+            </ScreenDiv>
+        </>
     )
 }
 
 
 
-const willExit = (props) => WithWillExit(BlogCreate, props);
-
-export default willExit;
+export default BlogCreate;

@@ -1,7 +1,6 @@
 import { FiX } from 'react-icons/fi';
 
 import ScreenDiv from '../components/ScreenDiv';
-import WithWillExit from '../components/WithWillExit';
 import { server } from '../config';
 import ProjectListTile from '../domain/portfolo/ProjectListTile';
 import TagsList from '../domain/portfolo/TagsList';

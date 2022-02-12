@@ -1,24 +1,51 @@
+import { AnimatePresence, motion } from 'framer-motion';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+
 import BlogViewer from "../../components/BlogViewer";
-import WithWillExit from "../../components/WithWillExit"
+import NavBar from "../../components/NavBar";
+import ScreenDiv from '../../components/ScreenDiv';
 import { server } from "../../config";
 
-function Blog({ willExit, post: { title, text } }) {
+function Blog({ post: { title, text } }) {
+
+    const router = useRouter();
+    const [nextRoute, setNextRoute] = useState(router.pathname);
+
+
+    const willExit = nextRoute !== router.pathname;
+
     return (
-        <div className="w-screen h-screen p-20">
-            <div className="w-1/2 m-auto">
-                <BlogViewer title={title}>
-                    {text}
-                </BlogViewer>
-            </div>
-        </div>
+        <>
+            <NavBar onClick={(route) => setNextRoute(route)} />
+            <ScreenDiv>
+                <AnimatePresence
+                    onExitComplete={() => router.push(nextRoute)}
+                >
+                    {!willExit &&
+                        <motion.div className="w-1/2 m-auto"
+                            initial={{
+                                x: '100vw',
+                            }}
+                            animate={{
+                                x: '0',
+                            }}
+                            exit={{
+                                x: '-100vw',
+                            }}
+                        >
+                            <BlogViewer title={title}>
+                                {text}
+                            </BlogViewer>
+                        </motion.div>
+                    }
+                </AnimatePresence>
+            </ScreenDiv>
+        </>
     )
 }
 
-export default function willExit(props) {
-    return (
-        WithWillExit(Blog, props)
-    );
-}
+export default Blog;
 
 export async function getStaticProps({ params }) {
     let id = params.id;

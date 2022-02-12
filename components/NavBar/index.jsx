@@ -1,53 +1,41 @@
 import useUser from '../../hooks/useUser';
-import StyledButton from './StyledButton';
+import StyledButton from '../StyledButton';
 import UserButton from './UserButton';
 
-export default function NavBar({ onClick = () => { }, delay = 0 }) {
-
+export default function NavBar({ onClick }) {
     let user = useUser();
 
     return (
         <>
             <div className='flex flex-row w-full justify-evenly absolute z-[95] py-3 bg-zinc-900 shadow-xl'>
                 <StyledButton
-                    className='hover:text-red-500'
-                    href='/'
-                    delay={delay}
-                    onStart={() => onClick('/')}
+                    color='#f00'
+                    onClick={() => onClick('/')}
                 >
                     About
                 </StyledButton>
                 <StyledButton
-                    className='hover:text-blue-500'
-                    href='/portfolio'
-                    delay={delay}
-                    onStart={() => onClick('/portfolio')}
+                    color='#3070fa'
+                    onClick={() => onClick('/portfolio')}
                 >
                     Portfolio
                 </StyledButton>
                 <StyledButton
-                    className='hover:text-purple-500'
-                    href='/contact'
-                    delay={delay}
-                    onStart={() => onClick('/contact')}
+                    color='#aa85ff'
+                    onClick={() => onClick('/contact')}
                 >
                     Contact
                 </StyledButton>
-
                 <StyledButton
-                    className='hover:text-green-500'
-                    href='/blog'
-                    delay={delay}
-                    onStart={() => onClick('/blog')}
+                    color='#34ff94'
+                    onClick={() => onClick('/blog')}
                 >
                     Blog
                 </StyledButton>
                 {user === null
                     ? <StyledButton
-                        className='hover:text-pink-500'
-                        href='/signin'
-                        delay={delay}
-                        onStart={() => onClick('/signin')}
+                        color='#ff88ff'
+                        onClick={() => onClick('/signin')}
                     >
                         Sign in
                     </StyledButton>

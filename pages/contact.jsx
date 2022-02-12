@@ -2,7 +2,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useEffect, useState } from "react";
 
 import ScreenDiv from '../components/ScreenDiv';
-import WithWillExit from "../components/WithWillExit";
+import StyledButton from "../components/StyledButton";
 import { server } from '../config';
 import useLoading from "../hooks/useLoading";
 import style from '../styles/Contact.module.css'
@@ -113,7 +113,11 @@ function Contact({ willExit }) {
                         {
                             isSubmitting ?
                                 <p>...</p>
-                                : <button type="submit" className={`transition-all duration-300 delay-[1500]  ${(showForm ? 'text-white' : 'text-transparent')}`}>Submit</button>
+                                : <StyledButton type="submit" className={`transition-all duration-300 delay-[1500]  ${(showForm ? 'text-white' : 'text-transparent')}`}
+                                    color='#f00'
+                                >
+                                    Submit
+                                </StyledButton>
                         }
                     </Form>
                     )
@@ -124,7 +128,5 @@ function Contact({ willExit }) {
     );
 }
 
-const willExit = () => WithWillExit(Contact);
-
-export default willExit;
+export default Contact;
 

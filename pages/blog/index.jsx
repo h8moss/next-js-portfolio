@@ -1,5 +1,4 @@
 import ScreenDiv from '../../components/ScreenDiv';
-import WithWillExit from "../../components/WithWillExit"
 import { server } from "../../config";
 import { dateFromSeconds, getAgoString } from "../../services/dateOperations";
 
@@ -38,10 +37,7 @@ function Blogs({ willExit, posts }) {
     )
 }
 
-const willExit = props => WithWillExit(Blogs, props);
-
-export default willExit;
-
+export default Blogs;
 
 export async function getStaticProps() {
     const response = await fetch(`${server}/api/blogs`);

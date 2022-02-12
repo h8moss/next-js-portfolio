@@ -41,7 +41,7 @@ const submit = async ({ title, body, tags }, { setSubmitting, resetForm }, route
 }
 
 // TODO: make tags work like dev.to
-const MainPage = () => {
+const MainPage = ({ onExit, shouldStay }) => {
 
     const [showPreview, setShowPreview] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
@@ -57,7 +57,10 @@ const MainPage = () => {
     }
 
     return (
-        <Card>
+        <Card
+            onExit={onExit}
+            show={shouldStay}
+        >
             <div className="flex flex-row">
                 <label htmlFor='preview'>Preview</label>
                 <input

@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import { useState } from "react";
 
 import ScreenDiv from "../components/ScreenDiv";
-import WithWillExit from "../components/WithWillExit";
 import useUser from "../hooks/useUser";
 import getAuthService from "../services/firebase/auth";
 import style from '../styles/Login.module.css';

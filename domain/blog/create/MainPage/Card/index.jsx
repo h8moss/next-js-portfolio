@@ -1,11 +1,41 @@
-const Card = ({ className, children, ...props }) =>
-(<div
-    className={`bg-white shadow-lg w-[70%] 
-    rounded-lg p-5 mx-auto text-gray-800
-    my-4 flex flex-col h-auto min-h-full ` + className}
-    {...props}
->
-    {children}
-</div>);
+import { AnimatePresence, motion } from "framer-motion";
+
+const Card = ({ className, children, show, onExit, ...props }) => {
+    return (
+        <AnimatePresence onExitComplete={onExit}>
+            {show &&
+                <motion.div
+                    className={`bg-white shadow-lg
+                        rounded-lg mx-auto text-gray-800
+                        my-4 flex flex-col ` + className}
+
+                    initial={{
+                        overflow: 'clip',
+                        padding: '0px',
+                        height: '0',
+                        minHeight: '0',
+                    }}
+
+                    animate={{
+                        overflow: 'auto',
+                        padding: '20px',
+                        width: '70%',
+                        height: 'auto',
+                        minHeight: '100%',
+                    }}
+
+                    exit={{
+                        overflow: 'cli,',
+                        padding: '0px',
+                        width: '0px'
+                    }}
+
+                    {...props}
+                >
+                    {children}
+                </motion.div>}
+        </AnimatePresence>
+    );
+}
 
 export default Card;
