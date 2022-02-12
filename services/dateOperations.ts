@@ -99,7 +99,7 @@ const timeTexts = {
     },
     {
       text: " years ago",
-      value: NaN, // infinity
+      value: Infinity,
       showValue: true,
       divide: times.secondsInYear,
     },
@@ -112,7 +112,7 @@ export function getAgoString(date: Date) {
   let difference = now - dateSeconds;
 
   for (let time of timeTexts.values) {
-    if (time.value === NaN || difference < time.value) {
+    if (difference < time.value) {
       let value = "";
       if (time.showValue) {
         if (time.divide !== undefined) {
