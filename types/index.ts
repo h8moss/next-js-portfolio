@@ -16,3 +16,9 @@ export enum SignInState {
   signedOut,
   signedIn,
 }
+
+export enum TagsState {
+  selected,
+  unselected,
+  notVisible,
+}

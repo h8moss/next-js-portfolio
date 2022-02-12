@@ -4,9 +4,10 @@ import ScreenDiv from '../components/ScreenDiv';
 import { server } from '../config';
 import ProjectListTile from '../domain/portfolio/ProjectListTile';
 import TagsList from '../domain/portfolio/TagsList';
-import { tagState, useFilteredProjects } from '../hooks/useFilteredProjects';
+import useFilteredProjects from '../hooks/useFilteredProjects';
 import useLoading from '../hooks/useLoading';
 import style from '../styles/Portfolio.module.css'
+import { TagsState } from '../types';
 
 function Portfolio({ projects, willExit }) {
 
@@ -29,11 +30,11 @@ function Portfolio({ projects, willExit }) {
     );
     const tagsComponents = projectsObject.tags.map((tag) => {
         return (
-            <button className={'transition-all duration-500 hover:bg-gray-700 bg-gray-600 text-white rounded-md flex flex-row text-sm ' + (tag.state === tagState.notVisible ? 'scale-0' : 'mx-2 my-auto')}
+            <button className={'transition-all duration-500 hover:bg-gray-700 bg-gray-600 text-white rounded-md flex flex-row text-sm ' + (tag.state === TagsState.notVisible ? 'scale-0' : 'mx-2 my-auto')}
                 key={tag.tag}
                 onClick={() => projectsObject.onTagPressed(tag.index)}>
-                {tag.state === tagState.selected && <FiX className='my-auto' />}
-                {tag.state !== tagState.notVisible && <p className='m-1 whitespace-nowrap'>
+                {tag.state === TagsState.selected && <FiX className='my-auto' />}
+                {tag.state !== TagsState.notVisible && <p className='m-1 whitespace-nowrap'>
                     {tag.tag}
                 </p>}
             </button>
@@ -67,7 +68,7 @@ const willExit = (props) => WithWillExit(Portfolio, props)
 
 export default willExit;
 
-export async function getStaticProps(context) {
+export async function getStaticProps() {
 
     const res = await fetch(`${server}/api/projects`)
     const data = await res.json()

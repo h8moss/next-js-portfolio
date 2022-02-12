@@ -1,23 +1,18 @@
 import { useState } from "react";
 
 import { getUniqueTags, projectsWithTags } from "../services/projectOperations";
-
-const tagState = {
-    selected: 'selected',
-    unselected: 'unselected',
-    notVisible: 'not_visible',
-}
+import { TagsState } from "../types";
 
 const sortTags = (tags) => {
     let result = [];
     for (let tag of tags) {
-        if (tag.state === tagState.selected) {
+        if (tag.state === TagsState.selected) {
             result.push(tag);
         }
     }
 
     for (let tag of tags) {
-        if (tag.state !== tagState.selected) {
+        if (tag.state !== TagsState.selected) {
             result.push(tag);
         }
     }
@@ -25,9 +20,7 @@ const sortTags = (tags) => {
     return result;
 }
 
-export { tagState };
-
-export function useFilteredProjects(projects) {
+export default function useFilteredProjects(projects) {
 
     let [selectedProjectIndex, setSelectedProjectIndex] = useState(null);
     let selectedProject = selectedProjectIndex !== null
@@ -47,10 +40,10 @@ export function useFilteredProjects(projects) {
     let tags = allTags.map((tag, index) => ({
         tag: tag,
         state: selectedTags.includes(index)
-            ? tagState.selected
+            ? TagsState.selected
             : (visibleTags.includes(tag)
-                ? tagState.unselected
-                : tagState.notVisible),
+                ? TagsState.unselected
+                : TagsState.notVisible),
         index: index,
     }));
     tags = sortTags(tags);
