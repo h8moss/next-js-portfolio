@@ -24,7 +24,7 @@ function Blogs({ posts }) {
             ? dateFromSeconds(post.created.seconds)
             : null;
 
-        let tagComponents = post.tags.map(tag => <Tag text={tag} key='tag' />);
+        let tagComponents = post.tags.map(tag => <Tag text={tag} key={tag} />);
 
         return (
             <ProjectTile
