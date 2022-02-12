@@ -30,9 +30,9 @@ function Blogs({ posts }) {
             <ProjectTile
                 key={post.id}
                 dateCreated={dateCreated}
-                id={post.id}
                 tags={tagComponents}
                 title={post.title}
+                onClick={() => setNextRoute(`blog/${post.id}`)}
             />
         );
     });

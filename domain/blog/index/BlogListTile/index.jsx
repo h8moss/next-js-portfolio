@@ -1,6 +1,6 @@
 import { getAgoString } from "../../../../services/dateOperations";
 
-const BlogListTile = ({ id, dateCreated, title, tags }) => {
+const BlogListTile = ({ dateCreated, title, tags, onClick }) => {
 
     const agoString = dateCreated !== null
         ? getAgoString(dateCreated)
@@ -8,11 +8,11 @@ const BlogListTile = ({ id, dateCreated, title, tags }) => {
 
     // TODO: get a better font for the title
     return (
-        <a
+        <button
             className="bg-white text-black flex flex-col 
                 mx-auto rounded-md shadow-2xl drop-shadow-lg 
                 p-3 w-full my-2 hover:scale-x-[1.02] transition-all group"
-            href={`/blog/${id}`}
+            onClick={onClick}
         >
             {dateCreated &&
                 <p className="text-sm text-gray-600">
@@ -28,7 +28,7 @@ const BlogListTile = ({ id, dateCreated, title, tags }) => {
             <div className="flex flex-row">
                 {tags}
             </div>
-        </a>
+        </button>
     );
 }
 
