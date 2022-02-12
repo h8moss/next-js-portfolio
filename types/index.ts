@@ -10,3 +10,9 @@ export type AppUser = {
   mail: String;
   isAdmin: boolean;
 };
+
+export enum SignInState {
+  signingIn,
+  signedOut,
+  signedIn,
+}

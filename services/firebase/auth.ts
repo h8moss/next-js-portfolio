@@ -9,6 +9,7 @@ import {
 import { doc, getDoc } from "firebase/firestore";
 
 import { AppUser } from "../../types";
+import { SignInState } from "../../types";
 import { app } from "./firebase";
 import { db } from "./firestore";
 
@@ -33,12 +34,6 @@ const appUserFromUser = async (user: User): Promise<AppUser> => {
   };
 };
 
-enum SignInState {
-  SignedOut,
-  SignedIn,
-  SigningIn,
-}
-
 class AuthService {
   googleAuth: GoogleAuthProvider;
   user: AppUser;
@@ -51,7 +46,7 @@ class AuthService {
     this.user = null;
     this.auth = getAuth(app);
     this.userListeners = [];
-    this.signInState = SignInState.SignedOut;
+    this.signInState = SignInState.signedOut;
 
     onAuthStateChanged(this.auth, async (user) => {
       this.user = user === null ? null : await appUserFromUser(user);
@@ -89,18 +84,18 @@ class AuthService {
 
   async signOut() {
     await this.auth.signOut();
-    this.signInState = SignInState.SignedOut;
+    this.signInState = SignInState.signedOut;
   }
 
   async signInWithGoogle() {
-    this.signInState = SignInState.SigningIn;
+    this.signInState = SignInState.signingIn;
     try {
       await signInWithPopup(this.auth, this.googleAuth);
     } catch (e) {
-      this.signInState = SignInState.SignedOut;
+      this.signInState = SignInState.signedOut;
       throw e;
     }
-    this.signInState = SignInState.SignedIn;
+    this.signInState = SignInState.signedIn;
   }
 }
 
