@@ -34,7 +34,11 @@ function Login({ willExit }) {
 
     return (
         <ScreenDiv>
-            <div className="bg-white mx-auto rounded-lg shadow-xl text-gray-800 text-center w-1/2 h-full flex flex-col">
+            <div
+                className="bg-white mx-auto rounded-lg shadow-xl 
+                    text-gray-800 text-center 
+                    w-1/2 h-full flex flex-col"
+            >
                 <Formik
 
                     initialValues={{

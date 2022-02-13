@@ -6,7 +6,6 @@ import NavBar from '../components/NavBar';
 import ScreenDiv from '../components/ScreenDiv'
 import ButtonLink from '../domain/index/ButtonLink';
 import TextWriter from '../domain/index/TextWriter';
-import useLoading from '../hooks/useLoading';
 import styles from '../styles/Home.module.css';
 
 function Home() {
@@ -17,7 +16,6 @@ function Home() {
 
   let willExit = nextRoute !== router.pathname;
 
-  const loaded = useLoading(50);
 
   const motionVariants = {
     beforeActive: {
@@ -50,7 +48,7 @@ function Home() {
           exit='afterActive'
         >
           <ScreenDiv className='flex flex-col text-center'>
-            <h1 className={'text-5xl mt-32 flex-1 transition-all delay-200 duration-500 ' + (loaded ? '' : ' text-transparent ') + styles.fontQuicksand}>My name is Daniel Armenta</h1>
+            <h1 className={'text-5xl mt-32 flex-1 transition-all delay-200 duration-500 ' + styles.fontQuicksand}>My name is Daniel Armenta</h1>
             <div className={styles.fontOutfit + ' flex-1 flex-grow'}>
               <TextWriter delay={40} onDone={() => setShowSocials(true)}>
                 I am a software developer with skills in
