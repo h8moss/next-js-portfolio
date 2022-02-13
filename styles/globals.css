@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.fontOutfit {
+  font-family: "Outfit", sans-serif;
+}
+
+.fontQuicksand {
+  font-family: "Quicksand", sans-serif;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 6px;
