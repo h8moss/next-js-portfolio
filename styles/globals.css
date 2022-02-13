@@ -2,16 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300&family=Quicksand&display=swap");
-
-.fontOutfit {
-  font-family: "Outfit", sans-serif;
-}
-
-.fontQuicksand {
-  font-family: "Quicksand", sans-serif;
-}
-
 /* width */
 ::-webkit-scrollbar {
   width: 6px;
