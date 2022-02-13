@@ -20,7 +20,7 @@ const searchBlogs = async () => {
   });
 };
 
-const getBlog = async (id: String) => {
+const getBlog = async (id: string) => {
   let document = await getDoc(doc(db, `blog-posts/${id}`));
   if (!document.exists()) throw "Document not found!";
   return { ...document.data(), id: document.id };
@@ -40,7 +40,7 @@ export default async function handle(
     if (!req.query.id) {
       data = await searchBlogs();
     } else {
-      data = await getBlog(req.query.id as String);
+      data = await getBlog(req.query.id as string);
     }
   } catch {
     res.status(400).send("Error understanding request");

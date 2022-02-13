@@ -38,7 +38,7 @@ class AuthService {
   googleAuth: GoogleAuthProvider;
   user: AppUser;
   auth: Auth;
-  userListeners: { callback: () => any; key: String }[];
+  userListeners: { callback: () => any; key: string }[];
   signInState: SignInState;
 
   constructor() {

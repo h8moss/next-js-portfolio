@@ -1,13 +1,13 @@
 export type Project = {
-  title: String;
-  description: String;
-  tags: String[];
+  title: string;
+  description: string;
+  tags: string[];
 };
 
 export type AppUser = {
-  photoURL: String;
-  displayName: String;
-  mail: String;
+  photoURL: string;
+  displayName: string;
+  mail: string;
   isAdmin: boolean;
 };
 

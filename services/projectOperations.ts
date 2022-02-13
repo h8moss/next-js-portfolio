@@ -3,9 +3,9 @@ import { Project } from "../types";
 const unique = <T>(arr: T[]): T[] =>
   arr.filter((val, index, array) => array.indexOf(val) === index);
 
-export function getUniqueTags(projects: Project[]): String[] {
+export function getUniqueTags(projects: Project[]): string[] {
   return unique(
-    projects.reduce<String[]>(
+    projects.reduce<string[]>(
       (previous, current) => [...previous, ...current.tags],
       []
     )
@@ -14,7 +14,7 @@ export function getUniqueTags(projects: Project[]): String[] {
 
 export function projectsWithTags(
   projects: Project[],
-  tags: String[]
+  tags: string[]
 ): Project[] {
   let result: Project[] = [];
   for (let project of projects) {
