@@ -54,17 +54,21 @@ const Contact = () => {
                 onDismiss={() => setShowErrorToast(false)}
             />
             <ScreenDiv className="p-16 px-60">
-                <div className="w-full h-full">
-
+                <AnimatePresence
+                    onExitComplete={() => router.push(nextRoute)}
+                >
                     {shouldShow &&
-                        <Title>
-                            Have some something you want to talk about?
-                        </Title>}
-                    <ContactForm
-                        submit={mySend}
-                        show={shouldShow}
-                    />
-                </div>
+                        <div className="w-full h-full">
+                            <Title>
+                                Have some something you want to talk about?
+                            </Title>
+                            <ContactForm
+                                submit={mySend}
+                                show
+                            />
+                        </div>
+                    }
+                </AnimatePresence>
             </ScreenDiv>
         </>
     );

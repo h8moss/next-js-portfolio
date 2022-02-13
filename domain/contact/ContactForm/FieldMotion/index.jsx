@@ -8,6 +8,8 @@ const FieldMotion = ({ children, className, ...props }) => {
             animate={{ width: '100%' }}
             exit={{ width: '0px' }}
             transition={{
+                stiffness: 30,
+                damping: 10,
                 duration: 0.7,
                 type: 'spring'
             }}
