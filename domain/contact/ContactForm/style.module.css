@@ -1,0 +1,15 @@
+.field {
+  @apply bg-zinc-700 rounded-xl w-full;
+  box-shadow: 3px 3px 3px 4px rgba(0, 0, 0, 0.3) inset;
+  overflow: clip;
+}
+
+.fieldTransition {
+  transition-property: width, padding;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 500ms;
+}
+
+.form {
+  @apply flex flex-col w-full h-full mb-24;
+}
