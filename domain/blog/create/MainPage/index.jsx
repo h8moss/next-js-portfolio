@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 import { useState } from "react";
 
 import BlogViewer from "../../../../components/BlogViewer";
+import Card from "../../../../components/Card";
 import { db } from "../../../../services/firebase/firestore";
-import Card from "./Card";
 import ElevatedButton from "./ElevatedButton";
 
 
