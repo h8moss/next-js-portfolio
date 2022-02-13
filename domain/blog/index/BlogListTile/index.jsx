@@ -1,4 +1,7 @@
+import { motion } from "framer-motion";
+
 import { getAgoString } from "../../../../services/dateOperations";
+import fonts from '../../../../styles/fonts.module.css';
 
 const BlogListTile = ({ dateCreated, title, tags, onClick }) => {
 
@@ -6,7 +9,27 @@ const BlogListTile = ({ dateCreated, title, tags, onClick }) => {
         ? getAgoString(dateCreated)
         : null;
 
-    // TODO: get a better font for the title
+    return (
+        <motion.button
+            className="flex flex-col mx-auto rounded-md shadow-2xl p-3 w-full my-2 bg-white group"
+            initial={{ opacity: 0, scaleX: 0.5 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            whileHover={{ scale: 1.02 }}
+        >
+            {dateCreated &&
+                <p className="text-sm text-gray-400">
+                    {`${dateCreated.toLocaleDateString()} (${agoString})`}
+                </p>
+            }
+            <h2 className="text-3xl transition-colors whitespace-nowrap group-hover:text-purple-400">
+                {title}
+            </h2>
+            <div className="flex flex-row">
+                {tags}
+            </div>
+        </motion.button>
+    )
+
     return (
         <button
             className="bg-white text-black flex flex-col 
@@ -20,8 +43,8 @@ const BlogListTile = ({ dateCreated, title, tags, onClick }) => {
                 </p>
             }
             <h2
-                className="text-3xl transition-all 
-                    group-hover:text-purple-400 whitespace-nowrap"
+                className={`${fonts.outfit} text-3xl transition-all 
+                group-hover:text-purple-400 whitespace-nowrap`}
             >
                 {title}
             </h2>
