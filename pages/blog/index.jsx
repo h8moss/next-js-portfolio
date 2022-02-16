@@ -1,3 +1,4 @@
+import { AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -43,12 +44,13 @@ function Blogs({ posts }) {
                 onClick={(route) => setNextRoute(route)}
             />
             <ScreenDiv>
-                <Card
-                    onExit={() => router.push(nextRoute)}
-                    show={shouldStay}
-                >
-                    {postComponents}
-                </Card>
+                <AnimatePresence
+                    onExitComplete={() => router.push(nextRoute)}>
+                    {shouldStay &&
+                        <Card>
+                            {postComponents}
+                        </Card>}
+                </AnimatePresence>
             </ScreenDiv>
         </>
     )
