@@ -1,6 +1,0 @@
-.tagsList {
-  @apply my-3 
-        flex flex-row rounded-3xl 
-        overflow-x-hidden overflow-y-clip 
-        transition-all bg-gray-300 shadow-xl h-10 scroll-smooth;
-}

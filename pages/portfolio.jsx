@@ -1,72 +1,121 @@
+import { AnimatePresence, motion } from 'framer-motion';
+import { useRouter } from 'next/router';
+import { useReducer, useState } from 'react';
 import { FiX } from 'react-icons/fi';
 
-import ScreenDiv from '../components/ScreenDiv';
+import NavBar from "../components/NavBar";
+import ScreenDiv from "../components/ScreenDiv";
 import { server } from '../config';
-import ProjectListTile from '../domain/portfolio/ProjectListTile';
-import TagsList from '../domain/portfolio/TagsList';
-import useFilteredProjects from '../hooks/useFilteredProjects';
-import useLoading from '../hooks/useLoading';
-import style from '../styles/Portfolio.module.css'
-import { TagsState } from '../types';
+import reducer from '../domain/portfolio/reducer';
+import { EventType, State } from '../domain/portfolio/reducer/types';
 
-function Portfolio({ projects, willExit }) {
+const initialState = {
+    allTags: [],
+    selectedTags: [],
+}
 
-    let loaded = useLoading(100);
+const Portfolio = ({ projects }) => {
 
-    let projectsObject = useFilteredProjects(projects);
+    const [state, dispatch] = useReducer(reducer, new State({ projects: projects }))
 
-    let selectedProject = willExit ? null : projectsObject.selectedProject;
-    const showProjectView = selectedProject !== null;
+    const router = useRouter();
 
-    const projectComponents = projectsObject.projects.map((v, i) =>
+    const [nextRoute, setNextRoute] = useState(router.pathname);
 
-    (<ProjectListTile
-        key={v.project.title}
-        project={v.project}
-        isSelected={v.isSelected}
-        isVisible={v.visible}
-        onClick={() => projectsObject.onProjectPressed(i)}
-    />)
-    );
-    const tagsComponents = projectsObject.tags.map((tag) => {
-        return (
-            <button className={'transition-all duration-500 hover:bg-gray-700 bg-gray-600 text-white rounded-md flex flex-row text-sm ' + (tag.state === TagsState.notVisible ? 'scale-0' : 'mx-2 my-auto')}
-                key={tag.tag}
-                onClick={() => projectsObject.onTagPressed(tag.index)}>
-                {tag.state === TagsState.selected && <FiX className='my-auto' />}
-                {tag.state !== TagsState.notVisible && <p className='m-1 whitespace-nowrap'>
-                    {tag.tag}
-                </p>}
-            </button>
-        );
-    })
+    const shouldStay = router.pathname === nextRoute;
 
     return (
-        <ScreenDiv className='flex'>
-            <div className={`flex-col transition-all flex mx-3 ${showProjectView ? 'flex-grow flex-1' : 'w-0'}`}>
-                <h2 className='text-2xl text-center my-2 min-h-[32px]'>{selectedProject?.title}</h2>
-                <div className={style.projectDescription}>
-                    <div className={showProjectView ? style.active : style.inactive}>
-                        <p>{selectedProject?.description}</p>
-                    </div>
-                </div>
-            </div>
-            <div className='flex flex-col flex-1 flex-grow overflow-clip'>
-                <TagsList show={!(willExit || !loaded)}>
-                    {tagsComponents}
-                </TagsList>
-                <div className={"flex flex-col rounded-3xl transition-all bg-gray-300 shadow-xl duration-300 delay-300 text-gray-800 overflow-clip" + ((!loaded || willExit) ? ' h-0 ' : ' h-full flex-grow flex-1')}
-                >
-                    {projectComponents}
-                </div>
-            </div>
-        </ScreenDiv>
+        <>
+            <NavBar />
+            <ScreenDiv className='flex flex-row'>
+                {shouldStay &&
+                    <>
+                        <AnimatePresence>
+                            {state.showSelectedProject &&
+                                <motion.div
+                                    key={state.selectedProject.title}
+                                    className='flex-1 overflow-clip bg-yellow-700 whitespace-nowrap'
+                                    initial={{ flex: '0 0 0%' }}
+                                    animate={{ flex: '1 1 0%' }}
+                                    exit={{ flex: '0 0 0%' }}
+                                >
+                                    {state.selectedProject.title}
+                                </motion.div>
+                            }
+                        </AnimatePresence>
+                        <div className='flex flex-col flex-1 overflow-clip'>
+                            <div className='flex overflow-auto w-full'>
+                                {state.sortedTags.map((tag) => {
+                                    let index = state.tags.indexOf(tag);
+
+                                    let isVisible = state.visibleTags.includes(index);
+                                    let isSelected = state.selectedTags.includes(index);
+
+                                    return (
+
+                                        <AnimatePresence key={tag}>
+                                            {isVisible &&
+                                                <div className='w-fit mx-1 my-2'>
+                                                    <motion.button
+                                                        layoutId={tag}
+                                                        onClick={() => dispatch({ type: EventType.tagClicked, payload: index })}
+                                                        whileHover={{
+                                                            color: isSelected ? '#f00' : '#c8f',
+                                                            backgroundColor: isSelected ? '#faa' : '#222',
+                                                            scale: 1.1,
+                                                        }}
+                                                        initial={{
+                                                            width: '0%',
+                                                        }}
+                                                        exit={{ opacity: 0 }}
+                                                        animate={{ opacity: 1, width: '100%', backgroundColor: '#555' }}
+                                                        className='rounded-lg p-2 text-sm flex-row flex whitespace-nowrap overflow-clip'
+                                                    >
+                                                        {isSelected && <FiX className='my-auto' />}
+                                                        {tag}
+                                                    </motion.button>
+                                                </div>}
+                                        </AnimatePresence>
+                                    );
+                                })}
+                            </div>
+                            <div className='bg-white flex-grow w-full flex flex-col'>
+                                {state.projects.map((project, i) => {
+
+                                    let isVisible = state.visibleProjects.includes(i)
+
+                                    return (
+                                        <AnimatePresence key={project.title}>
+                                            {isVisible &&
+                                                <motion.button
+                                                    layoutId={project.title}
+
+                                                    initial={{ opacity: 0 }}
+                                                    animate={{ opacity: 1, scaleY: 1 }}
+                                                    exit={{ scaleY: 0 }}
+
+                                                    className='text-black py-5 border-b-2 border-gray-400'
+                                                    onClick={() =>
+                                                        dispatch({
+                                                            type: EventType.projectClicked, payload: i
+                                                        })}
+                                                >
+                                                    {project.title}
+                                                </motion.button>
+                                            }
+                                        </AnimatePresence>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    </>
+                }
+            </ScreenDiv>
+        </>
     );
 }
 
-const willExit = (props) => WithWillExit(Portfolio, props)
-
-export default willExit;
+export default Portfolio;
 
 export async function getStaticProps() {
 
