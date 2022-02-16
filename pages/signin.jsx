@@ -8,7 +8,7 @@ import useUser from "../hooks/useUser";
 import getAuthService from "../services/firebase/auth";
 import style from '../styles/Login.module.css';
 
-function Login({ willExit }) {
+function Login() {
     const user = useUser();
 
     let [isRegistering, setIsRegistering] = useState(false);
@@ -95,8 +95,4 @@ function Login({ willExit }) {
     );
 }
 
-// export default Login
-
-export default function willExit() {
-    return WithWillExit(Login);
-}
+export default Login;
