@@ -14,7 +14,7 @@ function Home() {
   let [showSocials, setShowSocials] = useState(false);
   let [nextRoute, setNextRoute] = useState(router.pathname)
 
-  let willExit = nextRoute !== router.pathname;
+  let shouldStay = nextRoute === router.pathname;
 
 
   const motionVariants = {
@@ -41,7 +41,7 @@ function Home() {
           router.push(nextRoute);
         }}
       >
-        {!willExit && <motion.div
+        {shouldStay && <motion.div
           variants={motionVariants}
           initial='beforeActive'
           animate='active'
@@ -100,5 +100,4 @@ function Home() {
   )
 }
 
-// const willExit = () => WithWillExit(Home);
 export default Home;

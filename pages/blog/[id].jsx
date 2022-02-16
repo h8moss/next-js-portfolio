@@ -13,7 +13,7 @@ function Blog({ post: { title, text } }) {
     const [nextRoute, setNextRoute] = useState(router.pathname);
 
 
-    const willExit = nextRoute !== router.pathname;
+    const shouldStay = nextRoute === router.pathname;
 
     return (
         <>
@@ -22,7 +22,7 @@ function Blog({ post: { title, text } }) {
                 <AnimatePresence
                     onExitComplete={() => router.push(nextRoute)}
                 >
-                    {!willExit &&
+                    {shouldStay &&
                         <motion.div className="w-1/2 m-auto"
                             initial={{
                                 x: '100vw',
