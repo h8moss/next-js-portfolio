@@ -5,11 +5,13 @@ import { useReducer, useState } from 'react';
 import NavBar from "../components/NavBar";
 import ScreenDiv from "../components/ScreenDiv";
 import { server } from '../config';
+import ProjectListTile from '../domain/portfolio/ProjectListTile';
 import ProjectView from '../domain/portfolio/ProjectView';
 import reducer from '../domain/portfolio/reducer';
 import EventType from '../domain/portfolio/reducer/eventType';
 import State from '../domain/portfolio/reducer/state';
-import TagButton from '../domain/portfolio/TagButton';
+import TagList from '../domain/portfolio/TagList';
+import TagButton from '../domain/portfolio/TagList/TagButton';
 
 const initialState = {
     allTags: [],
@@ -41,26 +43,13 @@ const Portfolio = ({ projects }) => {
                                 }
                             </AnimatePresence>
                             <div className='flex flex-col flex-1 overflow-clip'>
-                                <div className='flex overflow-auto w-full'>
-                                    {state.sortedTags.map((tag) => {
-                                        let index = state.tags.indexOf(tag);
-
-                                        let isVisible = state.visibleTags.includes(index);
-                                        let isSelected = state.selectedTags.includes(index);
-
-                                        return (
-                                            <AnimatePresence key={tag}>
-                                                {isVisible &&
-                                                    <TagButton
-                                                        onClick={() => dispatch({ type: EventType.tagClicked, payload: index })}
-                                                        isSelected={isSelected}
-                                                        tag={tag}
-                                                    />
-                                                }
-                                            </AnimatePresence>
-                                        );
-                                    })}
-                                </div>
+                                <TagList
+                                    getIndex={(tag) => state.tags.indexOf(tag)}
+                                    getSelected={(index) => state.selectedTags.includes(index)}
+                                    getVisibility={(index) => state.visibleTags.includes(index)}
+                                    onClick={(index) => dispatch({ type: EventType.tagClicked, payload: index })}
+                                    tags={state.sortedTags}
+                                />
                                 <div className='bg-white flex-grow w-full flex flex-col'>
                                     {state.projects.map((project, i) => {
 
@@ -69,22 +58,14 @@ const Portfolio = ({ projects }) => {
                                         return (
                                             <AnimatePresence key={project.title}>
                                                 {isVisible &&
-                                                    <motion.button
-                                                        layoutId={project.title}
-
-                                                        initial={{ opacity: 0, backgroundColor: '#fff', fontSize: '1rem' }}
-                                                        animate={{ opacity: 1, scaleY: 1, backgroundColor: '#fff', fontSize: '1rem' }}
-                                                        exit={{ scaleY: 0 }}
-                                                        whileHover={{ backgroundColor: '#ddd', fontSize: '1.2rem' }}
-
-                                                        className='text-black py-5 border-b-2 border-gray-400'
+                                                    <ProjectListTile
+                                                        project={project}
                                                         onClick={() =>
                                                             dispatch({
-                                                                type: EventType.projectClicked, payload: i
+                                                                type: EventType.projectClicked,
+                                                                payload: i
                                                             })}
-                                                    >
-                                                        {project.title}
-                                                    </motion.button>
+                                                    />
                                                 }
                                             </AnimatePresence>
                                         );
