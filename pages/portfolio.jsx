@@ -1,13 +1,15 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useReducer, useState } from 'react';
-import { FiX } from 'react-icons/fi';
 
 import NavBar from "../components/NavBar";
 import ScreenDiv from "../components/ScreenDiv";
 import { server } from '../config';
+import ProjectView from '../domain/portfolio/ProjectView';
 import reducer from '../domain/portfolio/reducer';
-import { EventType, State } from '../domain/portfolio/reducer/types';
+import EventType from '../domain/portfolio/reducer/eventType';
+import State from '../domain/portfolio/reducer/state';
+import TagButton from '../domain/portfolio/TagButton';
 
 const initialState = {
     allTags: [],
@@ -33,26 +35,9 @@ const Portfolio = ({ projects }) => {
                         <>
                             <AnimatePresence>
                                 {state.showSelectedProject &&
-                                    <motion.div
-                                        className='overflow-clip whitespace-nowrap'
-                                        initial={{ width: '0' }}
-                                        animate={{ width: '50%' }}
-                                        exit={{ width: '0' }}
-                                    >
-                                        <AnimatePresence
-                                            exitBeforeEnter
-                                        >
-                                            <motion.div
-                                                key={state.selectedProject.title}
-                                                initial={{ opacity: 0 }}
-                                                animate={{ opacity: 1 }}
-                                                exit={{ opacity: 0 }}
-                                            >
-
-                                                {state.selectedProject.title}
-                                            </motion.div>
-                                        </AnimatePresence>
-                                    </motion.div>
+                                    <ProjectView
+                                        project={state.selectedProject}
+                                    />
                                 }
                             </AnimatePresence>
                             <div className='flex flex-col flex-1 overflow-clip'>
@@ -64,29 +49,14 @@ const Portfolio = ({ projects }) => {
                                         let isSelected = state.selectedTags.includes(index);
 
                                         return (
-
                                             <AnimatePresence key={tag}>
                                                 {isVisible &&
-                                                    <div className='w-fit mx-1 my-2'>
-                                                        <motion.button
-                                                            layoutId={tag}
-                                                            onClick={() => dispatch({ type: EventType.tagClicked, payload: index })}
-                                                            whileHover={{
-                                                                color: isSelected ? '#f00' : '#c8f',
-                                                                backgroundColor: '#222',
-                                                                scale: 1.1,
-                                                            }}
-                                                            initial={{
-                                                                width: '0%',
-                                                            }}
-                                                            exit={{ opacity: 0 }}
-                                                            animate={{ opacity: 1, width: '100%', backgroundColor: '#555' }}
-                                                            className='rounded-lg p-2 text-sm flex-row flex whitespace-nowrap overflow-clip'
-                                                        >
-                                                            {isSelected && <FiX className='my-auto' />}
-                                                            {tag}
-                                                        </motion.button>
-                                                    </div>}
+                                                    <TagButton
+                                                        onClick={() => dispatch({ type: EventType.tagClicked, payload: index })}
+                                                        isSelected={isSelected}
+                                                        tag={tag}
+                                                    />
+                                                }
                                             </AnimatePresence>
                                         );
                                     })}
