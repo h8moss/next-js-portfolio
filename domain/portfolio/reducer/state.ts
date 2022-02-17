@@ -1,8 +1,7 @@
-import { throws } from "assert";
 import { getUniqueTags } from "../../../services/projectOperations";
 import { Project } from "../../../types";
 
-export class State {
+export default class State {
   constructor({ projects }: { projects: Project[] }) {
     const allTags = getUniqueTags(projects);
 
@@ -65,13 +64,4 @@ export class State {
 
     return [...selected, ...unselected, ...invisible];
   }
-}
-
-const a = () => {
-  let x = new State({ projects: [] });
-};
-
-export enum EventType {
-  projectClicked,
-  tagClicked,
 }

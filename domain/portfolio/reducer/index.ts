@@ -2,7 +2,8 @@ import {
   getUniqueTags,
   projectsWithTags,
 } from "../../../services/projectOperations";
-import { EventType, State } from "./types";
+import EventType from "./eventType";
+import State from "./state";
 
 const reducer = (state: State, event: { type: EventType; payload: any }) => {
   const projectClicked = (index: number) => {
