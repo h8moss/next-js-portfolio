@@ -2,11 +2,12 @@ import Image from 'next/image';
 import { useRouter } from "next/router";
 import { useState } from "react";
 
+import useAuth from '../../../hooks/useAuth';
 import useUser from "../../../hooks/useUser";
-import getAuthService from "../../../services/firebase/auth";
 
 export default function UserButton() {
 
+    const auth = useAuth();
     let user = useUser();
     let router = useRouter();
     let [showPopup, setShowPopup] = useState(false);
@@ -14,7 +15,7 @@ export default function UserButton() {
     const togglePopup = () => setShowPopup(!showPopup);
     const logOut = async () => {
 
-        await getAuthService().signOut();
+        await auth.signOut();
 
         router.reload();
     }
