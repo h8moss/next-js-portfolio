@@ -1,14 +1,22 @@
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 import TagButton from "./TagButton";
 
 const TagList = ({ tags, onClick, getIndex, getVisibility, getSelected }) => {
     return (
-        <div className='flex overflow-auto w-full'>
+        <motion.div
+            className='flex overflow-auto bg-white rounded-xl my-2'
+            initial={{ width: '0%', opacity: 0 }}
+            exit={{ width: '0%', opacity: 0.1 }}
+            animate={{ width: '100%', opacity: 1 }}
+            transition={{
+                damping: 100,
+            }}
+        >
             {tags.map((tag) => {
                 let index = getIndex(tag);
 
-                let isVisible = getVisibility
+                let isVisible = getVisibility(index)
                 let isSelected = getSelected(index)
 
                 return (
@@ -23,7 +31,7 @@ const TagList = ({ tags, onClick, getIndex, getVisibility, getSelected }) => {
                     </AnimatePresence>
                 );
             })}
-        </div>
+        </motion.div>
     );
 }
 
