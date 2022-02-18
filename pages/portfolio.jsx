@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
-import { useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 
 import NavBar from "../components/NavBar";
 import ScreenDiv from "../components/ScreenDiv";
@@ -11,7 +11,6 @@ import reducer from '../domain/portfolio/reducer';
 import EventType from '../domain/portfolio/reducer/eventType';
 import State from '../domain/portfolio/reducer/state';
 import TagList from '../domain/portfolio/TagList';
-import TagButton from '../domain/portfolio/TagList/TagButton';
 
 const initialState = {
     allTags: [],
@@ -28,20 +27,39 @@ const Portfolio = ({ projects }) => {
 
     const shouldStay = router.pathname === nextRoute;
 
+    const [canExit, setCanExit] = useState([null, false]);
+
+    useEffect(() => {
+        setCanExit((canExit) => [!state.showSelectedProject, canExit[1]])
+    }, [state.showSelectedProject])
+
+    useEffect(() => {
+
+        console.log({ canExit })
+
+        if (canExit[0] && canExit[1]) {
+            router.push(nextRoute);
+        }
+    }, [canExit, nextRoute, router])
+
     return (
         <>
             <NavBar onClick={(route) => setNextRoute(route)} />
             <ScreenDiv className='flex flex-row'>
-                <AnimatePresence>
+                <AnimatePresence
+                    onExitComplete={() => setCanExit((state) => [true, state[1]])}
+                >
+                    {state.showSelectedProject && shouldStay &&
+                        <ProjectView
+                            project={state.selectedProject}
+                        />
+                    }
+                </AnimatePresence>
+                <AnimatePresence
+                    onExitComplete={() => setCanExit((state) => [state[0], true])}
+                >
                     {shouldStay &&
                         <>
-                            <AnimatePresence>
-                                {state.showSelectedProject &&
-                                    <ProjectView
-                                        project={state.selectedProject}
-                                    />
-                                }
-                            </AnimatePresence>
                             <div className='flex flex-col flex-1 overflow-clip'>
                                 <TagList
                                     getIndex={(tag) => state.tags.indexOf(tag)}
@@ -50,7 +68,19 @@ const Portfolio = ({ projects }) => {
                                     onClick={(index) => dispatch({ type: EventType.tagClicked, payload: index })}
                                     tags={state.sortedTags}
                                 />
-                                <div className='bg-white flex-grow w-full flex flex-col'>
+                                <motion.div
+                                    className='bg-white flex-grow w-full flex flex-col rounded-md shadow-2xl overflow-auto'
+                                    initial={{
+                                        x: '-100vw',
+                                    }}
+                                    exit={{
+                                        x: '-100vw',
+                                    }}
+                                    animate={{
+                                        x: '0'
+                                    }}
+
+                                >
                                     {state.projects.map((project, i) => {
 
                                         let isVisible = state.visibleProjects.includes(i)
@@ -70,7 +100,7 @@ const Portfolio = ({ projects }) => {
                                             </AnimatePresence>
                                         );
                                     })}
-                                </div>
+                                </motion.div>
                             </div>
                         </>
                     }
