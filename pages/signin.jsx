@@ -7,11 +7,13 @@ import { useState } from "react";
 import Card from '../components/Card';
 import NavBar from "../components/NavBar";
 import ScreenDiv from "../components/ScreenDiv";
+import useAuth from "../hooks/useAuth";
 import useUser from "../hooks/useUser";
-import getAuthService from "../services/firebase/auth";
 import style from '../styles/Login.module.css';
 
 function Login() {
+
+    let auth = useAuth();
     const user = useUser();
 
     let [isRegistering, setIsRegistering] = useState(false);
@@ -26,9 +28,8 @@ function Login() {
 
 
     const googleLogin = async () => {
-        let authService = getAuthService();
         try {
-            await authService.signInWithGoogle();
+            await auth.signInWithGoogle();
         } catch {
             return;
         }

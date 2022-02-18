@@ -1,8 +1,14 @@
+import { useContext } from 'react';
+
+import AuthContext from '../../context/auth';
+import useAuth from '../../hooks/useAuth';
 import useUser from '../../hooks/useUser';
 import StyledButton from '../StyledButton';
 import UserButton from './UserButton';
 
 export default function NavBar({ onClick }) {
+    const auth = useContext(AuthContext);
+
     let user = useUser();
 
     return (
@@ -34,7 +40,7 @@ export default function NavBar({ onClick }) {
                 </StyledButton>
                 {user === null
                     ? <StyledButton
-                        color='#ff88ff'
+                        color='#ff0'
                         onClick={() => onClick('/signin')}
                     >
                         Sign in

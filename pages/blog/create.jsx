@@ -20,6 +20,7 @@ const getPage = ({ isAdmin, onExit, shouldStay }) => {
 }
 
 function BlogCreate() {
+
     let user = useUser();
     let router = useRouter();
     const [nextRoute, setNextRoute] = useState(router.pathname);

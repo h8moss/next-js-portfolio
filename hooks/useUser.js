@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useEffect } from "react";
 
-import getAuthService from "../services/firebase/auth";
+import useAuth from "./useAuth";
 
 export default function useUser() {
-    let auth = getAuthService();
+
+    let auth = useAuth();
     let [user, setUser] = useState(auth.user);
 
     useEffect(() => {

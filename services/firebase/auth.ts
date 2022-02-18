@@ -99,12 +99,4 @@ class AuthService {
   }
 }
 
-let authService: AuthService = null;
-
-export default function getAuthService() {
-  if (authService === null) {
-    authService = new AuthService();
-  }
-
-  return authService;
-}
+export default AuthService;
