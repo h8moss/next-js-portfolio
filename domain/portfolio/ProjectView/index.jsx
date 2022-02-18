@@ -21,7 +21,7 @@ const ProjectView = ({ project }) => {
                     <h2 className="text-3xl p-5">
                         {project.title}
                     </h2>
-                    <div className="flex-grow border-4 p-5 m-2 rounded-xl border-purple-400">
+                    <div className="flex-grow border-4 p-5 m-2 rounded-xl border-purple-400 whitespace-normal">
                         <p>
                             {project.description}
                         </p>
