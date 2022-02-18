@@ -5,7 +5,8 @@ import { useEffect, useReducer, useState } from 'react';
 import NavBar from "../components/NavBar";
 import ScreenDiv from "../components/ScreenDiv";
 import { server } from '../config';
-import ProjectListTile from '../domain/portfolio/ProjectListTile';
+import ProjectList from '../domain/portfolio/ProjectList';
+import ProjectListTile from '../domain/portfolio/ProjectList/ProjectListTile';
 import ProjectView from '../domain/portfolio/ProjectView';
 import reducer from '../domain/portfolio/reducer';
 import EventType from '../domain/portfolio/reducer/eventType';
@@ -34,9 +35,6 @@ const Portfolio = ({ projects }) => {
     }, [state.showSelectedProject])
 
     useEffect(() => {
-
-        console.log({ canExit })
-
         if (canExit[0] && canExit[1]) {
             router.push(nextRoute);
         }
@@ -65,42 +63,22 @@ const Portfolio = ({ projects }) => {
                                     getIndex={(tag) => state.tags.indexOf(tag)}
                                     getSelected={(index) => state.selectedTags.includes(index)}
                                     getVisibility={(index) => state.visibleTags.includes(index)}
-                                    onClick={(index) => dispatch({ type: EventType.tagClicked, payload: index })}
+                                    onClick={(index) =>
+                                        dispatch({ type: EventType.tagClicked, payload: index })
+                                    }
                                     tags={state.sortedTags}
                                 />
-                                <motion.div
-                                    className='bg-white flex-grow w-full flex flex-col rounded-md shadow-2xl overflow-auto'
-                                    initial={{
-                                        x: '-100vw',
-                                    }}
-                                    exit={{
-                                        x: '-100vw',
-                                    }}
-                                    animate={{
-                                        x: '0'
-                                    }}
-
-                                >
-                                    {state.projects.map((project, i) => {
-
-                                        let isVisible = state.visibleProjects.includes(i)
-
-                                        return (
-                                            <AnimatePresence key={project.title}>
-                                                {isVisible &&
-                                                    <ProjectListTile
-                                                        project={project}
-                                                        onClick={() =>
-                                                            dispatch({
-                                                                type: EventType.projectClicked,
-                                                                payload: i
-                                                            })}
-                                                    />
-                                                }
-                                            </AnimatePresence>
-                                        );
+                                <ProjectList
+                                    onClick={(index) => dispatch({
+                                        type: EventType.projectClicked,
+                                        payload: index,
                                     })}
-                                </motion.div>
+                                    projects={state.projects}
+                                    isIndexVisible={(index) =>
+                                        state.visibleProjects.includes(index)
+                                    }
+                                />
+
                             </div>
                         </>
                     }
