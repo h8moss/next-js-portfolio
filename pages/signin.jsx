@@ -69,7 +69,7 @@ function Login() {
                                         <label htmlFor="password" >Password</label>
                                         <Field name="password" type='password' />
                                         <ErrorMessage name="password" component={'p'} />
-                                        <div className={'transition-all flex flex-col overflow-clip ' + (isRegistering ? 'h-20' : 'h-0')}>
+                                        <div className={'transition-all flex flex-col overflow-clip ' + (isRegistering ? 'max-h-28' : 'max-h-0')}>
                                             <label htmlFor="password" >Repeat password</label>
                                             <Field name="password2" type='password' />
                                             <ErrorMessage name="password2" component={'p'} />
