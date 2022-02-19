@@ -7,6 +7,8 @@ import { useState } from "react";
 import Card from '../components/Card';
 import NavBar from "../components/NavBar";
 import ScreenDiv from "../components/ScreenDiv";
+import send from '../domain/signin/api/send';
+import validate from '../domain/signin/api/validate';
 import useAuth from "../hooks/useAuth";
 import useUser from "../hooks/useUser";
 import style from '../styles/Login.module.css';
@@ -56,9 +58,11 @@ function Login() {
                                 initialValues={{
                                     mail: '',
                                     password: '',
+                                    password2: '',
+                                    isRegistering: isRegistering,
                                 }}
-                                validate={() => { }}
-                                onSubmit={() => { }}
+                                validate={validate}
+                                onSubmit={(values, formik) => send(values, auth, formik)}
                             >
                                 {() => (
                                     <Form className={style.form}>
@@ -70,10 +74,11 @@ function Login() {
                                         <Field name="password" type='password' />
                                         <ErrorMessage name="password" component={'p'} />
                                         <div className={'transition-all flex flex-col overflow-clip ' + (isRegistering ? 'h-20' : 'h-0')}>
-                                            <label htmlFor="password" >Repeat password</label>
+                                            <label htmlFor="password2" >Repeat password</label>
                                             <Field name="password2" type='password' />
                                             <ErrorMessage name="password2" component={'p'} />
                                         </div>
+                                        <Field name='isRegistering' type='checkbox' value={isRegistering} />
                                         <div className="flex flex-row">
                                             <button className={style.loginButton}>Log in</button>
                                             <button
