@@ -1,8 +1,10 @@
 import {
   Auth,
+  createUserWithEmailAndPassword,
   getAuth,
   GoogleAuthProvider,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithPopup,
   User,
 } from "firebase/auth";
@@ -91,6 +93,28 @@ class AuthService {
     this.signInState = SignInState.signingIn;
     try {
       await signInWithPopup(this.auth, this.googleAuth);
+    } catch (e) {
+      this.signInState = SignInState.signedOut;
+      throw e;
+    }
+    this.signInState = SignInState.signedIn;
+  }
+
+  async signInWithMail(mail: string, password: string) {
+    this.signInState = SignInState.signingIn;
+    try {
+      await signInWithEmailAndPassword(this.auth, mail, password);
+    } catch (e) {
+      this.signInState = SignInState.signedOut;
+      throw e;
+    }
+    this.signInState = SignInState.signedIn;
+  }
+
+  async createAccountWithMail(mail: string, password: string) {
+    this.signInState = SignInState.signingIn;
+    try {
+      await createUserWithEmailAndPassword(this.auth, mail, password);
     } catch (e) {
       this.signInState = SignInState.signedOut;
       throw e;

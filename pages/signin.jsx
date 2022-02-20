@@ -10,6 +10,8 @@ import NavBar from "../components/NavBar";
 import ScreenDiv from "../components/ScreenDiv";
 import SigninButton from "../domain/signin/Button";
 import SigninTitle from "../domain/signin/Title";
+import send from '../domain/signin/api/send';
+import validate from '../domain/signin/api/validate';
 import useAuth from "../hooks/useAuth";
 import useUser from "../hooks/useUser";
 import style from '../styles/Login.module.css';
@@ -59,9 +61,11 @@ function Login() {
                                 initialValues={{
                                     mail: '',
                                     password: '',
+                                    password2: '',
+                                    isRegistering: isRegistering,
                                 }}
-                                validate={() => { }}
-                                onSubmit={() => { }}
+                                validate={validate}
+                                onSubmit={(values, formik) => send(values, auth, formik)}
                             >
                                 {() => (
                                     <Form className={style.form}>
@@ -87,6 +91,7 @@ function Login() {
                                                 </motion.div>
                                             }
                                         </AnimatePresence>
+
                                         <div className="flex flex-row">
                                             <SigninButton className={style.loginButton}>
                                                 {isRegistering
