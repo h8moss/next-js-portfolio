@@ -1,5 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from 'next/image';
 import { useRouter } from 'next/router'
 import { useState } from "react";
@@ -69,11 +70,19 @@ function Login() {
                                         <label htmlFor="password" >Password</label>
                                         <Field name="password" type='password' />
                                         <ErrorMessage name="password" component={'p'} />
-                                        <div className={'transition-all flex flex-col overflow-clip ' + (isRegistering ? 'h-20' : 'h-0')}>
-                                            <label htmlFor="password" >Repeat password</label>
-                                            <Field name="password2" type='password' />
-                                            <ErrorMessage name="password2" component={'p'} />
-                                        </div>
+                                        <AnimatePresence>
+                                            {isRegistering &&
+                                                <motion.div className='flex flex-col overflow-clip'
+                                                    initial={{ height: 0 }}
+                                                    exit={{ height: 0 }}
+                                                    animate={{ height: '100px' }}
+                                                >
+                                                    <label htmlFor="password" >Repeat password</label>
+                                                    <Field name="password2" type='password' />
+                                                    <ErrorMessage name="password2" component={'p'} />
+                                                </motion.div>
+                                            }
+                                        </AnimatePresence>
                                         <div className="flex flex-row">
                                             <button className={style.loginButton}>Log in</button>
                                             <button
