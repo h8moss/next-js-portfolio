@@ -7,7 +7,7 @@ const validateSignIn = (values: SigninBody): Object => {
 
   if (!values.mail) {
     errors.mail = "This field is required";
-  } else if (validateEmail(values.mail)) {
+  } else if (!validateEmail(values.mail)) {
     errors.mail = "Invalid email address";
   }
 
@@ -24,7 +24,7 @@ const validateRegister = (values: SigninBody): Object => {
 
   if (!values.mail) {
     errors.mail = "This field is required";
-  } else if (validateEmail(values.mail)) {
+  } else if (!validateEmail(values.mail)) {
     errors.mail = "Invalid email address";
   }
 
@@ -46,13 +46,8 @@ const validateRegister = (values: SigninBody): Object => {
   return errors;
 };
 
-const validate = (values: SigninBody): Object => {
-  console.log({
-    message: "validation",
-    values: values,
-  });
-
-  if (values.isRegistering) {
+const validate = (values: SigninBody, isRegistering: boolean): Object => {
+  if (isRegistering) {
     return validateRegister(values);
   }
 
