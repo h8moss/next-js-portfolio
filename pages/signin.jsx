@@ -1,5 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from 'next/image';
 import { useRouter } from 'next/router'
 import { useState } from "react";
@@ -7,6 +8,8 @@ import { useState } from "react";
 import Card from '../components/Card';
 import NavBar from "../components/NavBar";
 import ScreenDiv from "../components/ScreenDiv";
+import SigninButton from "../domain/signin/Button";
+import SigninTitle from "../domain/signin/Title";
 import send from '../domain/signin/api/send';
 import validate from '../domain/signin/api/validate';
 import useAuth from "../hooks/useAuth";
@@ -66,21 +69,36 @@ function Login() {
                             >
                                 {() => (
                                     <Form className={style.form}>
-                                        <h1 className="text-4xl">{isRegistering ? 'Register' : 'Log in'}</h1>
+                                        <SigninTitle>
+                                            {isRegistering ? 'Register' : 'Log in'}
+                                        </SigninTitle>
                                         <label htmlFor="mail" >Email</label>
                                         <Field name="mail" type='mail' />
                                         <ErrorMessage name="mail" component={'p'} />
                                         <label htmlFor="password" >Password</label>
                                         <Field name="password" type='password' />
                                         <ErrorMessage name="password" component={'p'} />
-                                        <div className={'transition-all flex flex-col overflow-clip ' + (isRegistering ? 'h-20' : 'h-0')}>
-                                            <label htmlFor="password2" >Repeat password</label>
-                                            <Field name="password2" type='password' />
-                                            <ErrorMessage name="password2" component={'p'} />
-                                        </div>
-                                        <Field name='isRegistering' type='checkbox' value={isRegistering} />
+                                        <AnimatePresence>
+                                            {isRegistering &&
+                                                <motion.div className='flex flex-col overflow-clip'
+                                                    initial={{ height: 0 }}
+                                                    exit={{ height: 0 }}
+                                                    animate={{ height: '100px' }}
+                                                >
+                                                    <label htmlFor="password" >Repeat password</label>
+                                                    <Field name="password2" type='password' />
+                                                    <ErrorMessage name="password2" component={'p'} />
+                                                </motion.div>
+                                            }
+                                        </AnimatePresence>
+
                                         <div className="flex flex-row">
-                                            <button className={style.loginButton}>Log in</button>
+                                            <SigninButton className={style.loginButton}>
+                                                {isRegistering
+                                                    ? 'Sign up'
+                                                    : 'Log in'
+                                                }
+                                            </SigninButton>
                                             <button
                                                 className={style.createAccount}
                                                 onClick={() => setIsRegistering(!isRegistering)}
@@ -94,7 +112,7 @@ function Login() {
                                             </button>
                                         </div>
                                         <p className="text-center text-gray-600 text-sm">or</p>
-                                        <button className={style.loginWithGoogle} onClick={googleLogin}>
+                                        <SigninButton className={style.loginWithGoogle} onClick={googleLogin}>
                                             <div className="my-auto mx-5">
                                                 <Image src='/social_icons/google.png' alt=''
                                                     width={20}
@@ -103,7 +121,7 @@ function Login() {
                                                 />
                                             </div>
                                             Log in with google
-                                        </button>
+                                        </SigninButton>
                                     </Form>
                                 )}
                             </Formik>
