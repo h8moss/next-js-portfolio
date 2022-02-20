@@ -8,6 +8,8 @@ import { useState } from "react";
 import Card from '../components/Card';
 import NavBar from "../components/NavBar";
 import ScreenDiv from "../components/ScreenDiv";
+import SigninButton from "../domain/signin/Button";
+import SigninTitle from "../domain/signin/Title";
 import useAuth from "../hooks/useAuth";
 import useUser from "../hooks/useUser";
 import style from '../styles/Login.module.css';
@@ -63,7 +65,9 @@ function Login() {
                             >
                                 {() => (
                                     <Form className={style.form}>
-                                        <h1 className="text-4xl">{isRegistering ? 'Register' : 'Log in'}</h1>
+                                        <SigninTitle>
+                                            {isRegistering ? 'Register' : 'Log in'}
+                                        </SigninTitle>
                                         <label htmlFor="mail" >Email</label>
                                         <Field name="mail" type='mail' />
                                         <ErrorMessage name="mail" component={'p'} />
@@ -84,7 +88,12 @@ function Login() {
                                             }
                                         </AnimatePresence>
                                         <div className="flex flex-row">
-                                            <button className={style.loginButton}>Log in</button>
+                                            <SigninButton className={style.loginButton}>
+                                                {isRegistering
+                                                    ? 'Sign up'
+                                                    : 'Log in'
+                                                }
+                                            </SigninButton>
                                             <button
                                                 className={style.createAccount}
                                                 onClick={() => setIsRegistering(!isRegistering)}
@@ -98,7 +107,7 @@ function Login() {
                                             </button>
                                         </div>
                                         <p className="text-center text-gray-600 text-sm">or</p>
-                                        <button className={style.loginWithGoogle} onClick={googleLogin}>
+                                        <SigninButton className={style.loginWithGoogle} onClick={googleLogin}>
                                             <div className="my-auto mx-5">
                                                 <Image src='/social_icons/google.png' alt=''
                                                     width={20}
@@ -107,7 +116,7 @@ function Login() {
                                                 />
                                             </div>
                                             Log in with google
-                                        </button>
+                                        </SigninButton>
                                     </Form>
                                 )}
                             </Formik>
