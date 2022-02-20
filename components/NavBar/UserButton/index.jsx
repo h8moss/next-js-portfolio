@@ -20,11 +20,16 @@ export default function UserButton() {
         router.reload();
     }
 
+    const hasImage = user?.photoURL !== null;
+
     return (
         <>
             {user !== null &&
                 <button className="top-0 right-0 mt-3 mr-10 absolute rounded-3xl hover:rounded-md overflow-clip transition-all w-8 h-8" onClick={togglePopup}>
-                    <Image src={user.photoURL} alt='user profile pic' layout="fill" />
+                    {hasImage
+                        ? <Image src={user.photoURL} alt='user profile pic' layout="fill" />
+                        : 'No image'
+                    }
                 </button>}
             {showPopup &&
                 <div className="bg-black bg-opacity-40 w-screen h-screen top-0 left-0 absolute" onClick={togglePopup} >
@@ -36,7 +41,8 @@ export default function UserButton() {
                             <button onClick={() => logOut()}>Log out</button>
                         </div>
                     </div>
-                </div>}
+                </div>
+            }
         </>
     );
 }
