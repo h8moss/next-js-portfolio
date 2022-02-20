@@ -1,17 +1,18 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
-import Image from 'next/image';
 import { useRouter } from 'next/router'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Card from '../components/Card';
 import NavBar from "../components/NavBar";
 import ScreenDiv from "../components/ScreenDiv";
-import SigninButton from "../domain/signin/Button";
-import SigninTitle from "../domain/signin/Title";
+import Toast from "../components/Toast";
 import send from '../domain/signin/api/send';
 import validate from '../domain/signin/api/validate';
+import Password2 from "../domain/signin/Password2";
+import SubmitDiv from "../domain/signin/SubmitDiv";
+import SigninTitle from "../domain/signin/Title";
 import useAuth from "../hooks/useAuth";
 import useUser from "../hooks/useUser";
 import style from '../styles/Login.module.css';
@@ -31,6 +32,14 @@ function Login() {
         router.push({ pathname: nextPage });
     }
 
+    const [showErrorToast, setShowErrorToast] = useState(false);
+
+    useEffect(() => {
+        let time = setTimeout(() => {
+            if (showErrorToast) setShowErrorToast(false);
+        }, 5000);
+        return () => clearTimeout(time)
+    }, [showErrorToast])
 
     const googleLogin = async () => {
         try {
@@ -41,12 +50,16 @@ function Login() {
     }
 
     let [nextRoute, setNextRoute] = useState(router.pathname);
-
     let shouldStay = nextRoute === router.pathname;
-
 
     return (
         <>
+            <Toast
+                className='bg-red-500'
+                message={`Something went wrong, ${isRegistering ? 'please try again later' : 'make sure your username and password are correct'}`}
+                show={showErrorToast && shouldStay}
+                onDismiss={() => setShowErrorToast(false)}
+            />
             <NavBar
                 onClick={(route) => setNextRoute(route)}
             />
@@ -57,71 +70,48 @@ function Login() {
                     {shouldStay &&
                         <Card>
                             <Formik
-
                                 initialValues={{
                                     mail: '',
                                     password: '',
                                     password2: '',
-                                    isRegistering: isRegistering,
                                 }}
-                                validate={validate}
-                                onSubmit={(values, formik) => send(values, auth, formik)}
+                                validate={(values) => validate(values, isRegistering)}
+                                onSubmit={(values, formik) =>
+                                    send(values, auth, isRegistering, formik, () => setShowErrorToast(true))
+                                }
                             >
-                                {() => (
+                                {({ submitForm, isSubmitting, resetForm }) => (
                                     <Form className={style.form}>
                                         <SigninTitle>
                                             {isRegistering ? 'Register' : 'Log in'}
                                         </SigninTitle>
+
                                         <label htmlFor="mail" >Email</label>
                                         <Field name="mail" type='mail' />
-                                        <ErrorMessage name="mail" component={'p'} />
+                                        <ErrorMessage name="mail" component={'p'} className={style.error} />
+
                                         <label htmlFor="password" >Password</label>
                                         <Field name="password" type='password' />
-                                        <ErrorMessage name="password" component={'p'} />
+                                        <ErrorMessage name="password" component={'p'} className={style.error} />
+
                                         <AnimatePresence>
                                             {isRegistering &&
-                                                <motion.div className='flex flex-col overflow-clip'
-                                                    initial={{ height: 0 }}
-                                                    exit={{ height: 0 }}
-                                                    animate={{ height: '100px' }}
-                                                >
-                                                    <label htmlFor="password" >Repeat password</label>
-                                                    <Field name="password2" type='password' />
-                                                    <ErrorMessage name="password2" component={'p'} />
-                                                </motion.div>
-                                            }
+                                                <Password2
+                                                    className={style.error}
+                                                />}
                                         </AnimatePresence>
 
-                                        <div className="flex flex-row">
-                                            <SigninButton className={style.loginButton}>
-                                                {isRegistering
-                                                    ? 'Sign up'
-                                                    : 'Log in'
-                                                }
-                                            </SigninButton>
-                                            <button
-                                                className={style.createAccount}
-                                                onClick={() => setIsRegistering(!isRegistering)}
-                                            >
-                                                {
-                                                    isRegistering
-                                                        ? "Already have an account? Log in"
-                                                        : "Don't have an account? Create one"
-                                                }
-
-                                            </button>
-                                        </div>
-                                        <p className="text-center text-gray-600 text-sm">or</p>
-                                        <SigninButton className={style.loginWithGoogle} onClick={googleLogin}>
-                                            <div className="my-auto mx-5">
-                                                <Image src='/social_icons/google.png' alt=''
-                                                    width={20}
-                                                    height={20}
-                                                    layout='fixed'
-                                                />
-                                            </div>
-                                            Log in with google
-                                        </SigninButton>
+                                        {!isSubmitting &&
+                                            <SubmitDiv
+                                                googleLogin={googleLogin}
+                                                isRegistering={isRegistering}
+                                                submitForm={submitForm}
+                                                toggleIsRegistering={() => {
+                                                    setIsRegistering(!isRegistering)
+                                                    resetForm();
+                                                }}
+                                            />
+                                        }
                                     </Form>
                                 )}
                             </Formik>
