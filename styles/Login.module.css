@@ -6,12 +6,6 @@
   @apply rounded-md p-1 px-2 border-2;
 }
 
-.form .loginWithGoogle,
-.form .loginButton {
-  @apply border-2 rounded-md p-3 px-5 w-fit whitespace-nowrap mx-auto transition-all
-    hover:scale-105 my-3;
-}
-
 .form .loginButton {
   @apply bg-purple-500 border-purple-700 text-white;
 }
@@ -22,4 +16,8 @@
 
 .form .loginWithGoogle {
   @apply flex flex-row;
+}
+
+.form .error p {
+  @apply text-xs text-red-500;
 }
