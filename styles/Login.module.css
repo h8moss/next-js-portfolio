@@ -6,18 +6,6 @@
   @apply rounded-md p-1 px-2 border-2;
 }
 
-.form .loginButton {
-  @apply bg-purple-500 border-purple-700 text-white;
-}
-
-.form .createAccount {
-  @apply text-sm text-purple-400 hover:text-purple-600 my-auto font-bold;
-}
-
-.form .loginWithGoogle {
-  @apply flex flex-row;
-}
-
-.form .error p {
+p.error {
   @apply text-xs text-red-500;
 }

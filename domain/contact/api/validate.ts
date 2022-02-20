@@ -1,7 +1,5 @@
-import { FormikErrors } from "formik";
-
+import validateEmail from "../../../services/validateEmail";
 import { RequestBody } from "../types";
-import validateEmail from "./validateEmail";
 
 const validate = (values: RequestBody): Object => {
   let errors: any = {};
