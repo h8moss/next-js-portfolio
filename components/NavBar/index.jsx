@@ -42,6 +42,7 @@ export default function NavBar({ onClick }) {
                     ? <StyledButton
                         color='#ff0'
                         onClick={() => onClick('/signin')}
+                        className='top-3 right-3 absolute '
                     >
                         Sign in
                     </StyledButton>
