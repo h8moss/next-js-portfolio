@@ -5,7 +5,7 @@ import { useState } from 'react';
 import NavBar from '../components/NavBar';
 import ScreenDiv from '../components/ScreenDiv'
 import ButtonLink from '../domain/index/ButtonLink';
-import TextWriter from '../domain/index/TextWriter';
+import MainTextWriter from '../domain/index/MainTextWriter';
 import style from '../styles/fonts.module.css';
 
 function Home() {
@@ -50,20 +50,7 @@ function Home() {
           <ScreenDiv className='flex flex-col text-center'>
             <h1 className={`text-5xl mt-32 flex-1 transition-all delay-200 duration-500 ${style.fontQuicksand}`}>My name is Daniel Armenta</h1>
             <div className={`${style.fontOutfit} flex-1 flex-grow`}>
-              <TextWriter delay={40} onDone={() => setShowSocials(true)}>
-                I am a software developer with skills in
-                <span className='font-bold text-blue-500'> Flutter</span>
-                ,
-                <span className='font-bold text-red-500'> Python</span>
-                ,
-                <span className='font-bold text-purple-500'> C++</span>
-                ,
-                <span className='font-bold text-yellow-400'> Javascript </span>
-                and
-                <span className='font-bold text-green-500'> more</span>
-                <br />
-                Please take a look at my socials!
-              </TextWriter>
+              <MainTextWriter onDone={() => setShowSocials(true)} />
               <div className="flex flex-row mx-auto justify-evenly" >
                 <ButtonLink
                   active={showSocials}
