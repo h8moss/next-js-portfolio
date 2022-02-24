@@ -1,10 +1,16 @@
 import { motion } from 'framer-motion'
 
-export default function StyledButton({ children, color, onClick, ...props }) {
+
+
+const StyledButton = ({ children, color, onClick, initialSize = 16, ...props }) => {
+
+    initialSize = Math.round(initialSize);
+    const hoverSize = Math.round(initialSize * 1.38);
+
     return (
         <motion.button
-            initial={{ fontSize: '16px', color: '#fff' }}
-            whileHover={{ fontSize: '22px', color: color }}
+            initial={{ fontSize: `${initialSize}px`, color: '#fff' }}
+            whileHover={{ fontSize: `${hoverSize}px`, color: color }}
             exit={{ scaleX: '0px' }}
             onClick={onClick}
             {...props}
@@ -13,3 +19,5 @@ export default function StyledButton({ children, color, onClick, ...props }) {
         </ motion.button>
     );
 }
+
+export default StyledButton;
