@@ -72,7 +72,7 @@ export default function TextStreamWriter({ children, delay, onDone }) {
     let [currentNode, _] = getChildOfLength(<div>{children}</div>, currentIndex) ?? [null, 0];
 
     return (
-        <div>
+        <div className="text-xs md:text-xl">
             {currentNode}
         </div>
     );
