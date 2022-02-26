@@ -1,11 +1,11 @@
 import { AnimatePresence, motion } from "framer-motion";
 
-import TagButton from "./TagButton";
+import TagButton from "../TagButton";
 
 const TagList = ({ tags, onClick, getIndex, getVisibility, getSelected }) => {
     return (
         <motion.div
-            className='flex overflow-auto bg-white rounded-xl my-2'
+            className='flex overflow-auto bg-white rounded-xl my-2 scale-0 md:scale-100'
             initial={{ width: '0%', opacity: 0 }}
             exit={{ width: '0%', opacity: 0.1 }}
             animate={{ width: '100%', opacity: 1 }}

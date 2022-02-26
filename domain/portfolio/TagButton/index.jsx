@@ -17,7 +17,7 @@ const TagButton = ({ tag, onClick, isSelected }) => {
                 }}
                 exit={{ opacity: 0 }}
                 animate={{ opacity: 1, width: '100%', backgroundColor: '#555' }}
-                className='rounded-lg p-2 text-sm flex-row flex whitespace-nowrap overflow-clip'
+                className='rounded-lg p-2 text-sm flex-row flex whitespace-nowrap overflow-clip text-white'
             >
                 {isSelected && <FiX className='my-auto' />}
                 {tag}
