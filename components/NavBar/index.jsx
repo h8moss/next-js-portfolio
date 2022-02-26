@@ -9,6 +9,7 @@ import UserButton from './UserButton';
 
 export default function NavBar({ onClick }) {
     const [showMenu, setShowMenu] = useState(false);
+    const user = useUser();
 
     return (
         <>
@@ -46,6 +47,9 @@ export default function NavBar({ onClick }) {
                     </div>
                 }
             </AnimatePresence>
+            {user !== null &&
+                <UserButton />
+            }
         </>
     );
 };

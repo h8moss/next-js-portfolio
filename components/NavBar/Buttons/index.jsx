@@ -40,8 +40,8 @@ const Buttons = ({ onClick, buttonSize = 16, buttonClass }) => {
             >
                 Blog
             </StyledButton>
-            {user === null
-                ? <StyledButton
+            {user === null &&
+                <StyledButton
                     color='#ff0'
                     onClick={() => onClick('/signin')}
                     initialSize={buttonSize}
@@ -49,7 +49,6 @@ const Buttons = ({ onClick, buttonSize = 16, buttonClass }) => {
                 >
                     Sign in
                 </StyledButton>
-                : <UserButton />
             }
         </>
     );
