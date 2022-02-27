@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { FiFilter, FiX } from "react-icons/fi";
 
-import TagButton from "../TagButton";
+import TagButton from "../../TagButton";
 
 const MobileTagFilter = ({ tags, getSelected, getIndex, getVisibility, onClick }) => {
 
