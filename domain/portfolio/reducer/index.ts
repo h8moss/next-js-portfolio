@@ -13,16 +13,15 @@ const reducer = (state: State, event: { type: EventType; payload: any }) => {
     return newState;
   };
 
+  const removeProjectSelectionEvent = () => {
+    let newState = State.from(state);
+    newState.selectedProjectIndex = null;
+    return newState;
+  };
+
   const tagClicked = (i: number) => {
     let newState = State.from(state);
-    console.log(state);
-    console.log(newState);
 
-    console.log({
-      selectedTags: newState.selectedTags,
-      index: i,
-      should: newState.selectedTags.includes(i) ? "remove" : "add",
-    });
     // remove tag
     if (newState.selectedTags.includes(i)) {
       let index = newState.selectedTags.indexOf(i);
@@ -63,6 +62,9 @@ const reducer = (state: State, event: { type: EventType; payload: any }) => {
 
     case EventType.tagClicked:
       return tagClicked(event.payload as number);
+
+    case EventType.tagClicked:
+      return removeProjectSelectionEvent();
   }
 };
 
