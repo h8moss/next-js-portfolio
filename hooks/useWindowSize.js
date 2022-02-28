@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 const useWindowSize = () => {
-    const [currentWidth, setCurrentWidth] = useState(window.innerWidth);
-    const [currentHeight, setCurrentHeight] = useState(window.innerHeight);
+    const [currentWidth, setCurrentWidth] = useState(0);
+    const [currentHeight, setCurrentHeight] = useState(0);
 
     useEffect(() => {
         const onChange = () => {
@@ -10,10 +10,11 @@ const useWindowSize = () => {
             setCurrentHeight(window.innerHeight);
         }
 
+        onChange();
         window.addEventListener('resize', onChange);
 
         return () => window.removeEventListener('resize', onChange);
-    });
+    }, []);
 
     return [currentWidth, currentHeight];
 }
