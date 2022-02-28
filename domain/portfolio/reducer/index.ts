@@ -63,7 +63,7 @@ const reducer = (state: State, event: { type: EventType; payload: any }) => {
     case EventType.tagClicked:
       return tagClicked(event.payload as number);
 
-    case EventType.tagClicked:
+    case EventType.removeProjectSelection:
       return removeProjectSelectionEvent();
   }
 };
