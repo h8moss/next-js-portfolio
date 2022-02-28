@@ -1,8 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import { FiFilter, FiX } from "react-icons/fi";
+import { FiX } from "react-icons/fi";
 
 import TagButton from "../../TagButton";
+import FilterButton from "./FilterButton";
 
 const MobileTagFilter = ({ tags, getSelected, getIndex, getVisibility, onClick }) => {
 
@@ -25,13 +26,7 @@ const MobileTagFilter = ({ tags, getSelected, getIndex, getVisibility, onClick }
 
     return (
         <>
-            <button
-                className="bg-gray-600 text-white h-min md:h-0 m-2 p-2 md:p-0 md:m-0 rounded-md w-min overflow-clip flex flex-row"
-                onClick={() => setShowMenu(true)}
-            >
-                <FiFilter className="my-auto mx-2" />
-                Filter
-            </button>
+            <FilterButton onClick={() => setShowMenu(true)} />
             <AnimatePresence>
                 {showMenu &&
                     <div className="top-0 left-0 w-screen h-screen fixed z-[95] flex"
