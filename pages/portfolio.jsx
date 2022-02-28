@@ -5,7 +5,8 @@ import { useEffect, useReducer, useState } from 'react';
 import NavBar from "../components/NavBar";
 import ScreenDiv from "../components/ScreenDiv";
 import { server } from '../config';
-import MobileTagFilter from '../domain/portfolio/MobileTagFilter';
+import MobileProjectView from '../domain/portfolio/Mobile/ProjectView';
+import MobileTagFilter from '../domain/portfolio/Mobile/TagFilter';
 import ProjectList from '../domain/portfolio/ProjectList';
 import ProjectView from '../domain/portfolio/ProjectView';
 import reducer from '../domain/portfolio/reducer';
@@ -43,9 +44,15 @@ const Portfolio = ({ projects }) => {
                     onExitComplete={() => setCanExit((state) => [true, state[1]])}
                 >
                     {state.showSelectedProject && shouldStay &&
-                        <ProjectView
-                            project={state.selectedProject}
-                        />
+                        <>
+                            <ProjectView
+                                project={state.selectedProject}
+                            />
+                            <MobileProjectView
+                                onExit={() => dispatch({ type: EventType.removeProjectSelection })}
+                                project={state.selectedProject}
+                            />
+                        </>
                     }
                 </AnimatePresence>
                 <AnimatePresence
