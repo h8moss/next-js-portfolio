@@ -34,7 +34,7 @@ const MobileTagFilter = ({ tags, getSelected, getIndex, getVisibility, onClick }
             </button>
             <AnimatePresence>
                 {showMenu &&
-                    <div className="top-0 left-0 w-screen h-screen fixed  z-[95] flex"
+                    <div className="top-0 left-0 w-screen h-screen fixed z-[95] flex"
                         onClick={() => setShowMenu(false)}
                     >
                         <div onClick={(e) => e.stopPropagation()} className='h-min my-auto'>
