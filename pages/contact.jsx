@@ -53,14 +53,14 @@ const Contact = () => {
                 show={showErrorToast && shouldShow}
                 onDismiss={() => setShowErrorToast(false)}
             />
-            <ScreenDiv className="p-16 px-60">
+            <ScreenDiv className="py-16 md:px-60 px-3">
                 <AnimatePresence
                     onExitComplete={() => router.push(nextRoute)}
                 >
                     {shouldShow &&
                         <div className="w-full h-full">
                             <Title>
-                                Have some something you want to talk about?
+                                What do you wanna talk about?
                             </Title>
                             <ContactForm
                                 submit={mySend}
