@@ -57,7 +57,7 @@ const ContactForm = ({ submit, show = true }) => {
                         <Label htmlFor="message" show={show}>
                             What do you want to tell me?
                         </Label>
-                        <FieldMotion className='flex-grow'>
+                        <FieldMotion className='h-96'>
                             <Field
                                 name="message"
                                 as='textarea'

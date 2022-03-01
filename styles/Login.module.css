@@ -1,5 +1,5 @@
 .form {
-  @apply flex flex-col text-left mx-auto w-1/2 my-5;
+  @apply flex flex-col text-left mx-auto md:w-1/2 w-[95%] my-5;
 }
 
 .form input {

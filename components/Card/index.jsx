@@ -1,6 +1,13 @@
 import { AnimatePresence, motion } from "framer-motion";
 
+import useTailwindSize from '../../hooks/useTailwindSize';
+
 const Card = ({ className, children, onExit, ...props }) => {
+
+    const { isMd } = useTailwindSize();
+
+    const width = isMd ? '70%' : '95%';
+
     return (
         <motion.div
             className={`bg-white shadow-lg
@@ -17,7 +24,7 @@ const Card = ({ className, children, onExit, ...props }) => {
             animate={{
                 overflow: 'auto',
                 padding: '20px',
-                width: '70%',
+                width: width,
                 height: 'auto',
                 minHeight: '100%',
             }}

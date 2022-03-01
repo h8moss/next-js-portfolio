@@ -1,15 +1,21 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Image from 'next/image';
 
+import useTailwindSize from "../../../hooks/useTailwindSize";
+import ProjectDescription from "../ProjectDescription";
+
 const ProjectView = ({ project }) => {
 
-    const links = project.links ?? [];
+    const { isMd } = useTailwindSize();
+
+    const width = isMd ? '50%' : '0%';
+
 
     return (
         <motion.div
             className='overflow-clip whitespace-nowrap h-full'
             initial={{ width: '0' }}
-            animate={{ width: '50%' }}
+            animate={{ width: width }}
             exit={{ width: '0' }}
         >
             <AnimatePresence
@@ -22,6 +28,8 @@ const ProjectView = ({ project }) => {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                 >
+                    <ProjectDescription project={project} />
+
                     <h2 className="text-3xl p-5">
                         {project.title}
                     </h2>

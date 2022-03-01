@@ -23,7 +23,7 @@ function Blog({ post: { title, text } }) {
                     onExitComplete={() => router.push(nextRoute)}
                 >
                     {shouldStay &&
-                        <motion.div className="w-1/2 m-auto"
+                        <motion.div className="md:w-1/2 w-[95%] m-auto mt-10"
                             initial={{
                                 x: '100vw',
                             }}

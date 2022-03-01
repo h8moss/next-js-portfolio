@@ -1,7 +1,6 @@
 .field {
-  @apply bg-zinc-700 rounded-xl w-full;
+  @apply bg-zinc-700 rounded-xl w-full overflow-x-clip;
   box-shadow: 3px 3px 3px 4px rgba(0, 0, 0, 0.3) inset;
-  overflow: clip;
 }
 
 .fieldTransition {
@@ -11,5 +10,5 @@
 }
 
 .form {
-  @apply flex flex-col w-full h-full mb-24;
+  @apply flex flex-col w-full h-full md:mb-24 mb-96;
 }

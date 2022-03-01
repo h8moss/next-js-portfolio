@@ -5,18 +5,14 @@ import { useEffect, useReducer, useState } from 'react';
 import NavBar from "../components/NavBar";
 import ScreenDiv from "../components/ScreenDiv";
 import { server } from '../config';
+import MobileProjectView from '../domain/portfolio/Mobile/ProjectView';
+import MobileTagFilter from '../domain/portfolio/Mobile/TagFilter';
 import ProjectList from '../domain/portfolio/ProjectList';
-import ProjectListTile from '../domain/portfolio/ProjectList/ProjectListTile';
 import ProjectView from '../domain/portfolio/ProjectView';
 import reducer from '../domain/portfolio/reducer';
 import EventType from '../domain/portfolio/reducer/eventType';
 import State from '../domain/portfolio/reducer/state';
 import TagList from '../domain/portfolio/TagList';
-
-const initialState = {
-    allTags: [],
-    selectedTags: [],
-}
 
 const Portfolio = ({ projects }) => {
 
@@ -48,9 +44,15 @@ const Portfolio = ({ projects }) => {
                     onExitComplete={() => setCanExit((state) => [true, state[1]])}
                 >
                     {state.showSelectedProject && shouldStay &&
-                        <ProjectView
-                            project={state.selectedProject}
-                        />
+                        <>
+                            <ProjectView
+                                project={state.selectedProject}
+                            />
+                            <MobileProjectView
+                                onExit={() => dispatch({ type: EventType.removeProjectSelection })}
+                                project={state.selectedProject}
+                            />
+                        </>
                     }
                 </AnimatePresence>
                 <AnimatePresence
@@ -60,6 +62,15 @@ const Portfolio = ({ projects }) => {
                         <>
                             <div className='flex flex-col flex-1 overflow-clip'>
                                 <TagList
+                                    getIndex={(tag) => state.tags.indexOf(tag)}
+                                    getSelected={(index) => state.selectedTags.includes(index)}
+                                    getVisibility={(index) => state.visibleTags.includes(index)}
+                                    onClick={(index) =>
+                                        dispatch({ type: EventType.tagClicked, payload: index })
+                                    }
+                                    tags={state.sortedTags}
+                                />
+                                <MobileTagFilter
                                     getIndex={(tag) => state.tags.indexOf(tag)}
                                     getSelected={(index) => state.selectedTags.includes(index)}
                                     getVisibility={(index) => state.visibleTags.includes(index)}
