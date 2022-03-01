@@ -2,6 +2,7 @@ export type Project = {
   title: string;
   description: string;
   tags: string[];
+  links?: ImageLinkData[];
 };
 
 export type AppUser = {
@@ -22,3 +23,9 @@ export enum TagsState {
   unselected,
   notVisible,
 }
+
+export type ImageLinkData = {
+  imageSource: string;
+  alt: string;
+  url: string;
+};

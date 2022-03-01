@@ -27,6 +27,7 @@ export default function NavBar({ onClick }) {
                 {showMenu &&
                     <div className='bg-opacity-50 fixed top-0 left-0 w-screen h-screen z-[99]'
                         onClick={() => setShowMenu(false)}
+
                     >
                         <motion.div
                             onClick={(e) => e.stopPropagation()}
