@@ -1,6 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { AnimatePresence } from "framer-motion";
-import { motion } from "framer-motion";
 import { useRouter } from 'next/router'
 import { useEffect, useState } from "react";
 
@@ -8,11 +7,9 @@ import Card from '../components/Card';
 import NavBar from "../components/NavBar";
 import ScreenDiv from "../components/ScreenDiv";
 import Toast from "../components/Toast";
+import { Password2, SubmitDiv, Title } from "../domain/signin";
 import send from '../domain/signin/api/send';
 import validate from '../domain/signin/api/validate';
-import Password2 from "../domain/signin/Password2";
-import SubmitDiv from "../domain/signin/SubmitDiv";
-import SigninTitle from "../domain/signin/Title";
 import useAuth from "../hooks/useAuth";
 import useUser from "../hooks/useUser";
 import style from '../styles/Login.module.css';
@@ -82,9 +79,9 @@ function Login() {
                             >
                                 {({ submitForm, isSubmitting, resetForm }) => (
                                     <Form className={style.form}>
-                                        <SigninTitle>
+                                        <Title>
                                             {isRegistering ? 'Register' : 'Log in'}
-                                        </SigninTitle>
+                                        </Title>
 
                                         <label htmlFor="mail" >Email</label>
                                         <Field name="mail" type='mail' />

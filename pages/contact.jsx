@@ -5,9 +5,8 @@ import { useEffect, useState } from "react";
 import NavBar from '../components/NavBar';
 import ScreenDiv from '../components/ScreenDiv';
 import Toast from "../components/Toast";
+import { ContactForm, Title } from "../domain/contact";
 import send from '../domain/contact/api/send';
-import ContactForm from "../domain/contact/ContactForm";
-import Title from "../domain/contact/Title";
 
 const Contact = () => {
     const [showErrorToast, setShowErrorToast] = useState(false);
