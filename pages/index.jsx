@@ -4,8 +4,7 @@ import { useState } from 'react';
 
 import NavBar from '../components/NavBar';
 import ScreenDiv from '../components/ScreenDiv'
-import ButtonLink from '../domain/index/ButtonLink';
-import MainTextWriter from '../domain/index/MainTextWriter';
+import { ButtonLink, MainTextWriter } from '../domain/index';
 import style from '../styles/fonts.module.css';
 
 function Home() {

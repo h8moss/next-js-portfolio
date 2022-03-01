@@ -5,14 +5,14 @@ import { useEffect, useReducer, useState } from 'react';
 import NavBar from "../components/NavBar";
 import ScreenDiv from "../components/ScreenDiv";
 import { server } from '../config';
-import MobileProjectView from '../domain/portfolio/Mobile/ProjectView';
-import MobileTagFilter from '../domain/portfolio/Mobile/TagFilter';
-import ProjectList from '../domain/portfolio/ProjectList';
-import ProjectView from '../domain/portfolio/ProjectView';
+import { ProjectList, ProjectView, TagList } from '../domain/portfolio';
+import {
+    ProjectView as MProjectView,
+    TagFilter as MTagFilter
+} from '../domain/portfolio/Mobile';
 import reducer from '../domain/portfolio/reducer';
 import EventType from '../domain/portfolio/reducer/eventType';
 import State from '../domain/portfolio/reducer/state';
-import TagList from '../domain/portfolio/TagList';
 
 const Portfolio = ({ projects }) => {
 
@@ -48,7 +48,7 @@ const Portfolio = ({ projects }) => {
                             <ProjectView
                                 project={state.selectedProject}
                             />
-                            <MobileProjectView
+                            <MProjectView
                                 onExit={() => dispatch({ type: EventType.removeProjectSelection })}
                                 project={state.selectedProject}
                             />
@@ -70,7 +70,7 @@ const Portfolio = ({ projects }) => {
                                     }
                                     tags={state.sortedTags}
                                 />
-                                <MobileTagFilter
+                                <MTagFilter
                                     getIndex={(tag) => state.tags.indexOf(tag)}
                                     getSelected={(index) => state.selectedTags.includes(index)}
                                     getVisibility={(index) => state.visibleTags.includes(index)}

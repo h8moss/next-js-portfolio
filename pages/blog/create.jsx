@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 
 import NavBar from "../../components/NavBar";
 import ScreenDiv from "../../components/ScreenDiv";
-import Loading from "../../domain/blog/create/Loading";
-import MainPage from "../../domain/blog/create/MainPage";
-import NotAllowed from "../../domain/blog/create/NotAllowed";
+import { Loading, MainPage, NotAllowed } from "../../domain/blog/create";
 import useUser from "../../hooks/useUser";
 
 const getPage = ({ isAdmin, onExit, shouldStay }) => {

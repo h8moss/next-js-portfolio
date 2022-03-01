@@ -6,8 +6,7 @@ import Card from '../../components/Card';
 import NavBar from '../../components/NavBar';
 import ScreenDiv from '../../components/ScreenDiv';
 import { server } from "../../config";
-import ProjectTile from '../../domain/blog/index/BlogListTile';
-import Tag from '../../domain/blog/index/Tag';
+import { BlogListTile, Tag } from '../../domain/blog/index';
 import { dateFromSeconds } from "../../services/dateOperations";
 
 
@@ -28,7 +27,7 @@ function Blogs({ posts }) {
         let tagComponents = post.tags.map(tag => <Tag text={tag} key={tag} />);
 
         return (
-            <ProjectTile
+            <BlogListTile
                 key={post.id}
                 dateCreated={dateCreated}
                 tags={tagComponents}
