@@ -4,6 +4,9 @@ import Image from 'next/image';
 import style from './style.module.css';
 
 const ProjectDescription = ({ project }) => {
+
+    const links = project.links ?? [];
+
     return (
         <>
             <h2 className={style.title}>
