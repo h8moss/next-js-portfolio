@@ -29,3 +29,8 @@ export type ImageLinkData = {
   alt: string;
   url: string;
 };
+
+export type I18n<T> = {
+  en: T;
+  es: T;
+};
