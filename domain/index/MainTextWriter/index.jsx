@@ -1,9 +1,10 @@
-import { useI18n } from "../i18n";
+import useI18n from '../../../hooks/useI18n';
+import i18n from '../i18n';
 import TextStreamWriter from "./TextWriter";
 
 const MainTextWriter = ({ onDone }) => {
 
-    const { lookAtSocials, description } = useI18n();
+    const { lookAtSocials, description } = useI18n(i18n);
     const [d1, d2, d3, d4, d5, d6, d7, d8, d9, d10] = description;
 
     return (
