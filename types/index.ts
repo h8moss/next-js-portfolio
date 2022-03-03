@@ -1,6 +1,6 @@
 export type Project = {
-  title: string;
-  description: string;
+  title: I18n<string>;
+  description: I18n<string>;
   tags: string[];
   links?: ImageLinkData[];
 };
