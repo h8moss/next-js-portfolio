@@ -4,7 +4,8 @@ import { useState } from 'react';
 
 import NavBar from '../components/NavBar';
 import ScreenDiv from '../components/ScreenDiv'
-import { ButtonLink, MainTextWriter } from '../domain/index';
+import { ButtonLink, i18n, MainTextWriter } from '../domain/index';
+import useI18n from '../hooks/useI18n';
 import style from '../styles/fonts.module.css';
 
 function Home() {
@@ -12,9 +13,9 @@ function Home() {
   let router = useRouter();
   let [showSocials, setShowSocials] = useState(false);
   let [nextRoute, setNextRoute] = useState(router.pathname)
+  let { title } = useI18n(i18n);
 
   let shouldStay = nextRoute === router.pathname;
-
 
   const motionVariants = {
     beforeActive: {
@@ -47,7 +48,9 @@ function Home() {
           exit='afterActive'
         >
           <ScreenDiv className='flex flex-col text-center'>
-            <h1 className={`text-5xl mt-32 flex-1 transition-all delay-200 duration-500 ${style.fontQuicksand}`}>My name is Daniel Armenta</h1>
+            <h1 className={`text-5xl mt-32 flex-1 transition-all delay-200 duration-500 ${style.fontQuicksand}`}>
+              {title}
+            </h1>
             <div className={`${style.fontOutfit} flex-1 flex-grow`}>
               <MainTextWriter onDone={() => setShowSocials(true)} />
               <div className="flex flex-row mx-auto justify-evenly" >
