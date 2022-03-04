@@ -1,20 +1,26 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
+import useLocale from '../../../hooks/useLocale';
 import style from './style.module.css';
 
 const ProjectDescription = ({ project }) => {
 
+    const locale = useLocale();
+
     const links = project.links ?? [];
+    let { title, description } = project;
+    title = title[locale];
+    description = description[locale]
 
     return (
         <>
             <h2 className={style.title}>
-                {project.title}
+                {title}
             </h2>
             <div className={style.description}>
                 <p>
-                    {project.description}
+                    {description}
                 </p>
                 <div className="flex flex-row my-3">
                     {links.map((link) =>
