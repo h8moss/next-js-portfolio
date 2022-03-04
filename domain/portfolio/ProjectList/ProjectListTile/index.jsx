@@ -1,6 +1,11 @@
 import { motion } from "framer-motion";
 
+import useLocale from "../../../../hooks/useLocale";
+
 const ProjectListTile = ({ project, onClick }) => {
+
+    const locale = useLocale();
+
     return (
         <motion.button
             layoutId={project.title}
@@ -11,7 +16,7 @@ const ProjectListTile = ({ project, onClick }) => {
             className='text-black py-5 border-b-2 border-gray-400 flex flex-col px-3 w-full'
             onClick={onClick}
         >
-            {project.title}
+            {project.title[locale]}
             <div className="flex flex-row text-xs">
                 {project.tags.map((v) =>
                     <p
