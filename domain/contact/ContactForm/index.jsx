@@ -1,8 +1,10 @@
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
 
+import useI18n from "../../../hooks/useI18n";
 import useUser from "../../../hooks/useUser";
 import validate from '../api/validate';
+import i18n from "../i18n";
 import ContactErrorMessage from "./ContactErrorMessage";
 import FieldMotion from "./FieldMotion";
 import Label from './Label';
@@ -13,7 +15,13 @@ const ContactForm = ({ submit, show = true }) => {
     const user = useUser();
     let mail = user !== null ? user.mail : '';
 
-    console.log({ user, mail });
+    const {
+        emailQuestion,
+        messageQuestion,
+        nameQuestion,
+        optionalText,
+        submitButton
+    } = useI18n(i18n);
 
     return (
         <Formik
@@ -29,7 +37,7 @@ const ContactForm = ({ submit, show = true }) => {
                 <Form className={style.form}>
                     <>
                         <Label htmlFor="name" show={show}>
-                            What&apos;s your name?
+                            {nameQuestion}
                         </Label>
                         <FieldMotion>
                             <Field name="name" type="text" className={style.field + ' w-full'} />
@@ -41,8 +49,8 @@ const ContactForm = ({ submit, show = true }) => {
                             <ContactErrorMessage name="name" />
                         </motion.div>
                         <Label htmlFor="email" show={show}>
-                            What&apos;s your email?
-                            <span className='text-sm'> (optional)
+                            {emailQuestion}
+                            <span className='text-sm'> {optionalText}
                             </span>
                         </Label>
                         <FieldMotion>
@@ -55,7 +63,7 @@ const ContactForm = ({ submit, show = true }) => {
                             <ContactErrorMessage name="email" />
                         </motion.div>
                         <Label htmlFor="message" show={show}>
-                            What do you want to tell me?
+                            {messageQuestion}
                         </Label>
                         <FieldMotion className='h-96'>
                             <Field
@@ -83,7 +91,7 @@ const ContactForm = ({ submit, show = true }) => {
                                 }
                             }}
                         >
-                            Submit
+                            {submitButton}
                         </motion.button>
                     </>
                 </Form>
