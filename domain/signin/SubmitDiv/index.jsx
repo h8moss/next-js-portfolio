@@ -1,9 +1,21 @@
 import Image from 'next/image';
 
+import useI18n from '../../../hooks/useI18n';
 import SigninButton from "../Button";
+import i18n from '../i18n';
 import style from './style.module.css';
 
 const SubmitDiv = ({ submitForm, isRegistering, toggleIsRegistering, googleLogin }) => {
+
+    const {
+        registerTxt,
+        signinTxt,
+        switchToRegisterTxt,
+        switchToSigninTxt,
+        signinWithGoogleTxt,
+        orTxt
+    } = useI18n(i18n);
+
     return (
         <>
             <div className="flex flex-row">
@@ -13,8 +25,8 @@ const SubmitDiv = ({ submitForm, isRegistering, toggleIsRegistering, googleLogin
                     type='submit'
                 >
                     {isRegistering
-                        ? 'Sign up'
-                        : 'Log in'
+                        ? registerTxt
+                        : signinTxt
                     }
                 </SigninButton>
                 <button
@@ -23,13 +35,13 @@ const SubmitDiv = ({ submitForm, isRegistering, toggleIsRegistering, googleLogin
                 >
                     {
                         isRegistering
-                            ? "Already have an account? Log in"
-                            : "Don't have an account? Create one"
+                            ? switchToSigninTxt
+                            : switchToRegisterTxt
                     }
 
                 </button>
             </div>
-            <p className="text-center text-gray-600 text-sm">or</p>
+            <p className="text-center text-gray-600 text-sm">{orTxt}</p>
             <SigninButton
                 className={style.loginWithGoogle}
                 onClick={googleLogin}
@@ -42,7 +54,7 @@ const SubmitDiv = ({ submitForm, isRegistering, toggleIsRegistering, googleLogin
                         layout='fixed'
                     />
                 </div>
-                Log in with google
+                {signinWithGoogleTxt}
             </SigninButton>
         </>
 
