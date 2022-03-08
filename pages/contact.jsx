@@ -5,9 +5,8 @@ import { useEffect, useState } from "react";
 import NavBar from '../components/NavBar';
 import ScreenDiv from '../components/ScreenDiv';
 import Toast from "../components/Toast";
-import { ContactForm, Title } from "../domain/contact";
+import { ContactForm, i18n, Title } from "../domain/contact";
 import send from '../domain/contact/api/send';
-import i18n from "../domain/contact/i18n";
 import useI18n from "../hooks/useI18n";
 
 const Contact = () => {

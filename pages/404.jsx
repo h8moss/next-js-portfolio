@@ -1,8 +1,7 @@
 import { useRouter } from 'next/router';
 
 import NavBar from "../components/NavBar";
-import i18n from '../domain/404/i18n';
-import ParticleText from "../domain/404/ParticleText";
+import { i18n, ParticleText } from "../domain/404";
 import useI18n from '../hooks/useI18n';
 import useTailwindSize from '../hooks/useTailwindSize';
 
