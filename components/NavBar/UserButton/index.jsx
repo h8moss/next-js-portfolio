@@ -41,9 +41,20 @@ export default function UserButton() {
                 <div className="bg-black bg-opacity-40 w-screen h-screen top-0 left-0 absolute z-[99]" onClick={togglePopup} >
                     <div onClick={(e) => e.stopPropagation()}>
                         <div className="flex flex-col bg-gray-500 w-52 absolute top-0 right-32">
-                            <button>Profile</button>
-                            <button>Light mode</button>
-                            <button>{language}</button>
+                            <button className='group '>
+                                {language}
+                                <div className='w-0 group-hover:w-20 text-black overflow-clip absolute right-52 bg-gray-300 flex flex-col top-0'>
+                                    {router.locales.map((locale) =>
+                                        <button
+                                            className='hover:scale-110'
+                                            key={locale}
+                                            onClick={() => router.push(router.pathname, router.pathname, { locale: locale })}
+                                        >
+                                            {locale}
+                                        </button>)
+                                    }
+                                </div>
+                            </button>
                             <button onClick={() => logOut()}>{logout}</button>
                         </div>
                     </div>
