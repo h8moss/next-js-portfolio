@@ -11,17 +11,24 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import { db } from "../../../services/firebase/firestore";
 
-const searchBlogs = async () => {
+const searchBlogs = async (lang: string) => {
+  let language = "en";
+  if (lang) language = lang;
+
   let docs = await getDocs(
-    query(collection(db, "blog-posts"), orderBy("created", "desc"))
+    query(collection(db, `blog-posts-${language}`), orderBy("created", "desc"))
   );
   return docs.docs.map((doc) => {
     return { ...doc.data(), id: doc.id };
   });
 };
 
-const getBlog = async (id: string) => {
-  let document = await getDoc(doc(db, `blog-posts/${id}`));
+const getBlog = async (id: string, lang: string) => {
+  let language = "en";
+  if (lang) {
+    language = lang;
+  }
+  let document = await getDoc(doc(db, `blog-posts-${language}/${id}`));
   if (!document.exists()) throw "Document not found!";
   return { ...document.data(), id: document.id };
 };
@@ -38,9 +45,9 @@ export default async function handle(
   let data: DocumentData | DocumentData[] = null;
   try {
     if (!req.query.id) {
-      data = await searchBlogs();
+      data = await searchBlogs(req.query.lang as string);
     } else {
-      data = await getBlog(req.query.id as string);
+      data = await getBlog(req.query.id as string, req.query.lang as string);
     }
   } catch {
     res.status(400).send("Error understanding request");
