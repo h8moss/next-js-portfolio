@@ -10,8 +10,6 @@ const send = async (
   { resetForm, setSubmitting }: FormikHelpers<SigninBody>,
   onError: () => any
 ) => {
-  console.log(isRegistering);
-
   if (isRegistering && values.password === values.password2) {
     try {
       await auth.createAccountWithMail(values.mail, values.password);

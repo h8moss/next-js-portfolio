@@ -3,13 +3,13 @@ import { useState } from 'react';
 import { FiMenu } from 'react-icons/fi';
 
 import useUser from '../../hooks/useUser';
-import StyledButton from '../StyledButton';
 import Buttons from './Buttons';
 import UserButton from './UserButton';
 
 export default function NavBar({ onClick }) {
     const [showMenu, setShowMenu] = useState(false);
     const user = useUser();
+
 
     return (
         <>

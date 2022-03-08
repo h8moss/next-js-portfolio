@@ -1,57 +1,77 @@
 import validateEmail from "../../../services/validateEmail";
+import { ErrorMessages } from "../i18n/types";
 import { SigninBody } from "../types";
 import { isLongEnough, testAll } from "./passwordValidator";
 
-const validateSignIn = (values: SigninBody): Object => {
+const validateSignIn = (
+  values: SigninBody,
+  errorMessages: ErrorMessages
+): Object => {
   let errors: any = {};
 
+  const { invalidEmail, passwordLength, required } = errorMessages;
+
   if (!values.mail) {
-    errors.mail = "This field is required";
+    errors.mail = required;
   } else if (!validateEmail(values.mail)) {
-    errors.mail = "Invalid email address";
+    errors.mail = invalidEmail;
   }
 
   if (!values.password) {
-    errors.password = "This field is required";
+    errors.password = required;
   } else if (!isLongEnough(values.password)) {
-    errors.password = "Password is not long enough";
+    errors.password = passwordLength;
   }
   return errors;
 };
 
-const validateRegister = (values: SigninBody): Object => {
+const validateRegister = (
+  values: SigninBody,
+  errorMessages: ErrorMessages
+): Object => {
   let errors: any = {};
 
+  const {
+    invalidEmail,
+    passwordLengthMin,
+    passwordMatch,
+    passwordMustContain,
+    required,
+  } = errorMessages;
+
   if (!values.mail) {
-    errors.mail = "This field is required";
+    errors.mail = required;
   } else if (!validateEmail(values.mail)) {
-    errors.mail = "Invalid email address";
+    errors.mail = invalidEmail;
   }
 
   if (!values.password) {
-    errors.password = "This field is required";
+    errors.password = required;
   } else if (!isLongEnough(values.password)) {
-    errors.password = "Password must be at least 9 characters long";
+    errors.password = passwordLengthMin;
   } else if (!testAll(values.password)) {
-    errors.password =
-      "Password must contain two of the following: a lower case letter, an upper case letter, a number, a rare character (@#!=)";
+    errors.password = passwordMustContain;
   }
 
   if (!values.password2) {
-    errors.password2 = "This field is required";
+    errors.password2 = required;
   } else if (values.password !== values.password2) {
-    errors.password2 = "The passwords don't match";
+    errors.password2 = passwordMatch;
   }
 
   return errors;
 };
 
-const validate = (values: SigninBody, isRegistering: boolean): Object => {
+const validate = (
+  values: SigninBody,
+  isRegistering: boolean,
+  errorMessages: ErrorMessages
+): Object => {
   if (isRegistering) {
-    return validateRegister(values);
+    return validateRegister(values, errorMessages);
   }
 
-  return validateSignIn(values);
+  return validateSignIn(values, errorMessages);
 };
 
 export default validate;

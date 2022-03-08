@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import NavBar from '../components/NavBar';
 import ScreenDiv from '../components/ScreenDiv';
 import Toast from "../components/Toast";
-import { ContactForm, Title } from "../domain/contact";
+import { ContactForm, i18n, Title } from "../domain/contact";
 import send from '../domain/contact/api/send';
+import useI18n from "../hooks/useI18n";
 
 const Contact = () => {
     const [showErrorToast, setShowErrorToast] = useState(false);
@@ -14,6 +15,12 @@ const Contact = () => {
 
     const router = useRouter();
     const [nextRoute, setNextRoute] = useState(router.pathname);
+
+    const {
+        title,
+        errorMessage,
+        successMessage,
+    } = useI18n(i18n)
 
     useEffect(() => {
         let time = setTimeout(() => {
@@ -42,13 +49,13 @@ const Contact = () => {
             />
             <Toast
                 className='bg-green-500'
-                message='Message successfully sent!'
+                message={successMessage}
                 show={showSuccessToast && shouldShow}
                 onDismiss={() => setShowSuccessToast(false)}
             />
             <Toast
                 className='bg-red-500'
-                message='Something went wrong, please use my email instead'
+                message={errorMessage}
                 show={showErrorToast && shouldShow}
                 onDismiss={() => setShowErrorToast(false)}
             />
@@ -59,7 +66,7 @@ const Contact = () => {
                     {shouldShow &&
                         <div className="w-full h-full">
                             <Title>
-                                What do you wanna talk about?
+                                {title}
                             </Title>
                             <ContactForm
                                 submit={mySend}

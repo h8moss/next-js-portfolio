@@ -57,10 +57,10 @@ function Blogs({ posts }) {
 
 export default Blogs;
 
-export async function getStaticProps() {
-    const response = await fetch(`${server}/api/blogs`);
-    const posts = JSON.parse(await response.text());
+export async function getStaticProps({ locale }) {
 
+    const response = await fetch(`${server}/api/blogs?lang=${locale}`);
+    const posts = JSON.parse(await response.text());
     return {
         props: {
             posts: posts,

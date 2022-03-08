@@ -53,9 +53,9 @@ export default function TextStreamWriter({ children, delay, onDone }) {
     useEffect(() => {
 
         const increase = () => {
-            if (currentIndex < maxIndex) {
+            if (currentIndex <= maxIndex) {
                 setCurrentIndex(currentIndex + 1);
-            } else if (currentIndex === maxIndex) {
+            } else if (currentIndex > maxIndex) {
                 if (onDone !== undefined)
                     onDone();
                 currentIndex++;

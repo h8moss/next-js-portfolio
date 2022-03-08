@@ -1,13 +1,16 @@
 import { useRouter } from 'next/router';
 
 import NavBar from "../components/NavBar";
-import ParticleText from "../domain/404/ParticleText";
+import { i18n, ParticleText } from "../domain/404";
+import useI18n from '../hooks/useI18n';
 import useTailwindSize from '../hooks/useTailwindSize';
 
 export default function Four0Four() {
 
     let router = useRouter();
     const { isMd } = useTailwindSize();
+
+    const { message } = useI18n(i18n)
 
     return (
         <>
@@ -20,7 +23,7 @@ export default function Four0Four() {
                     </h1>
                 }
                 <div className="absolute bottom-20 w-full">
-                    <h2 className="text-3xl  text-center mx-auto">Are you lost?</h2>
+                    <h2 className="text-3xl  text-center mx-auto">{message}</h2>
                 </div>
             </div>
         </>

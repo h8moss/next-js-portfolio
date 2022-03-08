@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import BlogViewer from "../../../../components/BlogViewer";
 import Card from "../../../../components/Card";
+import useLocale from "../../../../hooks/useLocale";
 import { db } from "../../../../services/firebase/firestore";
 import ElevatedButton from "./ElevatedButton";
 
@@ -24,10 +25,10 @@ const validate = (values) => {
     return errors;
 }
 
-const submit = async ({ title, body, tags }, { setSubmitting, resetForm }, router) => {
+const submit = async ({ title, body, tags, language }, { setSubmitting, resetForm }, router, locales) => {
     let tagsList = tags.split(',').map(item => item.trim());
 
-    let blogPosts = collection(db, '/blog-posts')
+    let blogPosts = collection(db, `/blog-posts-${locales[language]}`)
 
     await addDoc(blogPosts, {
         'title': title,
@@ -47,7 +48,6 @@ const MainPage = ({ onExit, shouldStay }) => {
     const [showPreview, setShowPreview] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const router = useRouter();
-
     const onSaveDraft = async (currentValues) => {
         if (!isSaving) {
             setIsSaving(true);
@@ -77,9 +77,10 @@ const MainPage = ({ onExit, shouldStay }) => {
                             title: '',
                             body: '',
                             tags: '',
+                            language: 0,
                         }}
                         validate={validate}
-                        onSubmit={(values, formik) => submit(values, formik, router)}
+                        onSubmit={(values, formik) => submit(values, formik, router, router.locales)}
                     >
                         {({ values: { title, body, tags }, isSubmitting }) => (
                             showPreview ?
@@ -94,6 +95,9 @@ const MainPage = ({ onExit, shouldStay }) => {
                                         className='border-4 rounded-xl my-2 flex-1 h-auto' />
                                     <ErrorMessage name='body' component='p' className="text-red-500 text-xs" />
                                     <div className="flex flex-row w-full justify-end text-white">
+                                        <Field as='select' name='language' className='text-black'>
+                                            {router.locales.map((v, i) => <option value={i} key={v}>{v}</option>)}
+                                        </Field>
                                         <ElevatedButton
                                             className='bg-purple-500'
                                             isSending={isSaving}

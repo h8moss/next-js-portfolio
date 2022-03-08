@@ -1,10 +1,18 @@
+import useI18n from "../../../hooks/useI18n";
 import useUser from "../../../hooks/useUser";
 import StyledButton from "../../StyledButton";
-import UserButton from "../UserButton";
+import i18n from '../i18n';
 
 const Buttons = ({ onClick, buttonSize = 16, buttonClass }) => {
 
     const user = useUser();
+    const {
+        about,
+        blog,
+        contact,
+        portfolio,
+        signin
+    } = useI18n(i18n);
 
     return (
         <>
@@ -14,7 +22,7 @@ const Buttons = ({ onClick, buttonSize = 16, buttonClass }) => {
                 initialSize={buttonSize}
                 className={buttonClass}
             >
-                About
+                {about}
             </StyledButton>
             <StyledButton
                 color='#3070fa'
@@ -22,7 +30,7 @@ const Buttons = ({ onClick, buttonSize = 16, buttonClass }) => {
                 initialSize={buttonSize}
                 className={buttonClass}
             >
-                Portfolio
+                {portfolio}
             </StyledButton>
             <StyledButton
                 color='#aa85ff'
@@ -30,7 +38,7 @@ const Buttons = ({ onClick, buttonSize = 16, buttonClass }) => {
                 initialSize={buttonSize}
                 className={buttonClass}
             >
-                Contact
+                {contact}
             </StyledButton>
             <StyledButton
                 color='#34ff94'
@@ -38,7 +46,7 @@ const Buttons = ({ onClick, buttonSize = 16, buttonClass }) => {
                 initialSize={buttonSize}
                 className={buttonClass}
             >
-                Blog
+                {blog}
             </StyledButton>
             {user === null &&
                 <StyledButton
@@ -47,7 +55,7 @@ const Buttons = ({ onClick, buttonSize = 16, buttonClass }) => {
                     initialSize={buttonSize}
                     className={buttonClass}
                 >
-                    Sign in
+                    {signin}
                 </StyledButton>
             }
         </>

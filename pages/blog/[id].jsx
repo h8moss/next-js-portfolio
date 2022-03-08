@@ -47,10 +47,10 @@ function Blog({ post: { title, text } }) {
 
 export default Blog;
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params, locale }) {
     let id = params.id;
 
-    const response = await fetch(`${server}/api/blogs?id=${id}`);
+    const response = await fetch(`${server}/api/blogs?id=${id}&lang=${locale}`);
     const post = JSON.parse(await response.text());
 
     return {
@@ -60,11 +60,16 @@ export async function getStaticProps({ params }) {
     }
 }
 
-export async function getStaticPaths() {
-    const response = await fetch(`${server}/api/blogs`);
-    const posts = JSON.parse(await response.text())
-    const ids = posts.map(post => post.id);
-    const paths = ids.map(id => ({ params: { id: id } }));
+export async function getStaticPaths({ locales }) {
+
+    let paths = [];
+
+    for (let locale of locales) {
+        const response = await fetch(`${server}/api/blogs?lang=${locale}`);
+        const posts = JSON.parse(await response.text())
+        const ids = posts.map(post => post.id);
+        paths = [...paths, ...ids.map(id => ({ params: { id: id }, locale: locale }))];
+    }
 
     return {
         fallback: false,

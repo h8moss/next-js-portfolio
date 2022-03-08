@@ -1,12 +1,15 @@
 import { motion } from "framer-motion";
 
+import useI18n from "../../../../hooks/useI18n";
 import { getAgoString } from "../../../../services/dateOperations";
-import fonts from '../../../../styles/fonts.module.css';
+import i18n from '../../i18n';
 
 const BlogListTile = ({ dateCreated, title, tags, onClick }) => {
 
+    const { dateOp } = useI18n(i18n);
+
     const agoString = dateCreated !== null
-        ? getAgoString(dateCreated)
+        ? getAgoString(dateCreated, dateOp)
         : null;
 
     return (
