@@ -24,7 +24,6 @@ function Blogs({ posts }) {
             ? dateFromSeconds(post.created.seconds)
             : null;
 
-        console.log({ post });
         let tagComponents = post.tags.map(tag => <Tag text={tag} key={tag} />);
 
         return (
