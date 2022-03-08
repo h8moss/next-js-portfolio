@@ -65,7 +65,7 @@ const ContactForm = ({ submit, show = true }) => {
                         <Label htmlFor="message" show={show}>
                             {messageQuestion}
                         </Label>
-                        <FieldMotion className='h-96'>
+                        <FieldMotion className='flex-grow'>
                             <Field
                                 name="message"
                                 as='textarea'
@@ -79,20 +79,41 @@ const ContactForm = ({ submit, show = true }) => {
                             <ContactErrorMessage name="message" />
                         </motion.div>
 
-                        <motion.button
-                            whileHover={{ scale: 1.2 }}
-                            initial={{ x: '10vh', opacity: 0 }}
-                            exit={{ x: '100vw', opacity: 0 }}
-                            animate={{ x: '0', opacity: 1 }}
-                            className='w-min mx-auto my-3'
-                            onClick={() => {
-                                if (!isSubmitting) {
-                                    submitForm();
-                                }
-                            }}
-                        >
-                            {submitButton}
-                        </motion.button>
+                        <div className="flex flex-row justify-center">
+                            <motion.button
+                                whileHover={{ scale: 1.2 }}
+                                initial={{ x: '10vh', opacity: 0 }}
+                                exit={{ x: '100vw', opacity: 0 }}
+                                animate={{ x: '0', opacity: 1 }}
+                                className='w-min my-auto rounded-lg bg-purple-400 p-3'
+                                onClick={() => {
+                                    if (!isSubmitting) {
+                                        submitForm();
+                                    }
+                                }}
+                            >
+                                {submitButton}
+                            </motion.button>
+                            <motion.p
+                                className="my-auto ml-5 mr-2"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                            >
+                                or email me at
+                            </motion.p>
+                            <motion.a
+                                className="my-auto w-min text-purple-300 hover:underline"
+                                href="mailto:h8mosscontact@gmail.com"
+                                target='_blank'
+                                rel='noreferrer'
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                            >
+                                h8mosscontact@gmail.com
+                            </motion.a>
+                        </div>
                     </>
                 </Form>
             )
