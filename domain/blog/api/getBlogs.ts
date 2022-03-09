@@ -1,4 +1,3 @@
-import { Timestamp } from "@google-cloud/firestore";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 
 import { db } from "../../../services/firebase/firestore";
