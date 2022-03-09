@@ -1,6 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-
-import { ImageLinkData, Project } from "../../types";
+import { ImageLinkData, Project } from "../../../types";
 
 const generateGithubLink = (url: string): ImageLinkData => ({
   alt: "Github page",
@@ -8,11 +6,8 @@ const generateGithubLink = (url: string): ImageLinkData => ({
   url: url,
 });
 
-export default function handle(
-  req: NextApiRequest,
-  res: NextApiResponse<Project[]>
-) {
-  res.status(200).json([
+const getProjects = () => {
+  return [
     {
       title: {
         en: "Portfolio website",
@@ -97,5 +92,7 @@ export default function handle(
       tags: ["python", "machine-learning", "tkinter"],
       links: [generateGithubLink("https://github.com/h8moss/Drawing-Numbers")],
     },
-  ]);
-}
+  ];
+};
+
+export default getProjects;

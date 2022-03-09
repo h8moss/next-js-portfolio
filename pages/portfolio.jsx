@@ -1,11 +1,11 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useEffect, useReducer, useState } from 'react';
 
 import NavBar from "../components/NavBar";
 import ScreenDiv from "../components/ScreenDiv";
-import { server } from '../config';
 import { ProjectList, ProjectView, TagList } from '../domain/portfolio';
+import { getProjects } from '../domain/portfolio/api';
 import {
     ProjectView as MProjectView,
     TagFilter as MTagFilter
@@ -101,10 +101,9 @@ const Portfolio = ({ projects }) => {
 
 export default Portfolio;
 
-export async function getStaticProps() {
+export function getStaticProps() {
 
-    const res = await fetch(`${server}/api/projects`)
-    const data = await res.json()
+    const data = getProjects();
 
     return {
         props: { projects: data },
