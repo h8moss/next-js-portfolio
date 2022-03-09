@@ -1,17 +1,13 @@
 import { AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import language from 'react-syntax-highlighter/dist/esm/languages/hljs/1c';
 
 import Card from '../../components/Card';
 import NavBar from '../../components/NavBar';
 import ScreenDiv from '../../components/ScreenDiv';
-import { server } from "../../config";
 import { getBlogs } from '../../domain/blog/api';
 import { BlogListTile, Tag } from '../../domain/blog/index';
 import { dateFromSeconds } from "../../services/dateOperations";
-
-
 
 function Blogs({ posts }) {
 
@@ -61,11 +57,12 @@ export default Blogs;
 
 export async function getStaticProps({ locale }) {
 
-    const response = await getBlogs({ language: locale })
-    const posts = JSON.parse(await response.text());
+    const blogs = await getBlogs({ language: locale })
+    console.log('_____________________________');
+    console.log(blogs);
     return {
         props: {
-            posts: posts,
+            posts: blogs,
         }
     }
 }

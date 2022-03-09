@@ -34,3 +34,11 @@ export type I18n<T> = {
   en: T;
   es: T;
 };
+
+export type BlogPost = {
+  id: string;
+  title: string;
+  tags: string[];
+  text: string;
+  created: { seconds: number };
+};
