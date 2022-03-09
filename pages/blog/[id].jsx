@@ -6,6 +6,7 @@ import BlogViewer from "../../components/BlogViewer";
 import NavBar from "../../components/NavBar";
 import ScreenDiv from '../../components/ScreenDiv';
 import { server } from "../../config";
+import { getBlog, getBlogs } from '../../domain/blog/api';
 
 function Blog({ post: { title, text } }) {
 
@@ -50,12 +51,11 @@ export default Blog;
 export async function getStaticProps({ params, locale }) {
     let id = params.id;
 
-    const response = await fetch(`${server}/api/blogs?id=${id}&lang=${locale}`);
-    const post = JSON.parse(await response.text());
+    const response = await getBlog({ id: id, language: locale })
 
     return {
         props: {
-            post: post,
+            post: response,
         }
     }
 }
@@ -65,8 +65,7 @@ export async function getStaticPaths({ locales }) {
     let paths = [];
 
     for (let locale of locales) {
-        const response = await fetch(`${server}/api/blogs?lang=${locale}`);
-        const posts = JSON.parse(await response.text())
+        const posts = await getBlogs({ languages: locale })
         const ids = posts.map(post => post.id);
         paths = [...paths, ...ids.map(id => ({ params: { id: id }, locale: locale }))];
     }
