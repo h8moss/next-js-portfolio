@@ -58,8 +58,6 @@ export default Blogs;
 export async function getStaticProps({ locale }) {
 
     const blogs = await getBlogs({ language: locale })
-    console.log('_____________________________');
-    console.log(blogs);
     return {
         props: {
             posts: blogs,
