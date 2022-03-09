@@ -65,7 +65,7 @@ export async function getStaticPaths({ locales }) {
     let paths = [];
 
     for (let locale of locales) {
-        const posts = await getBlogs({ languages: locale })
+        const posts = await getBlogs({ language: locale })
         const ids = posts.map(post => post.id);
         paths = [...paths, ...ids.map(id => ({ params: { id: id }, locale: locale }))];
     }
