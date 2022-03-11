@@ -1,5 +1,5 @@
 import ContactForm from './ContactForm';
+import Heading from './Heading';
 import i18n from './i18n';
-import Title from './Title';
 
-export { ContactForm, i18n, Title }
+export { ContactForm, Heading, i18n }

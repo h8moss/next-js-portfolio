@@ -2,6 +2,7 @@ import { I18n } from "../../../types";
 
 export type LanguageBody = {
   title: string;
+  heading: string;
   nameQuestion: string;
   emailQuestion: string;
   optionalText: string;
