@@ -13,7 +13,7 @@ const ProjectListTile = ({ project, onClick }) => {
             animate={{ opacity: 1, scaleY: 1, backgroundColor: '#fff', fontSize: '1rem' }}
             exit={{ scaleY: 0 }}
             whileHover={{ backgroundColor: '#ddd', fontSize: '1.2rem' }}
-            className='text-black py-5 border-b-2 border-gray-400 flex flex-col px-3 w-full'
+            className='text-black py-5 border-b-2 border-gray-400 flex flex-col px-3 w-full overflow-x-auto overflow-y-clip'
             onClick={onClick}
         >
             {project.title[locale]}

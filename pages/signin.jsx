@@ -1,5 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { AnimatePresence } from "framer-motion";
+import Head from 'next/head';
 import { useRouter } from 'next/router'
 import { useEffect, useState } from "react";
 
@@ -60,6 +61,11 @@ function Login() {
 
     return (
         <>
+            <Head>
+                <title>
+                    {isRegistering ? registerTxt : signinTxt}
+                </title>
+            </Head>
             <Toast
                 className='bg-red-500'
                 message={isRegistering ? registeringErrorMessage : signinErrorMessage}

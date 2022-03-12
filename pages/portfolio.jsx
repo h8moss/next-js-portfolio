@@ -1,10 +1,11 @@
 import { AnimatePresence } from 'framer-motion';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useReducer, useState } from 'react';
 
 import NavBar from "../components/NavBar";
 import ScreenDiv from "../components/ScreenDiv";
-import { ProjectList, ProjectView, TagList } from '../domain/portfolio';
+import { i18n, ProjectList, ProjectView, TagList } from '../domain/portfolio';
 import { getProjects } from '../domain/portfolio/api';
 import {
     ProjectView as MProjectView,
@@ -13,6 +14,7 @@ import {
 import reducer from '../domain/portfolio/reducer';
 import EventType from '../domain/portfolio/reducer/eventType';
 import State from '../domain/portfolio/reducer/state';
+import useI18n from '../hooks/useI18n';
 
 const Portfolio = ({ projects }) => {
 
@@ -26,6 +28,8 @@ const Portfolio = ({ projects }) => {
 
     const [canExit, setCanExit] = useState([null, false]);
 
+    const { title } = useI18n(i18n);
+
     useEffect(() => {
         setCanExit((canExit) => [!state.showSelectedProject, canExit[1]])
     }, [state.showSelectedProject])
@@ -38,6 +42,7 @@ const Portfolio = ({ projects }) => {
 
     return (
         <>
+            <Head><title>{title}</title></Head>
             <NavBar onClick={(route) => setNextRoute(route)} />
             <ScreenDiv className='flex flex-row'>
                 <AnimatePresence

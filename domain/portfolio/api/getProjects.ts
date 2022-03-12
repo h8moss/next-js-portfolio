@@ -21,8 +21,8 @@ const getProjects = () => {
         "Next js",
         "React",
         "Javascript",
-        "Firebase",
-        "Firebase-hosting",
+        "Firebase firestore",
+        "Vercel-hosting",
         "web",
       ],
       links: [
@@ -91,6 +91,18 @@ const getProjects = () => {
       },
       tags: ["python", "machine-learning", "tkinter"],
       links: [generateGithubLink("https://github.com/h8moss/Drawing-Numbers")],
+    },
+    {
+      title: {
+        en: "website update notifier",
+        es: "notificador de cambios en sitio web",
+      },
+      description: {
+        en: "A simple python program that compares a cached version of a website with the live version and sends an email when they change",
+        es: "Una aplicación de python sencilla que compara una versión guardada de un sitio web con la versión actual y envía un mail si difieren",
+      },
+      tags: ["python"],
+      links: [generateGithubLink("https://github.com/h8moss/website_updates")],
     },
   ];
 };

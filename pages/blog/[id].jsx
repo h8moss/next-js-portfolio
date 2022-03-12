@@ -1,11 +1,11 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import BlogViewer from "../../components/BlogViewer";
 import NavBar from "../../components/NavBar";
 import ScreenDiv from '../../components/ScreenDiv';
-import { server } from "../../config";
 import { getBlog, getBlogs } from '../../domain/blog/api';
 
 function Blog({ post: { title, text } }) {
@@ -18,6 +18,9 @@ function Blog({ post: { title, text } }) {
 
     return (
         <>
+            <Head>
+                <title>{title}</title>
+            </Head>
             <NavBar onClick={(route) => setNextRoute(route)} />
             <ScreenDiv>
                 <AnimatePresence
