@@ -1,9 +1,12 @@
+import Head from 'next/head';
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import NavBar from "../../components/NavBar";
 import ScreenDiv from "../../components/ScreenDiv";
 import { Loading, MainPage, NotAllowed } from "../../domain/blog/create";
+import i18n from '../../domain/blog/i18n';
+import useI18n from '../../hooks/useI18n';
 import useUser from "../../hooks/useUser";
 
 const getPage = ({ isAdmin, onExit, shouldStay }) => {
@@ -25,12 +28,17 @@ function BlogCreate() {
 
     let [isAdmin, setIsAdmin] = useState(null);
 
+    let { createTitle } = useI18n(i18n);
+
     useEffect(() => {
         setIsAdmin(user !== null && user.isAdmin);
     }, [user, router]);
 
     return (
         <>
+            <Head>
+                <title>{createTitle}</title>
+            </Head>
             <NavBar
                 onClick={(route) => setNextRoute(route)}
             />
