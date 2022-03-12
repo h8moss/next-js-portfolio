@@ -13,4 +13,4 @@ const Heading = ({ children }) => {
     );
 }
 
-export default Title;
+export default Heading;
