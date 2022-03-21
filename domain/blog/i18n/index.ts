@@ -15,6 +15,7 @@ const i18n: I18nBody = {
       yearAgo: "Hace un año",
       yearsAgo: "Hace _ años",
     },
+    noBlogText: "No hay blogs aún",
   },
   en: {
     dateOp: {
@@ -30,6 +31,7 @@ const i18n: I18nBody = {
       yearAgo: "A year ago",
       yearsAgo: "_ years ago",
     },
+    noBlogText: "No blogs yet, check back later",
   },
 };
 
