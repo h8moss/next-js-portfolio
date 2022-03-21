@@ -1,4 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { BsEmojiNeutral } from 'react-icons/bs';
@@ -19,6 +20,8 @@ function Blogs({ posts }) {
 
     let shouldStay = nextRoute === router.pathname;
     let { noBlogText } = useI18n(i18n);
+
+    const { indexTitle } = useI18n(i18n);
 
     const postComponents = posts.map(post => {
 
@@ -41,6 +44,9 @@ function Blogs({ posts }) {
 
     return (
         <>
+            <Head>
+                <title>{indexTitle}</title>
+            </Head>
             <NavBar
                 onClick={(route) => setNextRoute(route)}
             />

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-const Title = ({ children }) => {
+const Heading = ({ children }) => {
     return (
         <motion.h1
             className="text-3xl w-1/2 text-center mx-auto"
@@ -13,4 +13,4 @@ const Title = ({ children }) => {
     );
 }
 
-export default Title;
+export default Heading;

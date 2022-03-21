@@ -2,6 +2,8 @@ import { I18nBody } from "./types";
 
 const i18n: I18nBody = {
   es: {
+    createTitle: "Crear un nuevo post",
+    indexTitle: "Explora mi blog",
     dateOp: {
       dayAgo: "Ayer",
       daysAgo: "Hace _ días",
@@ -18,6 +20,8 @@ const i18n: I18nBody = {
     noBlogText: "No hay blogs aún",
   },
   en: {
+    createTitle: "Create blog post",
+    indexTitle: "Read blog posts",
     dateOp: {
       dayAgo: "Yesterday",
       daysAgo: "_ days ago",

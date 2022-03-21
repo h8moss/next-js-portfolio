@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -7,7 +8,6 @@ import ScreenDiv from '../components/ScreenDiv'
 import { ButtonLink, i18n, MainTextWriter } from '../domain/index';
 import useI18n from '../hooks/useI18n';
 import style from '../styles/fonts.module.css';
-
 function Home() {
 
   let router = useRouter();
@@ -32,6 +32,7 @@ function Home() {
 
   return (
     <>
+      <Head><title>Daniel Armenta</title></Head>
       <NavBar
         onClick={(val) => setNextRoute(val)}
       />

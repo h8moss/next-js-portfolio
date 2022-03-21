@@ -1,11 +1,12 @@
 import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/dist/client/router";
+import Head from 'next/head';
 import { useEffect, useState } from "react";
 
 import NavBar from '../components/NavBar';
 import ScreenDiv from '../components/ScreenDiv';
 import Toast from "../components/Toast";
-import { ContactForm, i18n, Title } from "../domain/contact";
+import { ContactForm, Heading, i18n } from "../domain/contact";
 import send from '../domain/contact/api/send';
 import useI18n from "../hooks/useI18n";
 
@@ -17,6 +18,7 @@ const Contact = () => {
     const [nextRoute, setNextRoute] = useState(router.pathname);
 
     const {
+        heading,
         title,
         errorMessage,
         successMessage,
@@ -44,6 +46,9 @@ const Contact = () => {
 
     return (
         <>
+            <Head>
+                <title>{title}</title>
+            </Head>
             <NavBar
                 onClick={(route) => setNextRoute(route)}
             />
@@ -65,9 +70,9 @@ const Contact = () => {
                 >
                     {shouldShow &&
                         <div className="w-full h-full">
-                            <Title>
-                                {title}
-                            </Title>
+                            <Heading>
+                                {heading}
+                            </Heading>
                             <ContactForm
                                 submit={mySend}
                                 show

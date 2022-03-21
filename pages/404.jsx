@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import NavBar from "../components/NavBar";
@@ -14,6 +15,9 @@ export default function Four0Four() {
 
     return (
         <>
+            <Head>
+                <title> 404 </title>
+            </Head>
             <NavBar onClick={(route) => router.push(route)} />
             <div className="overflow-hidden flex-col text-center justify-center">
                 {isMd
