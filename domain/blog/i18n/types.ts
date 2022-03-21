@@ -3,6 +3,7 @@ import { I18n } from "../../../types";
 
 export type LanguageBody = {
   dateOp: DateAgoTextBody;
+  noBlogText: string;
   createTitle: string;
   indexTitle: string;
 };

@@ -2,6 +2,7 @@ import { AnimatePresence } from 'framer-motion';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { BsEmojiNeutral } from 'react-icons/bs';
 
 import Card from '../../components/Card';
 import NavBar from '../../components/NavBar';
@@ -18,6 +19,7 @@ function Blogs({ posts }) {
     let [nextRoute, setNextRoute] = useState(router.pathname);
 
     let shouldStay = nextRoute === router.pathname;
+    let { noBlogText } = useI18n(i18n);
 
     const { indexTitle } = useI18n(i18n);
 
@@ -53,7 +55,14 @@ function Blogs({ posts }) {
                     onExitComplete={() => router.push(nextRoute)}>
                     {shouldStay &&
                         <Card>
-                            {postComponents}
+                            {
+                                postComponents == null || postComponents.length == 0
+                                    ? <div className='justify-center text-center text-3xl flex flex-col'>
+                                        {noBlogText}
+                                        <BsEmojiNeutral className='mx-auto mt-4' size={50} />
+                                    </div>
+                                    : postComponents
+                            }
                         </Card>}
                 </AnimatePresence>
             </ScreenDiv>
