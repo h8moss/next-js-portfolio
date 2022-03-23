@@ -13,7 +13,7 @@ function Home() {
   let router = useRouter();
   let [showSocials, setShowSocials] = useState(false);
   let [nextRoute, setNextRoute] = useState(router.pathname)
-  let { title } = useI18n(i18n);
+  let { title, metaDescription } = useI18n(i18n);
 
   let shouldStay = nextRoute === router.pathname;
 
@@ -32,7 +32,13 @@ function Home() {
 
   return (
     <>
-      <Head><title>Daniel Armenta</title></Head>
+      <Head>
+        <title>Daniel Armenta</title>
+        <meta
+          name='description'
+          content={metaDescription}
+        />
+      </Head>
       <NavBar
         onClick={(val) => setNextRoute(val)}
       />

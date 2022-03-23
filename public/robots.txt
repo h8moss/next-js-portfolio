@@ -1,0 +1,10 @@
+user-agent: *
+Disallow: /social_icons/*
+Disallow: /favicon.ico
+
+Disallow: /api/*
+
+Disallow: /blog
+Disallow: /blog/create
+
+Disallow: /signin

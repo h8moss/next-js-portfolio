@@ -16,6 +16,8 @@ const i18n: i18nLangs = {
       " y ",
       "más",
     ],
+    metaDescription:
+      "Me llamo Daniel Armenta, y soy un desarrollador con habilidad en Flutter, Javascript, Python y otros, ve mis proyectos, contácteme o lea mi blog",
   },
   en: {
     title: "My name is Daniel Armenta",
@@ -32,6 +34,8 @@ const i18n: i18nLangs = {
       " and ",
       "more",
     ],
+    metaDescription:
+      "My name is Daniel Armenta, I'm a developer with skills in python, flutter, javascript and more, check out my project, contact me or read my blog",
   },
 };
 
