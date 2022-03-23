@@ -22,6 +22,7 @@ const Contact = () => {
         title,
         errorMessage,
         successMessage,
+        metaDescription
     } = useI18n(i18n)
 
     useEffect(() => {
@@ -48,6 +49,10 @@ const Contact = () => {
         <>
             <Head>
                 <title>{title}</title>
+                <meta
+                    name='description'
+                    content={metaDescription}
+                />
             </Head>
             <NavBar
                 onClick={(route) => setNextRoute(route)}

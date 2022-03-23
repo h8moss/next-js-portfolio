@@ -11,6 +11,7 @@ const i18n: I18nLangs = {
     heading: "What do you wanna talk about?",
     errorMessage: "Something went wrong, please contact me by mail instead",
     successMessage: "Message sent successfully",
+    metaDescription: "Want to contact me? Send me a message through here",
   },
   es: {
     title: "Contactarme",
@@ -22,6 +23,7 @@ const i18n: I18nLangs = {
     heading: "¿Quieres contactarme?",
     errorMessage: "¡Algo salió mal! Por favor contácteme a traves de mi mail",
     successMessage: "El mensaje se envió correctamente",
+    metaDescription: "Enviame un mensaje por este medio",
   },
 };
 
