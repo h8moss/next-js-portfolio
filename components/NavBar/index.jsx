@@ -1,4 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import { FiMenu } from 'react-icons/fi';
 
@@ -15,6 +17,11 @@ export default function NavBar({ onClick }) {
         <>
             <div className='  absolute z-[95] py-3 bg-zinc-900 shadow-xl w-full'>
                 <div className='md:scale-100 scale-0 flex flex-row w-full justify-evenly'>
+                    <div className='absolute left-10 top-0 cursor-pointer'>
+                        <Link href='/' passHref >
+                            <Image alt='icon' src='/icon.png' width={25} height={25} />
+                        </Link>
+                    </div>
                     <Buttons onClick={onClick} />
                 </div>
                 <motion.button
