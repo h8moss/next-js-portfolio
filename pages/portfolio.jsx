@@ -28,7 +28,7 @@ const Portfolio = ({ projects }) => {
 
     const [canExit, setCanExit] = useState([null, false]);
 
-    const { title } = useI18n(i18n);
+    const { title, metaDescription } = useI18n(i18n);
 
     useEffect(() => {
         setCanExit((canExit) => [!state.showSelectedProject, canExit[1]])
@@ -42,7 +42,13 @@ const Portfolio = ({ projects }) => {
 
     return (
         <>
-            <Head><title>{title}</title></Head>
+            <Head>
+                <title>{title}</title>
+                <meta
+                    name='description'
+                    content={metaDescription}
+                />
+            </Head>
             <NavBar onClick={(route) => setNextRoute(route)} />
             <ScreenDiv className='flex flex-row'>
                 <AnimatePresence
