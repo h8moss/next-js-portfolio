@@ -69,7 +69,7 @@ const Contact = () => {
                 show={showErrorToast && shouldShow}
                 onDismiss={() => setShowErrorToast(false)}
             />
-            <ScreenDiv className="py-16 md:px-60 px-3">
+            <ScreenDiv className="py-20 md:px-60 px-3 overflow-y-auto">
                 <AnimatePresence
                     onExitComplete={() => router.push(nextRoute)}
                 >

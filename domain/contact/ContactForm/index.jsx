@@ -78,8 +78,7 @@ const ContactForm = ({ submit, show = true }) => {
                         >
                             <ContactErrorMessage name="message" />
                         </motion.div>
-
-                        <div className="flex flex-row justify-center">
+                        <div className="flex md:flex-row flex-col justify-center">
                             <motion.button
                                 whileHover={{ scale: 1.2 }}
                                 initial={{ x: '10vh', opacity: 0 }}
