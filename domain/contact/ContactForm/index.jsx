@@ -1,5 +1,7 @@
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 import useI18n from "../../../hooks/useI18n";
 import useUser from "../../../hooks/useUser";
@@ -10,7 +12,7 @@ import FieldMotion from "./FieldMotion";
 import Label from './Label';
 import style from './style.module.css';
 
-const ContactForm = ({ submit, show = true }) => {
+const ContactForm = ({ submit, show = true, onError = () => { } }) => {
 
     const user = useUser();
     let mail = user !== null ? user.mail : '';
@@ -22,6 +24,8 @@ const ContactForm = ({ submit, show = true }) => {
         optionalText,
         submitButton
     } = useI18n(i18n);
+
+    const [isHuman, setIsHuman] = useState(false);
 
     return (
         <Formik
@@ -78,18 +82,34 @@ const ContactForm = ({ submit, show = true }) => {
                         >
                             <ContactErrorMessage name="message" />
                         </motion.div>
+                        <div className="mx-auto py-4">
+                            <HCaptcha
+                                sitekey="481c19fe-6f80-4feb-81c5-3c48a90ae625"
+                                onVerify={() => setIsHuman(true)}
+                                onError={() => {
+                                    onError('Something went wrong');
+                                    setIsHuman(false);
+                                }}
+
+                                onExpire={() => {
+                                    onError('Captcha expired');
+                                    setIsHuman(false);
+                                }}
+                            />
+                        </div>
                         <div className="flex md:flex-row flex-col justify-center">
                             <motion.button
-                                whileHover={{ scale: 1.2 }}
+                                whileHover={{ scale: isSubmitting || !isHuman ? 1 : 1.2 }}
                                 initial={{ x: '10vh', opacity: 0 }}
                                 exit={{ x: '100vw', opacity: 0 }}
                                 animate={{ x: '0', opacity: 1 }}
-                                className='w-min my-auto rounded-lg bg-purple-400 p-3'
+                                className={`w-min my-auto rounded-lg ${isSubmitting || !isHuman ? "bg-gray-400" : 'bg-purple-400'} p-3`}
                                 onClick={() => {
-                                    if (!isSubmitting) {
+                                    if (!isSubmitting && isHuman) {
                                         submitForm();
                                     }
                                 }}
+                                disabled={isSubmitting || !isHuman}
                             >
                                 {submitButton}
                             </motion.button>
