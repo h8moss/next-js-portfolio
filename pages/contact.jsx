@@ -11,8 +11,8 @@ import send from '../domain/contact/api/send';
 import useI18n from "../hooks/useI18n";
 
 const Contact = () => {
-    const [showErrorToast, setShowErrorToast] = useState(false);
-    const [showSuccessToast, setShowSuccessToast] = useState(false);
+    const [errorToastTxt, setErrorToastTxt] = useState('');
+    const [successToastTxt, setSuccessToastTxt] = useState('');
 
     const router = useRouter();
     const [nextRoute, setNextRoute] = useState(router.pathname);
@@ -27,23 +27,27 @@ const Contact = () => {
 
     useEffect(() => {
         let time = setTimeout(() => {
-            if (showErrorToast) setShowErrorToast(false);
-            if (showSuccessToast) setShowSuccessToast(false);
+            if (errorToastTxt != '') setErrorToastTxt('');
+            if (successToastTxt != '') setSuccessToastTxt('');
         }, 5000);
         return () => clearTimeout(time)
-    }, [showErrorToast, showSuccessToast]);
+    }, [errorToastTxt, successToastTxt]);
 
 
     const mySend = (data, formik) => {
         send(
             data,
             formik,
-            () => { setShowSuccessToast(true) },
-            () => { setShowErrorToast(true) }
+            () => { setSuccessToastTxt(successMessage) },
+            () => { setSuccessToastTxt(errorMessage) }
         );
     }
 
     const shouldShow = router.pathname === nextRoute;
+    if (!shouldShow) {
+        setErrorToastTxt('');
+        setSuccessToastTxt('');
+    }
 
     return (
         <>
@@ -59,15 +63,13 @@ const Contact = () => {
             />
             <Toast
                 className='bg-green-500'
-                message={successMessage}
-                show={showSuccessToast && shouldShow}
-                onDismiss={() => setShowSuccessToast(false)}
+                message={successToastTxt}
+                onDismiss={() => setSuccessToastTxt('')}
             />
             <Toast
                 className='bg-red-500'
-                message={errorMessage}
-                show={showErrorToast && shouldShow}
-                onDismiss={() => setShowErrorToast(false)}
+                message={errorToastTxt}
+                onDismiss={() => setErrorToastTxt('')}
             />
             <ScreenDiv className="py-20 md:px-60 px-3 overflow-y-auto">
                 <AnimatePresence
@@ -81,6 +83,7 @@ const Contact = () => {
                             <ContactForm
                                 submit={mySend}
                                 show
+                                onError={(txt) => setErrorToastTxt(txt)}
                             />
                         </div>
                     }
