@@ -1,7 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { FiX } from 'react-icons/fi';
 
-const Toast = ({ className, message, show, onDismiss }) => {
+const Toast = ({ className, message, onDismiss }) => {
+
+    const show = !!message; // if message is falsy, shouldn't show.
+
     return (
         <div className="w-screen h-screen absolute top-0 left-0 overflow-clip pointer-events-none">
             <AnimatePresence>

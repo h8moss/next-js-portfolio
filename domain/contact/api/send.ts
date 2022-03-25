@@ -1,6 +1,7 @@
+import { addDoc, collection } from "firebase/firestore";
 import { FormikHelpers } from "formik";
 
-import { server } from "../../../config";
+import { db } from "../../../services/firebase/firestore";
 import { RequestBody } from "../types";
 
 const send = async (
@@ -9,24 +10,18 @@ const send = async (
   onSuccess: () => any,
   onFailure: () => any
 ): Promise<void> => {
-  const name = values.name;
-  const message = values.message;
-  const email = values.email ? values.email : null;
-
-  const res = await fetch(`${server}/api/contact`, {
-    method: "POST",
-    body: JSON.stringify({
-      name: name,
-      message: message,
-      email: email,
-    }),
-  });
-
-  if (res.status !== 200) {
-    setFieldError("general", "Something went wrong!");
+  if (!values.name || !values.message) {
+    setFieldError("general", "Something went wrong");
     setSubmitting(false);
     onFailure();
   } else {
+    const contactCollection = collection(db, "/contact");
+    await addDoc(contactCollection, {
+      name: values.name,
+      message: values.message,
+      email: values.email ? values.email : null,
+    });
+
     resetForm();
     onSuccess();
   }
