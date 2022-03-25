@@ -82,7 +82,11 @@ const ContactForm = ({ submit, show = true, onError = () => { } }) => {
                         >
                             <ContactErrorMessage name="message" />
                         </motion.div>
-                        <div className="mx-auto py-4">
+                        <motion.div className="mx-auto py-4"
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            exit={{ scale: 0 }}
+                        >
                             <HCaptcha
                                 sitekey="481c19fe-6f80-4feb-81c5-3c48a90ae625"
                                 onVerify={() => setIsHuman(true)}
@@ -96,7 +100,7 @@ const ContactForm = ({ submit, show = true, onError = () => { } }) => {
                                     setIsHuman(false);
                                 }}
                             />
-                        </div>
+                        </motion.div>
                         <div className="flex md:flex-row flex-col justify-center">
                             <motion.button
                                 whileHover={{ scale: isSubmitting || !isHuman ? 1 : 1.2 }}
