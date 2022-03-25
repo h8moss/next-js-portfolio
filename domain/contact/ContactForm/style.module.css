@@ -10,5 +10,5 @@
 }
 
 .form {
-  @apply flex flex-col w-full h-[80%] md:mb-24 mb-96;
+  @apply flex flex-col w-full h-full md:mb-24 mb-96;
 }
