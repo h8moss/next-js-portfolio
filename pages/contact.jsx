@@ -44,10 +44,6 @@ const Contact = () => {
     }
 
     const shouldShow = router.pathname === nextRoute;
-    if (!shouldShow) {
-        setErrorToastTxt('');
-        setSuccessToastTxt('');
-    }
 
     return (
         <>
@@ -63,12 +59,12 @@ const Contact = () => {
             />
             <Toast
                 className='bg-green-500'
-                message={successToastTxt}
+                message={shouldShow ? successToastTxt : ''}
                 onDismiss={() => setSuccessToastTxt('')}
             />
             <Toast
                 className='bg-red-500'
-                message={errorToastTxt}
+                message={shouldShow ? errorToastTxt : ''}
                 onDismiss={() => setErrorToastTxt('')}
             />
             <ScreenDiv className="py-20 md:px-60 px-3 overflow-y-auto">
