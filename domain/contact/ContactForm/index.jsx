@@ -1,7 +1,7 @@
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import useI18n from "../../../hooks/useI18n";
 import useUser from "../../../hooks/useUser";
@@ -11,6 +11,10 @@ import ContactErrorMessage from "./ContactErrorMessage";
 import FieldMotion from "./FieldMotion";
 import Label from './Label';
 import style from './style.module.css';
+
+const verifyCaptcha = async (token, eKey) => {
+    const response = await fetch
+}
 
 const ContactForm = ({ submit, show = true, onError = () => { } }) => {
 
@@ -26,6 +30,7 @@ const ContactForm = ({ submit, show = true, onError = () => { } }) => {
     } = useI18n(i18n);
 
     const [isHuman, setIsHuman] = useState(false);
+    const captchaRef = useRef(null);
 
     return (
         <Formik
@@ -35,7 +40,11 @@ const ContactForm = ({ submit, show = true, onError = () => { } }) => {
                 message: '',
             }}
             validate={validate}
-            onSubmit={submit}
+            onSubmit={() => {
+                captchaRef.current.resetCaptcha();
+                setIsHuman(false);
+                submit();
+            }}
         >
             {({ isSubmitting, submitForm }) => (
                 <Form className={style.form}>
@@ -89,11 +98,13 @@ const ContactForm = ({ submit, show = true, onError = () => { } }) => {
                         >
                             <HCaptcha
                                 sitekey="481c19fe-6f80-4feb-81c5-3c48a90ae625"
-                                onVerify={() => setIsHuman(true)}
+                                onVerify={verifyCaptcha}
                                 onError={() => {
                                     onError('Something went wrong');
                                     setIsHuman(false);
                                 }}
+
+                                ref={captchaRef}
 
                                 onExpire={() => {
                                     onError('Captcha expired');
