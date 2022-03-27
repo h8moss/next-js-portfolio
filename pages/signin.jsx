@@ -68,8 +68,7 @@ function Login() {
             </Head>
             <Toast
                 className='bg-red-500'
-                message={isRegistering ? registeringErrorMessage : signinErrorMessage}
-                show={showErrorToast && shouldStay}
+                message={showErrorToast ? (isRegistering ? registeringErrorMessage : signinErrorMessage) : ''}
                 onDismiss={() => setShowErrorToast(false)}
             />
             <NavBar
