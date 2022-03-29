@@ -11,7 +11,7 @@ const NavBar = ({ onClick }) => {
 
     return (
         <>
-            <div className="bg-black shadow-2xl w-screen sticky flex justify-end">
+            <div className="bg-black shadow-2xl w-screen absolute flex justify-end">
                 <BurgerButton onClick={() => setShowModal(true)} />
             </div>
             <AnimatePresence>
