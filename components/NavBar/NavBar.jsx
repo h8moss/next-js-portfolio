@@ -6,12 +6,12 @@ const NavBar = ({ onClick = () => { } }) => {
     const { isLg } = useTailwindSize();
 
     return (
-        <div className="sticky w-full bg-black shadow-xl">
+        <>
             {isLg
                 ? <Desktop onClick={onClick} />
                 : <Mobile onClick={onClick} />
             }
-        </div>
+        </>
     );
 }
 
