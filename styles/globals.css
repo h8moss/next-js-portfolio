@@ -22,5 +22,6 @@ html {
 }
 
 body {
-  @apply text-5xl sm:text-5xl md:text-3xl lg:text-xl xl:text-lg 2xl:text-sm text-white bg-zinc-800;
+  @apply text-5xl sm:text-5xl md:text-3xl lg:text-3xl xl:text-xl 2xl:text-xl
+  text-white bg-zinc-800 overflow-x-clip;
 }
