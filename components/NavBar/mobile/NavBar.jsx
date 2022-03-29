@@ -1,9 +1,7 @@
 import { AnimatePresence } from "framer-motion";
-import { useRouter } from "next/router";
 import { useState } from "react";
 
-import Button from "../../Button";
-import RouteButton from "../RouteButton";
+import NavigationButtons from "../NavigationButtons";
 import BurgerButton from "./BurgerButton";
 import Modal from "./Modal";
 
@@ -20,15 +18,11 @@ const NavBar = ({ onClick }) => {
                 {showModal &&
                     <Modal
                         onClose={() => setShowModal(false)}
-                        onClick={() => {
-                            setShowModal(false);
-                            onClick();
-                        }}
                     >
-                        <RouteButton highlightColor='#0f0' onClick={onClick} route={'/'}>Home</RouteButton>
-                        <RouteButton highlightColor='#a0f' onClick={onClick} route={'/portfolio'}>Portfolio</RouteButton>
-                        <RouteButton highlightColor='#f00' onClick={onClick} route={'/contact'}>Contact</RouteButton>
-                        <RouteButton highlightColor='#ff0' onClick={onClick} route={'/blog'}>Blog</RouteButton>
+                        <NavigationButtons onClick={(v) => {
+                            setShowModal(false);
+                            onClick(v);
+                        }} />
                     </Modal>
                 }
             </AnimatePresence>
