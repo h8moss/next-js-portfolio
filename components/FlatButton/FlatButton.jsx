@@ -1,4 +1,4 @@
-const Button = ({ onClick, children, color, className, ...props }) => {
+const FlatButton = ({ onClick, children, color, className, ...props }) => {
     return (
         <button
             onClick={onClick}
@@ -11,4 +11,4 @@ const Button = ({ onClick, children, color, className, ...props }) => {
     );
 }
 
-export default Button;
+export default FlatButton;
