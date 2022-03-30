@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 
-import Button from "../../../Button";
+import FlatButton from "../../../FlatButton";
 import ModalBackground from "./ModalBackground";
 
 

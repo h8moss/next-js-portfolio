@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import Button from "../../Button";
+import FlatButton from "../../FlatButton";
 
 const RouteButton = ({ children, route, onClick }) => {
 
@@ -10,9 +10,9 @@ const RouteButton = ({ children, route, onClick }) => {
     const isHighlighted = currentRoute == route;
 
     return (
-        <Button onClick={() => onClick(route)} className={isHighlighted && 'accent-text'}>
+        <FlatButton onClick={() => onClick(route)} className={isHighlighted && 'accent-text'}>
             {children}
-        </Button>
+        </FlatButton>
     );
 };
 
