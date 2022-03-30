@@ -1,12 +1,14 @@
-import { motion } from "framer-motion";
+import { HTMLMotionProps, motion } from "framer-motion";
+import React from "react";
 
-const Button = ({ onClick, className, ...props }) => {
+interface Props extends HTMLMotionProps<"button"> {}
+
+const Button = ({ className, ...props }: Props) => {
   return (
     <motion.button
+      {...props}
       animate={{ scale: 1 }}
       whileHover={{ scale: 1.1 }}
-      {...props}
-      onClick={onClick}
       className={"p-3 accent-bg text-white rounded shadow-md " + className}
     />
   );

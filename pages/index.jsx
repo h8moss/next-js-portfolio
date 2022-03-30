@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import Button from '../components/Button';
 import NavBar from "../components/NavBar/Desktop";
+import AnimatedButton from '../domain/index/AnimatedButton';
 import MainHeading from '../domain/index/MainHeading';
 import MainTextWriter from "../domain/index/MainTextWriter";
 
@@ -31,14 +32,18 @@ const Home = () => {
 
             </motion.div>
             <div className="my-auto flex justify-around" >
-              <Button>
+              <AnimatedButton onClick={() => setNextRoute('/about')}>
                 Read more about me
-              </Button>
-              <Button>
+              </AnimatedButton>
+              <AnimatedButton onClick={() => setNextRoute('/portfolio')}>
                 Check out what I&apos;ve built
-              </Button>
-              <Button>Contact me</Button>
-              <Button>Read my Blog</Button>
+              </AnimatedButton>
+              <AnimatedButton onClick={() => setNextRoute('/contact')}>
+                Contact me
+              </AnimatedButton>
+              <AnimatedButton onClick={() => setNextRoute('/blog')}>
+                Read my Blog
+              </AnimatedButton>
             </div>
           </div>
         }
