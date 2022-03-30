@@ -1,99 +1,51 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
-import NavBar from '../components/NavBar';
-import ScreenDiv from '../components/ScreenDiv'
-import { ButtonLink, i18n, MainTextWriter } from '../domain/index';
-import useI18n from '../hooks/useI18n';
-import style from '../styles/fonts.module.css';
-function Home() {
+import Button from '../components/Button';
+import NavBar from "../components/NavBar/Desktop";
+import MainHeading from '../domain/index/MainHeading';
+import MainTextWriter from "../domain/index/MainTextWriter";
 
-  let router = useRouter();
-  let [showSocials, setShowSocials] = useState(false);
-  let [nextRoute, setNextRoute] = useState(router.pathname)
-  let { title, metaDescription } = useI18n(i18n);
+const Home = () => {
 
-  let shouldStay = nextRoute === router.pathname;
+  const router = useRouter();
+  const [nextRoute, setNextRoute] = useState(router.pathname);
 
-  const motionVariants = {
-    beforeActive: {
-      color: 'rgba(0,0,0,0)'
-    },
-    active: {
-      color: '#fff',
-      marginLeft: '0px',
-    },
-    afterActive: {
-      marginLeft: '-100vw',
-    }
-  }
+  const shouldStay = router.pathname == nextRoute;
 
   return (
-    <>
-      <Head>
-        <title>Daniel Armenta</title>
-        <meta
-          name='description'
-          content={metaDescription}
-        />
-      </Head>
-      <NavBar
-        onClick={(val) => setNextRoute(val)}
-      />
-      <AnimatePresence
-        exitBeforeEnter
-        onExitComplete={() => {
-          router.push(nextRoute);
-        }}
-      >
-        {shouldStay && <motion.div
-          variants={motionVariants}
-          initial='beforeActive'
-          animate='active'
-          exit='afterActive'
-        >
-          <ScreenDiv className='flex flex-col text-center'>
-            <h1 className={`text-5xl mt-32 flex-1 transition-all delay-200 duration-500 ${style.fontQuicksand}`}>
-              {title}
-            </h1>
-            <div className={`${style.fontOutfit} flex-1 flex-grow`}>
-              <MainTextWriter onDone={() => setShowSocials(true)} />
-              <div className="flex flex-row mx-auto justify-evenly" >
-                <ButtonLink
-                  active={showSocials}
-                  alt='github profile'
-                  bg='#fff'
-                  image='/social_icons/github.png'
-                  size={50}
-                  link='https://github.com/h8moss'
-                />
-                <ButtonLink
-                  active={showSocials}
-                  alt='stack overflow profile'
-                  bg='#fff'
-                  image='/social_icons/so.png'
-                  size={50}
-                  link='https://stackoverflow.com/users/12638504/h8moss'
-                  delay={500}
-                />
-                <ButtonLink
-                  active={showSocials}
-                  alt='dev.to profile'
-                  bg='#000'
-                  image='/social_icons/dev-to.png'
-                  size={50}
-                  link='https://dev.to/h8moss'
-                  delay={1000}
-                />
-              </div>
+    <div className="h-screen w-screen overflow-clip flex flex-col">
+      <NavBar onClick={(route) => setNextRoute(route)} />
+      <AnimatePresence onExitComplete={() => router.push(nextRoute)}>
+        {shouldStay &&
+          <div className="flex-grow flex flex-col text-center">
+            <div className="h-1/4" />
+            <MainHeading />
+            <motion.div
+              animate={{ x: 0 }}
+              exit={{ x: '-100vw' }}
+            >
+              <MainTextWriter onDone={() => { }} />
+
+            </motion.div>
+            <div className="my-auto flex justify-around" >
+              <Button>
+                Read more about me
+              </Button>
+              <Button>
+                Check out what I&apos;ve built
+              </Button>
+              <Button>Contact me</Button>
+              <Button>Read my Blog</Button>
             </div>
-          </ScreenDiv>
-        </motion.div>}
+          </div>
+        }
       </AnimatePresence>
-    </>
-  )
+    </div>
+  );
 }
+
 
 export default Home;
