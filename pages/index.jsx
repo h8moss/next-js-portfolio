@@ -3,8 +3,7 @@ import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-import Button from '../components/Button';
-import NavBar from "../components/NavBar/Desktop";
+import NavBar from "../components/NavBar";
 import AnimatedButton from '../domain/index/AnimatedButton';
 import MainHeading from '../domain/index/MainHeading';
 import MainTextWriter from "../domain/index/MainTextWriter";
