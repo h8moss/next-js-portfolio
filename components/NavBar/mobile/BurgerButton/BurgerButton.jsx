@@ -8,7 +8,7 @@ const getSize = ({ isSm, isMd, isLg, isXl, isXl2 }) => {
     if (isLg) return 80;
     if (isMd) return 70;
     if (isSm) return 70;
-    return 60;
+    return 30;
 }
 
 const BurgerButton = ({ onClick }) => {
