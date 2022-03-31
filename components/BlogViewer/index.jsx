@@ -35,7 +35,9 @@ const BlogViewer = ({ children, title, ...props }) => {
                         return !inline && match ? (
                             <div className="flex flex-col w-full">
                                 <div className={style.precode} >
-                                    <div className={style.btn1} /> <div className={style.btn2} /> <div className={style.btn3} />
+                                    <div className={style.btn1} />
+                                    <div className={style.btn2} />
+                                    <div className={style.btn3} />
                                 </div>
                                 <div className={style.code}>
                                     <SyntaxHighlighter
