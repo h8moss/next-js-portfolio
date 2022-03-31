@@ -1,5 +1,4 @@
-import Image from 'next/image';
-
+import Logo from '../Logo';
 import NavigationButtons from '../NavigationButtons';
 
 const NavBar = ({ onClick }) => {
@@ -7,12 +6,7 @@ const NavBar = ({ onClick }) => {
         <div className="flex flex-row bg-black shadow-2xl top-0 sticky w-full">
             <div className='flex-grow flex justify-center'>
                 <button className='m-auto' onClick={() => onClick('/')}>
-                    <Image
-                        alt='icon'
-                        width={30}
-                        height={30}
-                        src='/icon.png'
-                    />
+                    <Logo />
                 </button>
             </div>
             <div className='flex-grow-[2] flex justify-around '>
