@@ -20,8 +20,8 @@ const Home = () => {
       <NavBar onClick={(route) => setNextRoute(route)} />
       <AnimatePresence onExitComplete={() => router.push(nextRoute)}>
         {shouldStay &&
-          <div className="flex-grow flex flex-col text-center">
-            <div className="h-1/4" />
+          <div className="flex-grow flex flex-col text-center overflow-y-auto">
+            <div className="h-0 md:h-1/4 xl:h-1/3" />
             <MainHeading />
             <motion.div
               animate={{ x: 0 }}
@@ -30,7 +30,7 @@ const Home = () => {
               <MainTextWriter onDone={() => { }} />
 
             </motion.div>
-            <div className="my-auto flex justify-around" >
+            <div className="my-auto flex justify-around flex-wrap" >
               <AnimatedButton onClick={() => setNextRoute('/about')}>
                 Read more about me
               </AnimatedButton>
