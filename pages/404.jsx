@@ -9,7 +9,7 @@ import useTailwindSize from '../hooks/useTailwindSize';
 export default function Four0Four() {
 
     let router = useRouter();
-    const { isMd } = useTailwindSize();
+    const { isLg } = useTailwindSize();
 
     const { message } = useI18n(i18n)
 
@@ -20,9 +20,9 @@ export default function Four0Four() {
             </Head>
             <NavBar onClick={(route) => router.push(route)} />
             <div className="overflow-hidden flex-col text-center justify-center">
-                {isMd
+                {isLg
                     ? <ParticleText className='w-full h-full' text='404' />
-                    : <h1 className='text-9xl mt-48'>
+                    : <h1>
                         404
                     </h1>
                 }
