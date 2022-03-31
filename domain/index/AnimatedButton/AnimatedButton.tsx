@@ -16,6 +16,7 @@ const AnimatedButton = (props: Props) => {
       initial="hidden"
       exit="hidden"
       animate="visible"
+      className="p-2"
     >
       <Button {...props} />
     </motion.div>
