@@ -9,13 +9,14 @@ import Toast from "../components/Toast";
 import { ContactForm, Heading, i18n } from "../domain/contact";
 import send from '../domain/contact/api/send';
 import useI18n from "../hooks/useI18n";
+import useToastText from '../hooks/useToastText';
 
 const Contact = () => {
-    const [errorToastTxt, setErrorToastTxt] = useState('');
-    const [successToastTxt, setSuccessToastTxt] = useState('');
-
     const router = useRouter();
     const [nextRoute, setNextRoute] = useState(router.pathname);
+
+    const errorToast = useToastText({ props: { className: 'background-red-500' } });
+    const successToast = useToastText({ props: { className: 'background-green-500' } });
 
     const {
         heading,
@@ -25,21 +26,12 @@ const Contact = () => {
         metaDescription
     } = useI18n(i18n)
 
-    useEffect(() => {
-        let time = setTimeout(() => {
-            if (errorToastTxt != '') setErrorToastTxt('');
-            if (successToastTxt != '') setSuccessToastTxt('');
-        }, 5000);
-        return () => clearTimeout(time)
-    }, [errorToastTxt, successToastTxt]);
-
-
     const mySend = (data, formik) => {
         send(
             data,
             formik,
-            () => { setSuccessToastTxt(successMessage) },
-            () => { setSuccessToastTxt(errorMessage) }
+            () => { successToast.setText(successMessage) },
+            () => { errorToast.setText(errorMessage) }
         );
     }
 
@@ -57,16 +49,8 @@ const Contact = () => {
             <NavBar
                 onClick={(route) => setNextRoute(route)}
             />
-            <Toast
-                className='bg-green-500'
-                message={shouldShow ? successToastTxt : ''}
-                onDismiss={() => setSuccessToastTxt('')}
-            />
-            <Toast
-                className='bg-red-500'
-                message={shouldShow ? errorToastTxt : ''}
-                onDismiss={() => setErrorToastTxt('')}
-            />
+            <Toast {...errorToast.props} />
+            <Toast {...successToast.props} />
             <ScreenDiv className="py-20 md:px-60 px-3 overflow-y-auto">
                 <AnimatePresence
                     onExitComplete={() => router.push(nextRoute)}
