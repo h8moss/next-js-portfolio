@@ -1,19 +1,19 @@
-import { DateAgoTextBody } from "./types";
+import { DateAgoTextBody, DateFormat, ExtendedDateFormat } from "./types";
 
-// https://stackoverflow.com/questions/4611754/javascript-convert-seconds-to-a-date-object#4611809
-export function dateFromSeconds(secs: number) {
-  var t = new Date(1970, 0, 1); // Epoch
-  t.setSeconds(secs);
-  return t;
-}
-
-// HUGE oversimplification of durations of times
 const generateTimes = () => {
+  // oversimplification of durations of times
+  let msInSecond = 1000;
   let secondsInMinute = 60;
   let minutesInHour = 60;
   let hoursInDay = 24;
   let daysInMonth = 30;
   let monthsInYear = 12;
+
+  let msInMinute = msInSecond * secondsInMinute;
+  let msInHour = msInMinute * minutesInHour;
+  let msInDay = msInHour * hoursInDay;
+  let msInMonth = msInDay * daysInMonth;
+  let msInYear = msInMonth * monthsInYear;
 
   let secondsInHour = secondsInMinute * minutesInHour;
   let secondsInDay = secondsInHour * hoursInDay;
@@ -30,11 +30,17 @@ const generateTimes = () => {
   let daysInYear = daysInMonth * monthsInYear;
 
   return {
+    msInSecond,
     secondsInMinute,
     minutesInHour,
     hoursInDay,
     daysInMonth,
     monthsInYear,
+    msInMinute,
+    msInHour,
+    msInDay,
+    msInMonth,
+    msInYear,
     secondsInHour,
     secondsInDay,
     secondsInMonth,
@@ -47,7 +53,88 @@ const generateTimes = () => {
     daysInYear,
   };
 };
+
 const times = generateTimes();
+
+const avengersRuntimeInSeconds =
+  2 * times.secondsInHour + 23 * times.secondsInMinute;
+
+// https://stackoverflow.com/questions/4611754/javascript-convert-seconds-to-a-date-object#4611809
+export function dateFromSeconds(secs: number) {
+  var t = new Date(1970, 0, 1); // Epoch
+  t.setSeconds(secs);
+  return t;
+}
+
+const dateInFormat = (
+  initialDate: Date,
+  finalDate: Date,
+  format: ExtendedDateFormat
+): [number, ExtendedDateFormat] => {
+  if (!finalDate) finalDate = new Date();
+  const difference = finalDate.getTime() - initialDate.getTime();
+
+  if (format == "closest") {
+    format = getClosestFormat(difference);
+  }
+
+  let dividend = 0;
+  switch (format) {
+    case "avengers-runtime":
+      dividend = avengersRuntimeInSeconds * times.msInSecond;
+      break;
+    case "days":
+      dividend = times.msInDay;
+      break;
+    case "hours":
+      dividend = times.msInHour;
+      break;
+    case "milliseconds":
+      dividend = 1;
+      break;
+    case "minutes":
+      dividend = times.msInMinute;
+      break;
+    case "months":
+      dividend = times.msInMonth;
+      break;
+    case "seconds":
+      dividend = times.msInSecond;
+      break;
+    case "years":
+      dividend = times.msInYear;
+      break;
+    default:
+      throw "Format not implemented yet";
+  }
+
+  return [difference / dividend, format];
+};
+
+const getClosestFormat = (difference: number): DateFormat => {
+  const { msInSecond, msInMinute, msInHour, msInDay, msInMonth, msInYear } =
+    times;
+
+  if (difference < msInSecond) {
+    return "milliseconds";
+  }
+  if (difference < msInMinute) {
+    return "seconds";
+  }
+  if (difference < msInHour) {
+    return "minutes";
+  }
+  if (difference < msInDay) {
+    return "hours";
+  }
+  if (difference < msInMonth) {
+    return "days";
+  }
+  if (difference < msInYear) {
+    return "months";
+  }
+  return "years";
+};
 
 const getTimeTexts = (lang: DateAgoTextBody) => {
   const {
@@ -138,3 +225,5 @@ export function getAgoString(date: Date, language: DateAgoTextBody) {
     }
   }
 }
+
+export { dateInFormat };
