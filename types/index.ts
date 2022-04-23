@@ -1,3 +1,5 @@
+import { ExtendedDateFormat } from "../services/dateOperations/types";
+
 export type Project = {
   title: I18n<string>;
   description: I18n<string>;
@@ -41,4 +43,8 @@ export type BlogPost = {
   tags: string[];
   text: string;
   created: { seconds: number };
+};
+
+export type TimeTexts = {
+  [key in ExtendedDateFormat]: string;
 };
