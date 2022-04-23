@@ -103,28 +103,9 @@ const ParticleText = ({ text, ...props }) => {
             requestAnimationFrame(animate);
         }
 
-        function connect() {
-            let maxDistance = 2;
-            for (let a = 0; a < particles.length; a++) {
-                for (let b = a; b < particles.length; b++) {
-                    let dx = particles[a].x - particles[b].x;
-                    let dy = particles[a].y - particles[b].y;
-                    let distance = Math.sqrt(dx * dx + dy * dy);
-                    if (distance <= maxDistance) {
-                        context.strokeStyle = 'white';
-                        context.lineWidth = 2;
-                        context.beginPath();
-                        context.moveTo(particles[a].x, particles[a].y);
-                        context.lineTo(particles[b].x, particles[b].y);
-                        context.stroke();
-                    }
-                }
-            }
-        }
-
         init();
         animate();
-    }, [])
+    }, [text])
 
     return <canvas ref={canvasRef} {...props} />
 }
