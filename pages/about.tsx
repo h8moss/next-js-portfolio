@@ -3,7 +3,9 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 import NavBar from "../components/NavBar";
+import TimeAgo from "../components/TimeAgo";
 import InfoDiv from "../domain/about/InfoDiv";
+import style from "../domain/about/style.module.css";
 
 const About = () => {
   const router = useRouter();
@@ -12,6 +14,8 @@ const About = () => {
 
   const shouldStay = nextRoute == router.pathname;
 
+  const birth = new Date(2002, 1, 11, 0, 0, 0, 0);
+
   return (
     <>
       <NavBar onClick={(route) => setNextRoute(route)} />
@@ -19,36 +23,51 @@ const About = () => {
         {shouldStay && (
           <>
             <h1>Auto biography</h1>
-            <div className="flex flex-col">
+            <div className={"flex flex-col " + style.aboutParagraph}>
               <InfoDiv>
-                My name is Daniel Armenta, I am a 20 year old Mexican student.
-                As a 16 year old, the time to think about university was quickly
-                approaching, and I had no idea what I wanted to do when I grew
-                up. I did know one thing tho, I loved video-games, and, with
-                that in mind I figured I could try to learn how to make them
-                from scratch. I had heard before of something called
-                &quot;pygame&quot;, some sort of program that used the
-                programming language python to create video-games, and so, doing
-                no research whatsoever into what programming language are used
-                to make video games or what kind of tool pygame was, I went
-                ahead and got a book on programming in python.
-                <br />
-                <br />
-                The specific book I picked is not important and to be honest I
-                don&apos;t think it is worth recommending, so I won&apos;t.
+                My name is Daniel Armenta, I also go by h8m0ss online, I was
+                born{" "}
+                <TimeAgo
+                  initialDate={birth}
+                  displayAgo
+                  format="hours"
+                  useDecimal
+                  shouldUpdate
+                />{" "}
+                in Mexico. But it was only when I was{" "}
+                <TimeAgo
+                  initialDate={birth}
+                  format="hours"
+                  useDecimal
+                  finalDate={new Date(2018, 1, 11, 0, 0, 0, 0)}
+                />{" "}
+                <span> old </span>, the time to think about university was
+                quickly approaching, and I had no idea what I wanted to do when
+                I grew up. I did know one thing tho, I loved video-games. Maybe
+                I could become a game developer? and so, I decided to do
+                absolutely no research into the tools used for game development.
+                I picked up a book on programming at random and I started
+                learning python, you know, the oh so famous game language for
+                game development (sarcasm).
               </InfoDiv>
-
               <InfoDiv leftAlign>
-                Anyway, I immediatly fell in love with programming, I also
-                quickly found out python shouldn&apos;t really be used to make
-                games, but I didn&apos;t care... I was hooked! I still remember
+                Anyway, I immediately fell in love with programming, I also
+                quickly found out python couldn&apos;t really be used to make
+                games, even if I did learn a fair bit of pygame, still, I
+                didn&apos;t care, I was hooked! I still remember the feeling of
                 being in my room at 3 in the morning giggling like an idiot
-                because I managed to make a simple calculator program, so I kept
-                at it.
+                because I managed to make a simple calculator program, or
+                display a pixel on the screen, or print my name on the console.
+                I fell in love with programming, day one.
               </InfoDiv>
-
               <InfoDiv>
-                By 2020, I had already 3 programming languages under my belt,
+                By the time I was{" "}
+                <TimeAgo
+                  initialDate={birth}
+                  format="hours"
+                  finalDate={new Date(2020, 1, 11, 0, 0, 0, 0)}
+                />{" "}
+                old, I had already 3 programming languages under my belt,
                 python, C# and Java. It was my last year of high school and
                 everything was looking up for the 18-year-old me, but, as you
                 may or may not be aware, there was a slight virus going around
@@ -75,7 +94,7 @@ const About = () => {
                 And like they were nothing, two years passed. When 2022 started,
                 I decided it was finally time to get my act together and create
                 a website so I got down to it, started learning react and
-                NextJs, the lockdown finally came to an end and I stepped foot
+                NextJs, the lock-down finally came to an end and I stepped foot
                 on my university for the very first time.
               </InfoDiv>
               <InfoDiv leftAlign>
