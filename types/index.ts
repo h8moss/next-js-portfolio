@@ -32,9 +32,10 @@ export type ImageLinkData = {
   url: string;
 };
 
+export type Locale = "en" | "es";
+
 export type I18n<T> = {
-  en: T;
-  es: T;
+  [key in Locale]: T;
 };
 
 export type BlogPost = {
