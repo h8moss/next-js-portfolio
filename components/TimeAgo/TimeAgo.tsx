@@ -9,14 +9,7 @@ interface Props {
   initialDate: Date;
   finalDate?: Date;
   displayAgo?: boolean;
-  format:
-    | "seconds"
-    | "minutes"
-    | "hours"
-    | "days"
-    | "months"
-    | "years"
-    | "avengers-runtime";
+  format: ExtendedDateFormat;
   useDecimal?: boolean;
   shouldUpdate?: boolean;
   label?: string;
@@ -68,7 +61,7 @@ const TimeAgo = ({
   if (!useDecimal) {
     time = Math.round(initialTime);
   } else {
-    time = Math.round(initialTime * 100) / 100;
+    time = Math.round(initialTime * 1000) / 1000;
   }
 
   const lang = useI18n(i18n);
@@ -76,10 +69,13 @@ const TimeAgo = ({
   const pluralText = time - 1 === Number.EPSILON ? "singular" : "plural";
 
   if (!label)
-    label = lang[pluralText][displayAgo ? "withAgo" : "withoutAgo"][format];
+    label =
+      lang[pluralText][displayAgo ? "withAgo" : "withoutAgo"][
+        finalFormat.current
+      ];
   const text = label.replace(
     "_",
-    useDecimal ? time.toFixed() : time.toString()
+    useDecimal ? time.toFixed(3) : time.toString()
   );
 
   return <span>{text}</span>;
