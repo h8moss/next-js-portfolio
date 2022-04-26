@@ -3,10 +3,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 import NavBar from "../components/NavBar";
-import TimeAgo from "../components/TimeAgo";
 import Biography from "../domain/about/Biography";
-import InfoDiv from "../domain/about/InfoDiv";
-import style from "../domain/about/style.module.css";
 import { ExtendedDateFormat } from "../services/dateOperations/types";
 
 const About = () => {
