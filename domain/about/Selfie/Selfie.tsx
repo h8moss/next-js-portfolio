@@ -1,7 +1,11 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-const Selfie = () => {
+interface Props {
+  description: string;
+}
+
+const Selfie = ({ description }: Props) => {
   return (
     <motion.div
       className="border rounded-full my-3 w-80 h-80 mx-auto overflow-clip"
@@ -13,7 +17,7 @@ const Selfie = () => {
         className="rotate-[39deg]"
         src="/selfie.jpg"
         layout="intrinsic"
-        alt="Me at the wax museum of Veracruz with a wax statue of Obama"
+        alt={description}
         width={320}
         height={320}
       />
