@@ -17,7 +17,7 @@ const ModalBackground = ({ children, onClick }) => {
             initial='hidden'
             animate='visible'
             variants={variants}
-            className='w-screen h-screen absolute left-0 top-0 bg-black bg-opacity-40'
+            className='w-screen h-screen overflow-clip fixed left-0 top-0 bg-black bg-opacity-40'
         >
             {children}
         </motion.div>
