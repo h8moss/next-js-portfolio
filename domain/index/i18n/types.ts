@@ -15,7 +15,10 @@ export type LanguageBody = {
     string,
     string
   ];
-  lookAtSocials: string;
+  aboutButton: string;
+  portfolioButton: string;
+  contactButton: string;
+  blogButton: string;
 };
 
 export type i18nLangs = I18n<LanguageBody>;

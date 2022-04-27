@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
+import { PropsWithChildren } from "react";
 
-const MainHeading = () => {
+const MainHeading = ({ children }: PropsWithChildren<{}>) => {
   return (
     <motion.h1
       className="p-5"
@@ -8,7 +9,7 @@ const MainHeading = () => {
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: "-100vw" }}
     >
-      My name is Daniel Armenta
+      {children}
     </motion.h1>
   );
 };

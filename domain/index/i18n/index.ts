@@ -3,7 +3,6 @@ import { i18nLangs } from "./types";
 const i18n: i18nLangs = {
   es: {
     title: "Me llamo Daniel Armenta",
-    lookAtSocials: "Abre mis redes sociales",
     description: [
       "Soy un desarrollador con experiencia en ",
       "Flutter",
@@ -18,10 +17,18 @@ const i18n: i18nLangs = {
     ],
     metaDescription:
       "Me llamo Daniel Armenta, y soy un desarrollador con habilidad en Flutter, Javascript, Python y otros, ve mis proyectos, contácteme o lea mi blog",
+    aboutButton: "Lee más sobre mi",
+    blogButton: "Lee mi blog",
+    contactButton: "Contactame",
+    portfolioButton: "Ve lo que he desarrollado",
   },
   en: {
+    aboutButton: "Read more about me",
+    blogButton: "Read my blog",
+    contactButton: "Contact me",
+    portfolioButton: "Check out what I've built",
+
     title: "My name is Daniel Armenta",
-    lookAtSocials: "Take a look at my socials",
     description: [
       "I'm a developer with skills in ",
       "Flutter",
