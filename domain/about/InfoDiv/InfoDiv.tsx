@@ -28,7 +28,7 @@ const InfoDiv = ({
 
   return (
     <motion.div
-      className={`w-full ${className} ${alignStyle}`}
+      className={`w-full my-2 ${className} ${alignStyle}`}
       transition={{
         type: "spring",
         damping: 10,
