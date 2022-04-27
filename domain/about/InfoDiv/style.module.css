@@ -3,7 +3,7 @@
 }
 
 .leftAlign > div {
-    @apply lg:text-right lg:w-1/2 w-full text-center;
+    @apply lg:text-right lg:w-1/2 w-full text-justify;
 }
 
 .rightAlign {
@@ -12,5 +12,5 @@
 }
 
 .rightAlign > div {
-    @apply lg:text-left lg:w-1/2 w-full text-center;
+    @apply lg:text-left lg:w-1/2 w-full text-justify;
 }
