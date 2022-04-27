@@ -8,6 +8,7 @@ import BiographyEs from "./BiographyEs/BiographyEs";
 
 export interface Props {
   format: ExtendedDateFormat;
+  displayDecimal: boolean;
 }
 
 const getLocaleBiography = (locale: Locale, props: Props): ReactNode => {

@@ -2,7 +2,7 @@ import TimeAgo from "../../../../components/TimeAgo";
 import InfoDiv from "../../InfoDiv";
 import { Props } from "../Biography";
 
-const BiographyEs = ({ format }: Props) => {
+const BiographyEs = ({ format, displayDecimal }: Props) => {
   const birth = new Date(2002, 1, 11, 0, 0, 0, 0);
 
   return (
@@ -15,7 +15,7 @@ const BiographyEs = ({ format }: Props) => {
             initialDate={birth}
             displayAgo
             shouldUpdate
-            useDecimal
+            useDecimal={displayDecimal}
           />
         </span>{" "}
         en México. Pero no fue hasta que tenía{" "}
@@ -24,7 +24,7 @@ const BiographyEs = ({ format }: Props) => {
             format={format}
             initialDate={birth}
             finalDate={new Date(2018, 1, 11, 0, 0, 0, 0)}
-            useDecimal
+            useDecimal={displayDecimal}
           />
         </span>
         , que empecé a pensar a que quería dedicarme, pero no sabía que
@@ -50,7 +50,7 @@ const BiographyEs = ({ format }: Props) => {
             format={format}
             initialDate={new Date(2020, 3, 15, 0, 0, 0, 0)}
             shouldUpdate
-            useDecimal
+            useDecimal={displayDecimal}
           />
         </span>{" "}
         , manejaba ya, tres lenguajes de programación: Python, C# y Java. Este
@@ -62,7 +62,7 @@ const BiographyEs = ({ format }: Props) => {
             format={format}
             initialDate={birth}
             finalDate={new Date(2020, 3, 15, 0, 0, 0, 0)}
-            useDecimal
+            useDecimal={displayDecimal}
           />
         </span>
         , pero, como quizás sepas,{" "}
@@ -72,7 +72,7 @@ const BiographyEs = ({ format }: Props) => {
             initialDate={new Date(2020, 3, 15, 0, 0, 0, 0)}
             shouldUpdate
             displayAgo
-            useDecimal
+            useDecimal={displayDecimal}
           />
         </span>{" "}
         había un pequeño problema relacionado con un virus alrededor del mundo,
@@ -106,7 +106,7 @@ const BiographyEs = ({ format }: Props) => {
             format={format}
             initialDate={new Date(2020, 3, 15, 0, 0, 0, 0)}
             finalDate={new Date(2022, 2, 12, 0, 0, 0, 0)}
-            useDecimal
+            useDecimal={displayDecimal}
           />
         </span>
         , es decir,{" "}
@@ -116,7 +116,7 @@ const BiographyEs = ({ format }: Props) => {
             initialDate={new Date(2022, 1, 1, 0, 0, 0, 0)}
             displayAgo
             shouldUpdate
-            useDecimal
+            useDecimal={displayDecimal}
           />
         </span>
         . Si no estas llevando cuenta, ya tendría{" "}
@@ -125,7 +125,7 @@ const BiographyEs = ({ format }: Props) => {
             format={format}
             initialDate={birth}
             finalDate={new Date(2022, 1, 1, 0, 0, 0, 0)}
-            useDecimal
+            useDecimal={displayDecimal}
           />
         </span>
         . Decidí que había llegado la hora de tener un sitio web. Por lo que
@@ -136,7 +136,7 @@ const BiographyEs = ({ format }: Props) => {
             initialDate={new Date(2022, 2, 12, 0, 0, 0, 0)}
             displayAgo
             shouldUpdate
-            useDecimal
+            useDecimal={displayDecimal}
           />
         </span>
         , afortunadamente el encierro termino y pude tomar clases presenciales
@@ -146,7 +146,7 @@ const BiographyEs = ({ format }: Props) => {
             format={format}
             initialDate={new Date(2020, 3, 15, 0, 0, 0, 0)}
             finalDate={new Date(2022, 2, 12, 0, 0, 0, 0)}
-            useDecimal
+            useDecimal={displayDecimal}
           />
         </span>
         .

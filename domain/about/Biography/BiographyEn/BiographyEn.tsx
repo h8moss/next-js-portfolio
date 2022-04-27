@@ -2,7 +2,7 @@ import TimeAgo from "../../../../components/TimeAgo";
 import InfoDiv from "../../InfoDiv";
 import { Props } from "../Biography";
 
-const BiographyEn = ({ format }: Props) => {
+const BiographyEn = ({ format, displayDecimal }: Props) => {
   const birth = new Date(2002, 1, 11, 0, 0, 0, 0);
 
   return (
@@ -14,7 +14,7 @@ const BiographyEn = ({ format }: Props) => {
             initialDate={birth}
             displayAgo
             format={format}
-            useDecimal
+            useDecimal={displayDecimal}
             shouldUpdate
           />{" "}
         </span>
@@ -23,7 +23,7 @@ const BiographyEn = ({ format }: Props) => {
           <TimeAgo
             initialDate={birth}
             format={format}
-            useDecimal
+            useDecimal={displayDecimal}
             finalDate={new Date(2018, 1, 11, 0, 0, 0, 0)}
           />{" "}
           old
@@ -54,7 +54,7 @@ const BiographyEn = ({ format }: Props) => {
             initialDate={new Date(2020, 2, 1, 0, 0, 0, 0)}
             displayAgo
             shouldUpdate
-            useDecimal
+            useDecimal={displayDecimal}
           />
         </span>
         , I had already 3 programming languages under my belt, python, C# and
@@ -67,7 +67,7 @@ const BiographyEn = ({ format }: Props) => {
             format={format}
             initialDate={birth}
             finalDate={new Date(2020, 2, 1, 0, 0, 0, 0)}
-            useDecimal
+            useDecimal={displayDecimal}
           />{" "}
           old
         </span>{" "}
@@ -79,7 +79,7 @@ const BiographyEn = ({ format }: Props) => {
             initialDate={new Date(2020, 2, 1, 0, 0, 0, 0)}
             displayAgo
             shouldUpdate
-            useDecimal
+            useDecimal={displayDecimal}
           />
         </span>
         , which meant we had to stay home for who-knows how long.
@@ -116,6 +116,7 @@ const BiographyEn = ({ format }: Props) => {
             format={format}
             initialDate={birth}
             finalDate={new Date(2004, 1, 11, 0, 0, 0, 0)}
+            useDecimal={displayDecimal}
           />{" "}
         </span>
         passed. That made me{" "}
@@ -124,7 +125,7 @@ const BiographyEn = ({ format }: Props) => {
             initialDate={birth}
             format={format}
             finalDate={new Date(2022, 1, 11, 0, 0, 0, 0)}
-            useDecimal
+            useDecimal={displayDecimal}
           />{" "}
           old
         </span>
@@ -135,7 +136,7 @@ const BiographyEn = ({ format }: Props) => {
             format={format}
             initialDate={new Date(2022, 2, 21, 0, 0, 0, 0)}
             displayAgo
-            useDecimal
+            useDecimal={displayDecimal}
             shouldUpdate
           />
         </span>
