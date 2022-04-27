@@ -7,6 +7,7 @@ import { useState } from "react";
 import NavBar from "../components/NavBar";
 import Biography from "../domain/about/Biography";
 import i18n from "../domain/about/i18n";
+import ScrollToTop from "../domain/about/ScrollToTop";
 import Selfie from "../domain/about/Selfie";
 import useI18n from "../hooks/useI18n";
 import { ExtendedDateFormat } from "../services/dateOperations/types";
@@ -56,6 +57,7 @@ const About = () => {
       <AnimatePresence onExitComplete={() => router.push(nextRoute)}>
         {shouldStay && (
           <>
+            <ScrollToTop show={shouldStay} />
             <motion.h1
               initial={{ x: "-100vw" }}
               animate={{ x: 0 }}
@@ -64,23 +66,29 @@ const About = () => {
             >
               {heading}
             </motion.h1>
-            <label className="ml-3">{formatLabel}</label>
-            <select
-              value={dateFormat}
-              onChange={onDropdownChange}
-              className="rounded bg-zinc-900 capitalize cursor-pointer"
+            <motion.div
+              initial={{ scaleY: 0 }}
+              exit={{ scaleY: 0 }}
+              animate={{ scaleY: 1 }}
             >
-              {eDateFormatValues
-                .map((v) => ({
-                  value: v,
-                  label: timeText[v],
-                }))
-                .map(({ label, value }) => (
-                  <option key={value} value={value}>
-                    {label}
-                  </option>
-                ))}
-            </select>
+              <label className="ml-3">{formatLabel}</label>
+              <select
+                value={dateFormat}
+                onChange={onDropdownChange}
+                className="rounded bg-zinc-900 capitalize cursor-pointer"
+              >
+                {eDateFormatValues
+                  .map((v) => ({
+                    value: v,
+                    label: timeText[v],
+                  }))
+                  .map(({ label, value }) => (
+                    <option key={value} value={value}>
+                      {label}
+                    </option>
+                  ))}
+              </select>
+            </motion.div>
             <Biography
               format={dateFormat}
               displayDecimal={dateFormat !== "closest"}
