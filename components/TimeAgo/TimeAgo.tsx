@@ -15,16 +15,6 @@ interface Props {
   label?: string;
 }
 
-// Shamelessly stolen from:
-// https://stackoverflow.com/a/9232092/12638504
-const truncateDecimals = (num: number, digits: number): number => {
-  var multiplier = Math.pow(10, digits),
-    adjustedNum = num * multiplier,
-    truncatedNum = Math[adjustedNum < 0 ? "ceil" : "floor"](adjustedNum);
-
-  return truncatedNum / multiplier;
-};
-
 const TimeAgo = ({
   initialDate,
   finalDate,
@@ -64,9 +54,13 @@ const TimeAgo = ({
     time = Math.round(initialTime * 1000) / 1000;
   }
 
+  if (!shouldUpdate && Math.round(time) - time < Number.EPSILON) {
+    useDecimal = false;
+  }
+
   const lang = useI18n(i18n);
 
-  const pluralText = time - 1 === Number.EPSILON ? "singular" : "plural";
+  const pluralText = time - 1 < Number.EPSILON ? "singular" : "plural";
 
   if (!label)
     label =
