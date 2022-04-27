@@ -8,7 +8,7 @@ interface Props {
 const Selfie = ({ description }: Props) => {
   return (
     <motion.div
-      className="border rounded-full my-3 w-80 h-80 mx-auto overflow-clip"
+      className="rounded-full my-3 w-80 h-80 mx-auto overflow-clip shadow-2xl"
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       exit={{ scale: 0 }}
