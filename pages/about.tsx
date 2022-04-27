@@ -1,11 +1,14 @@
 import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
 import NavBar from "../components/NavBar";
 import Biography from "../domain/about/Biography";
+import i18n from "../domain/about/i18n";
 import Selfie from "../domain/about/Selfie";
+import useI18n from "../hooks/useI18n";
 import { ExtendedDateFormat } from "../services/dateOperations/types";
 
 const eDateFormatValues: ExtendedDateFormat[] = [
@@ -28,6 +31,15 @@ const About = () => {
 
   const shouldStay = nextRoute == router.pathname;
 
+  const {
+    description,
+    formatLabel,
+    heading,
+    imageDescription,
+    timeText,
+    title,
+  } = useI18n(i18n);
+
   const onDropdownChange = (e: any) => {
     const target = e.target as HTMLOptionElement;
     const stringValue = target.value as string;
@@ -36,6 +48,10 @@ const About = () => {
 
   return (
     <>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={description} />{" "}
+      </Head>
       <NavBar onClick={(route) => setNextRoute(route)} />
       <AnimatePresence onExitComplete={() => router.push(nextRoute)}>
         {shouldStay && (
@@ -46,9 +62,9 @@ const About = () => {
               exit={{ x: "100vw" }}
               className="text-center m-3"
             >
-              Auto biography
+              {heading}
             </motion.h1>
-            <label className="ml-3">Display times in: </label>
+            <label className="ml-3">{formatLabel}</label>
             <select
               value={dateFormat}
               onChange={onDropdownChange}
@@ -57,7 +73,7 @@ const About = () => {
               {eDateFormatValues
                 .map((v) => ({
                   value: v,
-                  label: v == "avengers-runtime" ? "Avengers movies" : v,
+                  label: timeText[v],
                 }))
                 .map(({ label, value }) => (
                   <option key={value} value={value}>
@@ -69,7 +85,7 @@ const About = () => {
               format={dateFormat}
               displayDecimal={dateFormat !== "closest"}
             />
-            <Selfie />
+            <Selfie description={imageDescription} />
           </>
         )}
       </AnimatePresence>
