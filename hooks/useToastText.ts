@@ -9,14 +9,14 @@ import {
 import { Props } from "../components/Toast";
 
 interface Arguments {
-  props: HTMLProps<HTMLButtonElement>;
-  timeout: number;
+  props?: HTMLProps<HTMLButtonElement>;
+  timeout?: number;
 }
 
 const useToastText = ({
   props = {},
   timeout = 3000,
-}: Arguments): { props: Props; setText: Dispatch<SetStateAction<string>> } => {
+}: Arguments): [Props, Dispatch<SetStateAction<string>>] => {
   const [text, setText] = useState("");
 
   useEffect(() => {
@@ -27,14 +27,14 @@ const useToastText = ({
     return () => clearTimeout(timeout);
   }, [text]);
 
-  return {
-    props: {
+  return [
+    {
       ...props,
       onDismiss: () => setText(""),
       message: text,
     },
     setText,
-  };
+  ];
 };
 
 export default useToastText;
