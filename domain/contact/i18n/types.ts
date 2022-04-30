@@ -1,16 +1,24 @@
 import { I18n } from "../../../types";
 
-export type LanguageBody = {
-  title: string;
-  metaDescription: string;
-  heading: string;
-  nameQuestion: string;
-  emailQuestion: string;
-  optionalText: string;
-  messageQuestion: string;
-  submitButton: string;
-  errorMessage: string;
-  successMessage: string;
-};
+export interface ValidationErrorTextBody {
+  invalidMail: string;
+  missingMessage: string;
+  messageTooLong: string;
+  missingName: string;
+}
 
-export type I18nLangs = I18n<LanguageBody>;
+interface LanguageBody {
+  validationErrors: ValidationErrorTextBody;
+  successMessage: string;
+  submitErrorMessage: string;
+  heading: string;
+  title: string;
+  description: string;
+  namePlaceholder: string;
+  emailPlaceholder: string;
+  messagePlaceholder: string;
+  captchaErrorText: string;
+  submitText: string;
+}
+
+export type I18nBody = I18n<LanguageBody>;
