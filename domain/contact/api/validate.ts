@@ -1,23 +1,31 @@
 import validateEmail from "../../../services/validateEmail";
-import { RequestBody } from "../types";
+import { ValidationErrorTextBody } from "../i18n/types";
+import { FormValues } from "../types";
 
-const validate = (values: RequestBody): Object => {
-  let errors: any = {};
+const validate = (
+  values: FormValues,
+  errorText: ValidationErrorTextBody
+): object => {
+  let errors: {
+    email?: string;
+    name?: string;
+    message?: string;
+  } = {};
 
-  if (!values.name) {
-    errors.name = "This field is required!";
-  } else if (values.name.length > 30) {
-    errors.name = "Your name is too long!";
-  }
-  if (!values.message) {
-    errors.message = "This field is required!";
-  } else if (values.message.length > 300) {
-    errors.message = "Your message is too long!";
-  }
   if (values.email) {
     if (!validateEmail(values.email)) {
-      errors.email = "Invalid email address!";
+      errors.email = errorText.invalidMail;
     }
+  }
+
+  if (!values.message) {
+    errors.message = errorText.missingMessage;
+  } else if (values.message.length > 250) {
+    errors.message = errorText.messageTooLong;
+  }
+
+  if (!values.name) {
+    errors.name = errorText.missingName;
   }
 
   return errors;
