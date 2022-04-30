@@ -31,12 +31,15 @@ const getSize = ({
 };
 
 const ScrollToTop = ({ minScroll = 100, show }: Props) => {
-  const [trueShow, setTrueShow] = useState(true);
+  const [trueShow, setTrueShow] = useState(false);
 
   useEffect(() => {
     const updateScroll = () => {
       setTrueShow(window.scrollY > minScroll);
     };
+
+    updateScroll();
+
     window.addEventListener("scroll", updateScroll);
 
     return () => window.removeEventListener("scroll", updateScroll);
