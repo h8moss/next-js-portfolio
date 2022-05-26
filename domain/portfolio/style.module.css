@@ -1,0 +1,71 @@
+.Card {
+    display: flex;
+    flex-direction: column;
+    width: clamp(50px, 75%, 50rem);
+    margin: 2rem auto 0px auto;
+    border-radius: 1rem;
+    overflow: hidden;
+    @apply bg-white shadow-xl text-black;
+}
+
+.ProjectListItem {
+    border-bottom: 0.1rem solid gray;
+    padding: .25rem;
+}
+
+.TagList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.TagList > div {
+    border-radius: 1rem;
+    white-space: nowrap;
+    margin: auto 0.1rem 0.1rem 0.1rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    padding: 0.25rem;
+    @apply bg-zinc-600 text-gray-300;
+}
+
+.ModalBackground {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    z-index: 99;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow-y: hidden;
+    display: flex;
+    align-items: center;
+    
+}
+
+.ModalCard {
+    background-color: white;
+    color: black;
+    width: min(80%, 50rem);
+    height: 70%;
+    margin: auto;
+    padding: 0.5rem;
+    border-radius: 1rem;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.ProjectDescription {
+    border: 0.2rem solid #b35afc;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.ProjectDescription > div {
+    display: flex;
+}

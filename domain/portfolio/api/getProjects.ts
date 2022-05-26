@@ -6,7 +6,7 @@ const generateGithubLink = (url: string): ImageLinkData => ({
   url: url,
 });
 
-const getProjects = () => {
+const getProjects = (): Project[] => {
   return [
     {
       title: {

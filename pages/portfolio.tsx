@@ -1,122 +1,90 @@
-import { AnimatePresence } from 'framer-motion';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useEffect, useReducer, useState } from 'react';
+import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
+import ImageLink from "../components/ImageLink";
 import NavBar from "../components/NavBar";
-import ScreenDiv from "../components/ScreenDiv";
-import { i18n, ProjectList, ProjectView, TagList } from '../domain/portfolio';
-import { getProjects } from '../domain/portfolio/api';
-import {
-    ProjectView as MProjectView,
-    TagFilter as MTagFilter
-} from '../domain/portfolio/Mobile';
-import reducer from '../domain/portfolio/reducer';
-import EventType from '../domain/portfolio/reducer/eventType';
-import State from '../domain/portfolio/reducer/state';
-import useI18n from '../hooks/useI18n';
+import getProjects from "../domain/portfolio/api/getProjects";
+import style from "../domain/portfolio/style.module.css";
+import useLocale from "../hooks/useLocale";
 
-const Portfolio = ({ projects }) => {
+const Portfolio = () => {
+  const projects = getProjects();
+  const locale = useLocale();
 
-    const [state, dispatch] = useReducer(reducer, new State({ projects: projects }))
+  const [projectIndex, setProjectIndex] = useState<number>(null);
 
-    const router = useRouter();
+  const router = useRouter();
+  const [nextRoute, setNextRoute] = useState(router.pathname);
 
-    const [nextRoute, setNextRoute] = useState(router.pathname);
+  // Todo: this
+  const shouldStay = nextRoute === router.pathname;
 
-    const shouldStay = router.pathname === nextRoute;
-
-    const [canExit, setCanExit] = useState([null, false]);
-
-    const { title, metaDescription } = useI18n(i18n);
-
-    useEffect(() => {
-        setCanExit((canExit) => [!state.showSelectedProject, canExit[1]])
-    }, [state.showSelectedProject])
-
-    useEffect(() => {
-        if (canExit[0] && canExit[1]) {
-            router.push(nextRoute);
-        }
-    }, [canExit, nextRoute, router])
-
-    return (
-        <>
-            <Head>
-                <title>{title}</title>
-                <meta
-                    name='description'
-                    content={metaDescription}
-                />
-            </Head>
-            <NavBar onClick={(route) => setNextRoute(route)} />
-            <ScreenDiv className='flex flex-row'>
-                <AnimatePresence
-                    onExitComplete={() => setCanExit((state) => [true, state[1]])}
+  return (
+    <>
+      <NavBar onClick={(route) => setNextRoute(route)} />
+      <AnimatePresence onExitComplete={() => router.push(nextRoute)}>
+        {shouldStay && (
+          <>
+            <motion.div
+              className={style.Card}
+              initial={{ x: "100vw" }}
+              animate={{ x: "0" }}
+              exit={{ x: "-100vw" }}
+            >
+              {projects.map((v, i) => (
+                <button
+                  key={v.title.en}
+                  className={style.ProjectListItem}
+                  onClick={() => setProjectIndex(i)}
                 >
-                    {state.showSelectedProject && shouldStay &&
-                        <>
-                            <ProjectView
-                                project={state.selectedProject}
-                            />
-                            <MProjectView
-                                onExit={() => dispatch({ type: EventType.removeProjectSelection })}
-                                project={state.selectedProject}
-                            />
-                        </>
-                    }
-                </AnimatePresence>
-                <AnimatePresence
-                    onExitComplete={() => setCanExit((state) => [state[0], true])}
+                  <h2>{v.title[locale]}</h2>
+                  <div className={style.TagList}>
+                    {v.tags.map((v) => (
+                      <div key={v}>{v}</div>
+                    ))}
+                  </div>
+                </button>
+              ))}
+            </motion.div>
+            {projectIndex != null && shouldStay && (
+              <motion.div
+                className={style.ModalBackground}
+                onClick={() => setProjectIndex(null)}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <motion.div
+                  className={style.ModalCard}
+                  onClick={(e) => e.stopPropagation()}
+                  initial={{ y: "-100vh" }}
+                  animate={{ y: "0" }}
+                  exit={{ y: "150vh" }}
                 >
-                    {shouldStay &&
-                        <>
-                            <div className='flex flex-col flex-1 overflow-clip'>
-                                <TagList
-                                    getIndex={(tag) => state.tags.indexOf(tag)}
-                                    getSelected={(index) => state.selectedTags.includes(index)}
-                                    getVisibility={(index) => state.visibleTags.includes(index)}
-                                    onClick={(index) =>
-                                        dispatch({ type: EventType.tagClicked, payload: index })
-                                    }
-                                    tags={state.sortedTags}
-                                />
-                                <MTagFilter
-                                    getIndex={(tag) => state.tags.indexOf(tag)}
-                                    getSelected={(index) => state.selectedTags.includes(index)}
-                                    getVisibility={(index) => state.visibleTags.includes(index)}
-                                    onClick={(index) =>
-                                        dispatch({ type: EventType.tagClicked, payload: index })
-                                    }
-                                    tags={state.sortedTags}
-                                />
-                                <ProjectList
-                                    onClick={(index) => dispatch({
-                                        type: EventType.projectClicked,
-                                        payload: index,
-                                    })}
-                                    projects={state.projects}
-                                    isIndexVisible={(index) =>
-                                        state.visibleProjects.includes(index)
-                                    }
-                                />
-
-                            </div>
-                        </>
-                    }
-                </AnimatePresence>
-            </ScreenDiv>
-        </>
-    );
-}
+                  <h1>{projects[projectIndex].title[locale]}</h1>
+                  <div className={style.ProjectDescription}>
+                    {projects[projectIndex].description[locale]}
+                    <div>
+                      {projects[projectIndex].links &&
+                        projects[projectIndex].links.map((v) => (
+                          <ImageLink
+                            alt={v.alt}
+                            href={v.url}
+                            src={v.imageSource}
+                            key={v.url}
+                          />
+                        ))}
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </>
+        )}
+      </AnimatePresence>
+    </>
+  );
+};
 
 export default Portfolio;
-
-export function getStaticProps() {
-
-    const data = getProjects();
-
-    return {
-        props: { projects: data },
-    }
-}
