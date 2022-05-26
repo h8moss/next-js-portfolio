@@ -58,14 +58,16 @@ const About = () => {
         {shouldStay && (
           <>
             <ScrollToTop show={shouldStay} />
-            <motion.h1
-              initial={{ x: "-100vw" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100vw" }}
-              className="text-center m-3"
-            >
-              {heading}
-            </motion.h1>
+            <div className="w-screen overflow-x-clip">
+              <motion.h1
+                initial={{ x: "-100vw" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100vw" }}
+                className="text-center m-3"
+              >
+                {heading}
+              </motion.h1>
+            </div>
             <motion.div
               initial={{ scaleY: 0 }}
               exit={{ scaleY: 0 }}
