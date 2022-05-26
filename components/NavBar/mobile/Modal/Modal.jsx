@@ -21,7 +21,7 @@ const Modal = ({ onClose, children }) => {
         <ModalBackground onClick={onClose}>
             <div onClick={(e) => e.stopPropagation()}>
                 <motion.div
-                    className="bg-zinc-500 w-1/2 absolute top-0 right-0 flex flex-col h-screen"
+                    className="bg-zinc-600 w-1/2 absolute top-0 right-0 flex flex-col justify-end h-screen"
                     variants={variants}
                     initial='hidden'
                     exit='hidden'

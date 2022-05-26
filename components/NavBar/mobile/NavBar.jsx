@@ -12,7 +12,7 @@ const NavBar = ({ onClick }) => {
 
     return (
         <>
-            <div className="bg-black shadow-2xl w-screen top-0 sticky flex justify-end z-[99]">
+            <div className="bg-black shadow-2xl w-screen bottom-0 fixed flex justify-end z-[98]">
                 <button className="px-3" onClick={() => onClick('/')}>
                     <Logo />
                 </button>
