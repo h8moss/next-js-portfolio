@@ -96,6 +96,7 @@ const About = () => {
               displayDecimal={dateFormat !== "closest"}
             />
             <Selfie description={imageDescription} />
+            <div className="h-32" />
           </>
         )}
       </AnimatePresence>

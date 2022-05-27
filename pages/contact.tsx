@@ -14,6 +14,7 @@ import i18n from "../domain/contact/i18n";
 import TextField from "../domain/contact/TextField/TextField";
 import { FormValues } from "../domain/contact/types";
 import useI18n from "../hooks/useI18n";
+import useTailwindSize from "../hooks/useTailwindSize";
 import useToastText from "../hooks/useToastText";
 
 const initialValues: FormValues = {
@@ -56,6 +57,8 @@ const Contact = () => {
     }
   };
 
+  const { isLg } = useTailwindSize();
+
   return (
     <>
       <Head>
@@ -84,8 +87,9 @@ const Contact = () => {
                   placeholder={i.messagePlaceholder}
                   isTextarea
                 />
-                <div className="flex flex-row justify-center m-3 p-3">
+                <div className="flex flex-row justify-center m-3 p-3 flex-wrap">
                   <HCaptcha
+                    size={isLg ? "normal" : "compact"}
                     sitekey="481c19fe-6f80-4feb-81c5-3c48a90ae625"
                     onVerify={() => setIsHuman(true)}
                     onError={() => {
@@ -107,6 +111,7 @@ const Contact = () => {
           </Formik>
         )}
       </AnimatePresence>
+      <div className="h-32" />
     </>
   );
 };
