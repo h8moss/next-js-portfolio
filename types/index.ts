@@ -1,3 +1,5 @@
+import { ExtendedDateFormat } from "../services/dateOperations/types";
+
 export type Project = {
   title: I18n<string>;
   description: I18n<string>;
@@ -30,9 +32,10 @@ export type ImageLinkData = {
   url: string;
 };
 
+export type Locale = "en" | "es";
+
 export type I18n<T> = {
-  en: T;
-  es: T;
+  [key in Locale]: T;
 };
 
 export type BlogPost = {
@@ -41,4 +44,8 @@ export type BlogPost = {
   tags: string[];
   text: string;
   created: { seconds: number };
+};
+
+export type TimeTexts = {
+  [key in ExtendedDateFormat]: string;
 };
