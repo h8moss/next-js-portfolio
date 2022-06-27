@@ -4,13 +4,14 @@ import TextStreamWriter from "./TextWriter";
 
 const MainTextWriter = ({ onDone }) => {
 
-    const { lookAtSocials, description } = useI18n(i18n);
+    const { description } = useI18n(i18n);
     const [d1, d2, d3, d4, d5, d6, d7, d8, d9, d10] = description;
 
     return (
         <>
             <TextStreamWriter delay={40} onDone={onDone}>
                 {d1}
+                <br />
                 <span className='font-bold text-blue-500'>{d2}</span>
                 {d3}
                 <span className='font-bold text-red-500'>{d4}</span>
@@ -21,7 +22,6 @@ const MainTextWriter = ({ onDone }) => {
                 {d9}
                 <span className='font-bold text-green-500'>{d10}</span>
                 <br />
-                {lookAtSocials}
             </TextStreamWriter>
         </>
     );

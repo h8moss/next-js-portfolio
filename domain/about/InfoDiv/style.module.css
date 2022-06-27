@@ -1,0 +1,16 @@
+.leftAlign {
+    @apply flex flex-row justify-end;
+}
+
+.leftAlign > div {
+    @apply lg:text-right lg:w-1/2 w-full text-justify;
+}
+
+.rightAlign {
+
+    @apply flex flex-row justify-start;
+}
+
+.rightAlign > div {
+    @apply lg:text-left lg:w-1/2 w-full text-justify;
+}

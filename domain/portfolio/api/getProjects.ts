@@ -6,7 +6,7 @@ const generateGithubLink = (url: string): ImageLinkData => ({
   url: url,
 });
 
-const getProjects = () => {
+const getProjects = (): Project[] => {
   return [
     {
       title: {
@@ -66,7 +66,14 @@ const getProjects = () => {
         "CRUD",
         "web",
       ],
-      links: [generateGithubLink("https://github.com/h8moss/flutter_chat_app")],
+      links: [
+        generateGithubLink("https://github.com/h8moss/flutter_chat_app"),
+        {
+          alt: "Live website",
+          imageSource: "/social_icons/internet.png",
+          url: "https://flutter-chat-app-4894a.web.app",
+        },
+      ],
     },
     {
       title: {
@@ -98,8 +105,8 @@ const getProjects = () => {
         es: "notificador de cambios en sitio web",
       },
       description: {
-        en: "A simple python program that compares a cached version of a website with the live version and sends an email when they change",
-        es: "Una aplicación de python sencilla que compara una versión guardada de un sitio web con la versión actual y envía un mail si difieren",
+        en: "A simple python program that compares a cached version of a website with the live version and sends a notification when they change",
+        es: "Una aplicación de python sencilla que compara una versión guardada de un sitio web con la versión actual y envía una notificación si difieren",
       },
       tags: ["python"],
       links: [generateGithubLink("https://github.com/h8moss/website_updates")],

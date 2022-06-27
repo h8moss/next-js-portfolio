@@ -14,7 +14,6 @@ import validate from '../domain/signin/api/validate';
 import useAuth from "../hooks/useAuth";
 import useI18n from "../hooks/useI18n";
 import useUser from "../hooks/useUser";
-import style from '../styles/Login.module.css';
 
 function Login() {
 
@@ -92,24 +91,22 @@ function Login() {
                                 }
                             >
                                 {({ submitForm, isSubmitting, resetForm }) => (
-                                    <Form className={style.form}>
+                                    <Form >
                                         <Title>
                                             {isRegistering ? registerTxt : signinTxt}
                                         </Title>
 
                                         <label htmlFor="mail" >{emailTxt}</label>
                                         <Field name="mail" type='mail' />
-                                        <ErrorMessage name="mail" component={'p'} className={style.error} />
+                                        <ErrorMessage name="mail" component={'p'} />
 
                                         <label htmlFor="password" >{passwordTxt}</label>
                                         <Field name="password" type='password' />
-                                        <ErrorMessage name="password" component={'p'} className={style.error} />
+                                        <ErrorMessage name="password" component={'p'} />
 
                                         <AnimatePresence>
                                             {isRegistering &&
-                                                <Password2
-                                                    className={style.error}
-                                                />}
+                                                <Password2 />}
                                         </AnimatePresence>
 
                                         {!isSubmitting &&

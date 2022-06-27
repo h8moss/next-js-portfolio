@@ -11,3 +11,15 @@ export type DateAgoTextBody = {
   yearAgo: string;
   yearsAgo: string;
 };
+
+export type DateFormat =
+  | "milliseconds"
+  | "seconds"
+  | "minutes"
+  | "hours"
+  | "days"
+  | "months"
+  | "years"
+  | "closest";
+
+export type ExtendedDateFormat = DateFormat | "avengers-runtime";
