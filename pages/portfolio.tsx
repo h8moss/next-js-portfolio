@@ -30,69 +30,73 @@ const Portfolio = () => {
         <title>{i.title}</title>
         <meta name="description" content={i.description} />
       </Head>
-      <NavBar onClick={(route) => setNextRoute(route)} />
-      <AnimatePresence onExitComplete={() => router.push(nextRoute)}>
-        {shouldStay && (
-          <>
-            <motion.div
-              className={style.Card}
-              initial={{ x: "100vw" }}
-              animate={{ x: "0" }}
-              exit={{ x: "-100vw" }}
-            >
-              {projects.map((v, i) => (
-                <button
-                  key={v.title.en}
-                  className={style.ProjectListItem}
-                  onClick={() => setProjectIndex(i)}
-                >
-                  <h2>{v.title[locale]}</h2>
-                  <div className={style.TagList}>
-                    {v.tags.map((v) => (
-                      <div key={v}>{v}</div>
-                    ))}
-                  </div>
-                </button>
-              ))}
-            </motion.div>
-            <AnimatePresence>
-              {projectIndex != null && shouldStay && (
-                <motion.div
-                  className={style.ModalBackground}
-                  onClick={() => setProjectIndex(null)}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                >
-                  <motion.div
-                    className={style.ModalCard}
-                    onClick={(e) => e.stopPropagation()}
-                    initial={{ y: "-100vh" }}
-                    animate={{ y: "0" }}
-                    exit={{ y: "150vh" }}
+      <div className="w-screen h-screen">
+        <NavBar onClick={(route) => setNextRoute(route)} />
+        <AnimatePresence onExitComplete={() => router.push(nextRoute)}>
+          {shouldStay && (
+            <>
+              <motion.div
+                className={style.Card}
+                initial={{ x: "100vw" }}
+                animate={{ x: "0" }}
+                exit={{ x: "-100vw" }}
+              >
+                {projects.map((v, i) => (
+                  <motion.button
+                    key={v.title.en}
+                    className={style.ProjectListItem}
+                    onClick={() => setProjectIndex(i)}
+                    animate={{ scale: 1 }}
+                    whileHover={{ scale: 1.05 }}
                   >
-                    <h1>{projects[projectIndex].title[locale]}</h1>
-                    <div className={style.ProjectDescription}>
-                      {projects[projectIndex].description[locale]}
-                      <div>
-                        {projects[projectIndex].links &&
-                          projects[projectIndex].links.map((v) => (
-                            <ImageLink
-                              alt={v.alt}
-                              href={v.url}
-                              src={v.imageSource}
-                              key={v.url}
-                            />
-                          ))}
-                      </div>
+                    <h2>{v.title[locale]}</h2>
+                    <div className={style.TagList}>
+                      {v.tags.map((v) => (
+                        <div key={v}>{v}</div>
+                      ))}
                     </div>
+                  </motion.button>
+                ))}
+              </motion.div>
+              <AnimatePresence>
+                {projectIndex != null && shouldStay && (
+                  <motion.div
+                    className={style.ModalBackground}
+                    onClick={() => setProjectIndex(null)}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <motion.div
+                      className={style.ModalCard}
+                      onClick={(e) => e.stopPropagation()}
+                      initial={{ y: "-100vh" }}
+                      animate={{ y: "0" }}
+                      exit={{ y: "150vh" }}
+                    >
+                      <h1>{projects[projectIndex].title[locale]}</h1>
+                      <div className={style.ProjectDescription}>
+                        {projects[projectIndex].description[locale]}
+                        <div>
+                          {projects[projectIndex].links &&
+                            projects[projectIndex].links.map((v) => (
+                              <ImageLink
+                                alt={v.alt}
+                                href={v.url}
+                                src={v.imageSource}
+                                key={v.url}
+                              />
+                            ))}
+                        </div>
+                      </div>
+                    </motion.div>
                   </motion.div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </>
-        )}
-      </AnimatePresence>
+                )}
+              </AnimatePresence>
+            </>
+          )}
+        </AnimatePresence>
+      </div>
     </>
   );
 };

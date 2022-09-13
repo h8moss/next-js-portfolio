@@ -4,7 +4,7 @@ import { FiX } from "react-icons/fi";
 
 interface Props extends HTMLProps<HTMLButtonElement> {
   message: string | null;
-  onDismiss: () => any;
+  onDismiss: () => void;
 }
 
 const Toast = ({ className, message, onDismiss }: Props) => {

@@ -7,6 +7,12 @@ export type Project = {
   links?: ImageLinkData[];
 };
 
+export type DarkModeService = {
+  setValue: (v: boolean) => void;
+  getValue: () => boolean;
+  toggleValue: () => void;
+};
+
 export type AppUser = {
   photoURL: string;
   displayName: string;
@@ -48,4 +54,16 @@ export type BlogPost = {
 
 export type TimeTexts = {
   [key in ExtendedDateFormat]: string;
+};
+
+export type Theme = {
+  textColorClass: string;
+  buttonTextColorClass: string;
+  bgColorClass: string;
+  highlightBgColorClass: string;
+
+  bodyClass: string;
+
+  toggleName: string;
+  toggleBg: string;
 };

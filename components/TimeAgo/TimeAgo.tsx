@@ -10,7 +10,7 @@ interface Props {
   finalDate?: Date;
   displayAgo?: boolean;
   format: ExtendedDateFormat;
-  useDecimal?: boolean;
+  round: "down" | "up" | "closest" | "none";
   shouldUpdate?: boolean;
   label?: string;
 }
@@ -20,12 +20,12 @@ const TimeAgo = ({
   finalDate,
   format,
   displayAgo = false,
-  useDecimal = false,
+  round = "none",
   shouldUpdate = false,
   label,
 }: Props) => {
   const [initialTime, setTime] = useState(null);
-  let finalFormat = useRef<ExtendedDateFormat>(format);
+  const finalFormat = useRef<ExtendedDateFormat>(format);
 
   useEffect(() => {
     const setDateAndFormat = () => {
@@ -37,7 +37,7 @@ const TimeAgo = ({
     setDateAndFormat();
 
     if (shouldUpdate) {
-      let timeout = setInterval(() => {
+      const timeout = setInterval(() => {
         if (shouldUpdate && !finalDate) {
           setDateAndFormat();
         }
@@ -48,29 +48,39 @@ const TimeAgo = ({
 
   let time = 0;
 
-  if (!useDecimal) {
-    time = Math.round(initialTime);
-  } else {
-    time = Math.round(initialTime * 1000) / 1000;
+  switch (round) {
+    case "closest":
+      time = Math.round(initialTime);
+      break;
+    case "down":
+      time = Math.floor(initialTime);
+      break;
+    case "up":
+      time = Math.ceil(initialTime);
+      break;
+    case "none":
+      time = Math.round(initialTime * 1000) / 1000;
+      break;
   }
 
   if (!shouldUpdate && Math.round(time) - time < Number.EPSILON) {
-    useDecimal = false;
+    round = "closest";
   }
 
   const lang = useI18n(i18n);
 
-  const pluralText = time - 1 < Number.EPSILON ? "singular" : "plural";
+  const pluralText =
+    Math.abs(time - 1) < Number.EPSILON ? "singular" : "plural";
 
   if (!label)
     label =
       lang[pluralText][displayAgo ? "withAgo" : "withoutAgo"][
         finalFormat.current
       ];
-  const text = label.replace(
-    "_",
-    useDecimal ? time.toFixed(3) : time.toString()
-  );
+
+  let finalTime = round === "none" ? time.toFixed(3) : time.toString();
+
+  const text = label.replace("_", finalTime);
 
   return <span>{text}</span>;
 };

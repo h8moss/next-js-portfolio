@@ -15,7 +15,7 @@ const BurgerButton = ({ onClick }) => {
 
     return (
         <button className="m-3" onClick={onClick}>
-            <FiMenu size={size} />
+            <FiMenu size={size} color='#fff' />
         </button>
     )
 }

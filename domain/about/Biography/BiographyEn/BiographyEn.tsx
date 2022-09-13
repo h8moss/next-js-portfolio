@@ -14,7 +14,7 @@ const BiographyEn = ({ format, displayDecimal }: Props) => {
             initialDate={birth}
             displayAgo
             format={format}
-            useDecimal={displayDecimal}
+            round={displayDecimal ? "none" : "down"}
             shouldUpdate
           />{" "}
         </span>
@@ -23,7 +23,7 @@ const BiographyEn = ({ format, displayDecimal }: Props) => {
           <TimeAgo
             initialDate={birth}
             format={format}
-            useDecimal={displayDecimal}
+            round={displayDecimal ? "none" : "down"}
             finalDate={new Date(2018, 1, 11, 0, 0, 0, 0)}
           />{" "}
           old
@@ -54,7 +54,7 @@ const BiographyEn = ({ format, displayDecimal }: Props) => {
             initialDate={new Date(2020, 2, 1, 0, 0, 0, 0)}
             displayAgo
             shouldUpdate
-            useDecimal={displayDecimal}
+            round={displayDecimal ? "none" : "closest"}
           />
         </span>
         , I had already 3 programming languages under my belt, python, C# and
@@ -67,7 +67,7 @@ const BiographyEn = ({ format, displayDecimal }: Props) => {
             format={format}
             initialDate={birth}
             finalDate={new Date(2020, 2, 1, 0, 0, 0, 0)}
-            useDecimal={displayDecimal}
+            round={displayDecimal ? "none" : "down"}
           />{" "}
           old
         </span>{" "}
@@ -79,7 +79,7 @@ const BiographyEn = ({ format, displayDecimal }: Props) => {
             initialDate={new Date(2020, 2, 1, 0, 0, 0, 0)}
             displayAgo
             shouldUpdate
-            useDecimal={displayDecimal}
+            round={displayDecimal ? "none" : "closest"}
           />
         </span>
         , which meant we had to stay home for who-knows how long.
@@ -116,7 +116,7 @@ const BiographyEn = ({ format, displayDecimal }: Props) => {
             format={format}
             initialDate={birth}
             finalDate={new Date(2004, 1, 11, 0, 0, 0, 0)}
-            useDecimal={displayDecimal}
+            round={displayDecimal ? "none" : "closest"}
           />{" "}
         </span>
         passed. That made me{" "}
@@ -125,7 +125,7 @@ const BiographyEn = ({ format, displayDecimal }: Props) => {
             initialDate={birth}
             format={format}
             finalDate={new Date(2022, 1, 11, 0, 0, 0, 0)}
-            useDecimal={displayDecimal}
+            round={displayDecimal ? "none" : "down"}
           />{" "}
           old
         </span>
@@ -136,7 +136,7 @@ const BiographyEn = ({ format, displayDecimal }: Props) => {
             format={format}
             initialDate={new Date(2022, 2, 21, 0, 0, 0, 0)}
             displayAgo
-            useDecimal={displayDecimal}
+            round={displayDecimal ? "none" : "closest"}
             shouldUpdate
           />
         </span>

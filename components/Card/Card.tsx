@@ -2,9 +2,7 @@ import { HTMLMotionProps, motion } from "framer-motion";
 
 import useTailwindSize from "../../hooks/useTailwindSize";
 
-interface Props extends HTMLMotionProps<"div"> {}
-
-const Card = ({ className, children, ...props }: Props) => {
+const Card = ({ className, children, ...props }: HTMLMotionProps<"div">) => {
   const { isMd } = useTailwindSize();
 
   const width = isMd ? "70%" : "95%";
@@ -27,7 +25,7 @@ const Card = ({ className, children, ...props }: Props) => {
         padding: "20px",
         width: width,
         height: "auto",
-        minHeight: "100%",
+        minHeight: "50%",
       }}
       exit={{
         overflow: "cli,",

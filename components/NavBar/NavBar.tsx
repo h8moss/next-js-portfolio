@@ -3,7 +3,7 @@ import Desktop from "./Desktop";
 import Mobile from "./mobile";
 
 interface Props {
-  onClick: (v: string) => any;
+  onClick: (v: string) => void;
 }
 
 const NavBar = ({ onClick = () => {} }: Props) => {

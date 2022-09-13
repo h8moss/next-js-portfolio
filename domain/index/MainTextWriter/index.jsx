@@ -18,7 +18,7 @@ const MainTextWriter = ({ onDone }) => {
                 {d5}
                 <span className='font-bold text-purple-500'>{d6}</span>
                 {d7}
-                <span className='font-bold text-yellow-400'>{d8}</span>
+                <span className='font-bold text-yellow-500'>{d8}</span>
                 {d9}
                 <span className='font-bold text-green-500'>{d10}</span>
                 <br />

@@ -1,6 +1,6 @@
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { Form, Formik, FormikHelpers } from "formik";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -70,45 +70,51 @@ const Contact = () => {
       <NavBar onClick={(route) => setNextRoute(route)} />
       <AnimatePresence onExitComplete={() => router.push(nextRoute)}>
         {shouldStay && (
-          <Formik
-            initialValues={initialValues}
-            onSubmit={mySubmit}
-            validate={(values: FormValues) =>
-              validate(values, i.validationErrors)
-            }
+          <motion.div
+            initial={{ x: "-100vw" }}
+            animate={{ x: "0" }}
+            exit={{ x: "100vw" }}
           >
-            {({ isSubmitting }) => (
-              <Form className="flex flex-col justify-center text-center">
-                <h1 className="m-9 ">{i.heading}</h1>
-                <TextField name="name" placeholder={i.namePlaceholder} />
-                <TextField name="email" placeholder={i.emailPlaceholder} />
-                <TextField
-                  name="message"
-                  placeholder={i.messagePlaceholder}
-                  isTextarea
-                />
-                <div className="flex flex-row justify-center m-3 p-3 flex-wrap">
-                  <HCaptcha
-                    size={isLg ? "normal" : "compact"}
-                    sitekey="481c19fe-6f80-4feb-81c5-3c48a90ae625"
-                    onVerify={() => setIsHuman(true)}
-                    onError={() => {
-                      setIsHuman(false);
-                      setErrorText(i.captchaErrorText);
-                    }}
-                    onExpire={() => {
-                      setIsHuman(false);
-                      setErrorText(i.captchaErrorText);
-                    }}
+            <Formik
+              initialValues={initialValues}
+              onSubmit={mySubmit}
+              validate={(values: FormValues) =>
+                validate(values, i.validationErrors)
+              }
+            >
+              {({ isSubmitting }) => (
+                <Form className="flex flex-col justify-center text-center">
+                  <h1 className="m-9 ">{i.heading}</h1>
+                  <TextField name="name" placeholder={i.namePlaceholder} />
+                  <TextField name="email" placeholder={i.emailPlaceholder} />
+                  <TextField
+                    name="message"
+                    placeholder={i.messagePlaceholder}
+                    isTextarea
                   />
-                  <div className="w-4" />
-                  <Button disabled={!isHuman || isSubmitting}>
-                    {i.submitText}
-                  </Button>
-                </div>
-              </Form>
-            )}
-          </Formik>
+                  <div className="flex flex-row justify-center m-3 p-3 flex-wrap">
+                    <HCaptcha
+                      size={isLg ? "normal" : "compact"}
+                      sitekey="481c19fe-6f80-4feb-81c5-3c48a90ae625"
+                      onVerify={() => setIsHuman(true)}
+                      onError={() => {
+                        setIsHuman(false);
+                        setErrorText(i.captchaErrorText);
+                      }}
+                      onExpire={() => {
+                        setIsHuman(false);
+                        setErrorText(i.captchaErrorText);
+                      }}
+                    />
+                    <div className="w-4" />
+                    <Button disabled={!isHuman || isSubmitting}>
+                      {i.submitText}
+                    </Button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          </motion.div>
         )}
       </AnimatePresence>
       <div className="h-32" />
