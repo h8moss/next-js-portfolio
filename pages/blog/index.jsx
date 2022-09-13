@@ -47,10 +47,10 @@ function Blogs({ posts }) {
             <Head>
                 <title>{indexTitle}</title>
             </Head>
-            <NavBar
-                onClick={(route) => setNextRoute(route)}
-            />
-            <ScreenDiv>
+            <div className='w-screen h-screen'>
+                <NavBar
+                    onClick={(route) => setNextRoute(route)}
+                />
                 <AnimatePresence
                     onExitComplete={() => router.push(nextRoute)}>
                     {shouldStay &&
@@ -65,7 +65,7 @@ function Blogs({ posts }) {
                             }
                         </Card>}
                 </AnimatePresence>
-            </ScreenDiv>
+            </div>
         </>
     )
 }
