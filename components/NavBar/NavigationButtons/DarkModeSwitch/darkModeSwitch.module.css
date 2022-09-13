@@ -1,0 +1,15 @@
+.lightMode {
+    background-color: black;
+}
+
+.lightMode > div.child {
+    background-color: white;
+}
+
+.darkMode {
+    background-color: white;
+}
+
+.darkMode > div.child {
+    background-color: black;
+}
