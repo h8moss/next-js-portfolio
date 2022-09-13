@@ -27,6 +27,8 @@ const NavBar = ({ onClick }) => {
                             setShowModal(false);
                             onClick(v);
                         }} />
+
+                        <div className="h-16" />
                     </Modal>
                 }
             </AnimatePresence>

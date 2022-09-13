@@ -25,7 +25,7 @@ const Card = ({ className, children, ...props }: HTMLMotionProps<"div">) => {
         padding: "20px",
         width: width,
         height: "auto",
-        minHeight: "100%",
+        minHeight: "50%",
       }}
       exit={{
         overflow: "cli,",

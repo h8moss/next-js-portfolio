@@ -46,7 +46,7 @@ function Blogs({ posts }) {
             <Head>
                 <title>{indexTitle}</title>
             </Head>
-            <div className='w-screen h-screen'>
+            <div className='h-screen'>
                 <NavBar
                     onClick={(route) => setNextRoute(route)}
                 />
