@@ -23,7 +23,15 @@ html {
 
 body {
   @apply text-xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl 2xl:text-3xl
-  text-white bg-zinc-800 overflow-x-clip;
+  overflow-x-clip;
+}
+
+.dark-theme {
+  @apply text-white bg-zinc-800;
+}
+
+.main-theme {
+  @apply text-black bg-gray-300
 }
 
 h1 {

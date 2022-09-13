@@ -1,9 +1,12 @@
+import useTheme from '../../../hooks/useTheme';
 import Logo from '../Logo';
 import NavigationButtons from '../NavigationButtons';
 
 const NavBar = ({ onClick }) => {
+    const theme = useTheme();
+
     return (
-        <div className="flex flex-row bg-black shadow-2xl top-0 sticky w-full z-[99]">
+        <div className={"flex flex-row shadow-2xl top-0 sticky w-full z-[99] " + theme.highlightBgColorClass}>
             <div className='flex-grow flex justify-center'>
                 <button className='m-auto' onClick={() => onClick('/')}>
                     <Logo />

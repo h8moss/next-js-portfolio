@@ -1,5 +1,6 @@
 import useI18n from "../../../hooks/useI18n";
 import RouteButton from "../RouteButton";
+import DarkModeSwitch from "./DarkModeSwitch/DarkModeSwitch";
 import i18n from "./i18n";
 
 const NavigationButtons = ({ onClick }) => {
@@ -12,6 +13,8 @@ const NavigationButtons = ({ onClick }) => {
             <RouteButton onClick={onClick} route={'/portfolio'}>{portfolio}</RouteButton>
             <RouteButton onClick={onClick} route={'/contact'}>{contact}</RouteButton>
             <RouteButton onClick={onClick} route={'/blog'}>{blog}</RouteButton>
+
+            <DarkModeSwitch />
         </>
     );
 }

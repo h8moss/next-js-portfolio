@@ -10,6 +10,7 @@ import i18n from "../domain/about/i18n";
 import ScrollToTop from "../domain/about/ScrollToTop";
 import Selfie from "../domain/about/Selfie";
 import useI18n from "../hooks/useI18n";
+import useTheme from "../hooks/useTheme";
 import { ExtendedDateFormat } from "../services/dateOperations/types";
 
 const eDateFormatValues: ExtendedDateFormat[] = [
@@ -26,6 +27,8 @@ const eDateFormatValues: ExtendedDateFormat[] = [
 
 const About = () => {
   const [dateFormat, setDateFormat] = useState<ExtendedDateFormat>("closest");
+
+  const theme = useTheme();
 
   const router = useRouter();
   const [nextRoute, setNextRoute] = useState(router.pathname);
@@ -77,7 +80,7 @@ const About = () => {
               <select
                 value={dateFormat}
                 onChange={onDropdownChange}
-                className="rounded bg-zinc-900 capitalize cursor-pointer"
+                className={`rounded capitalize cursor-pointer ${theme.highlightBgColorClass}`}
               >
                 {eDateFormatValues
                   .map((v) => ({
