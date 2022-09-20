@@ -5,7 +5,6 @@ import { useState } from 'react';
 
 import BlogViewer from "../../components/BlogViewer";
 import NavBar from "../../components/NavBar";
-import ScreenDiv from '../../components/ScreenDiv';
 import { getBlog, getBlogs } from '../../domain/blog/api';
 
 function Blog({ post: { title, text } }) {
