@@ -22,7 +22,7 @@ function Blog({ post: { title, text } }) {
                 <title>{title}</title>
             </Head>
             <NavBar onClick={(route) => setNextRoute(route)} />
-            <ScreenDiv>
+            <div>
                 <AnimatePresence
                     onExitComplete={() => router.push(nextRoute)}
                 >
@@ -44,7 +44,7 @@ function Blog({ post: { title, text } }) {
                         </motion.div>
                     }
                 </AnimatePresence>
-            </ScreenDiv>
+            </div>
         </>
     )
 }
