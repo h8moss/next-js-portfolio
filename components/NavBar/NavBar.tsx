@@ -1,12 +1,9 @@
 import useTailwindSize from "../../hooks/useTailwindSize";
 import Desktop from "./Desktop";
 import Mobile from "./mobile";
+import { NavbarProps } from "./types";
 
-interface Props {
-  onClick: (v: string) => void;
-}
-
-const NavBar = ({ onClick = () => {} }: Props) => {
+const NavBar = ({ onClick = () => {} }: NavbarProps) => {
   const { isLg } = useTailwindSize();
 
   return (
