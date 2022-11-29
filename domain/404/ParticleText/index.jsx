@@ -1,7 +1,10 @@
 import React, { useEffect, useRef } from 'react'
 
+import useTheme from '../../../hooks/useTheme'
+
 const ParticleText = ({ text, ...props }) => {
 
+    const { particleColor } = useTheme();
     const canvasRef = useRef(null)
 
     useEffect(() => {
@@ -24,7 +27,7 @@ const ParticleText = ({ text, ...props }) => {
             mouse.x = (event.x - rect.left) * (canvas.width / rect.width);
         });
 
-        context.fillStyle = 'white';
+        context.fillStyle = particleColor;
         context.font = '30px Verdana';
         context.fillText(text, 0, 30);
         const textCoordinates = context.getImageData(0, 0, 100, 100);
