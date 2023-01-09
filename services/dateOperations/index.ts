@@ -2,32 +2,32 @@ import { DateAgoTextBody, DateFormat, ExtendedDateFormat } from "./types";
 
 const generateTimes = () => {
   // oversimplification of durations of times
-  let msInSecond = 1000;
-  let secondsInMinute = 60;
-  let minutesInHour = 60;
-  let hoursInDay = 24;
-  let daysInMonth = 30;
-  let monthsInYear = 12;
+  const msInSecond = 1000;
+  const secondsInMinute = 60;
+  const minutesInHour = 60;
+  const hoursInDay = 24;
+  const daysInMonth = 30;
+  const monthsInYear = 12;
 
-  let msInMinute = msInSecond * secondsInMinute;
-  let msInHour = msInMinute * minutesInHour;
-  let msInDay = msInHour * hoursInDay;
-  let msInMonth = msInDay * daysInMonth;
-  let msInYear = msInMonth * monthsInYear;
+  const msInMinute = msInSecond * secondsInMinute;
+  const msInHour = msInMinute * minutesInHour;
+  const msInDay = msInHour * hoursInDay;
+  const msInMonth = msInDay * daysInMonth;
+  const msInYear = msInMonth * monthsInYear;
 
-  let secondsInHour = secondsInMinute * minutesInHour;
-  let secondsInDay = secondsInHour * hoursInDay;
-  let secondsInMonth = secondsInDay * daysInMonth;
-  let secondsInYear = secondsInMonth * monthsInYear;
+  const secondsInHour = secondsInMinute * minutesInHour;
+  const secondsInDay = secondsInHour * hoursInDay;
+  const secondsInMonth = secondsInDay * daysInMonth;
+  const secondsInYear = secondsInMonth * monthsInYear;
 
-  let minutesInDay = minutesInHour * hoursInDay;
-  let minutesInMonth = minutesInDay * daysInMonth;
-  let minutesInYear = minutesInMonth * monthsInYear;
+  const minutesInDay = minutesInHour * hoursInDay;
+  const minutesInMonth = minutesInDay * daysInMonth;
+  const minutesInYear = minutesInMonth * monthsInYear;
 
-  let hoursInMonth = hoursInDay * daysInMonth;
-  let hoursInYear = hoursInMonth * monthsInYear;
+  const hoursInMonth = hoursInDay * daysInMonth;
+  const hoursInYear = hoursInMonth * monthsInYear;
 
-  let daysInYear = daysInMonth * monthsInYear;
+  const daysInYear = daysInMonth * monthsInYear;
 
   return {
     msInSecond,

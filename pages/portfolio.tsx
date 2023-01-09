@@ -30,34 +30,36 @@ const Portfolio = () => {
         <title>{i.title}</title>
         <meta name="description" content={i.description} />
       </Head>
-      <div className="w-screen h-screen">
+      <div className="w-screen h-screen flex flex-col">
         <NavBar onClick={(route) => setNextRoute(route)} />
         <AnimatePresence onExitComplete={() => router.push(nextRoute)}>
           {shouldStay && (
             <>
-              <motion.div
-                className={style.Card}
-                initial={{ x: "100vw" }}
-                animate={{ x: "0" }}
-                exit={{ x: "-100vw" }}
-              >
-                {projects.map((v, i) => (
-                  <motion.button
-                    key={v.title.en}
-                    className={style.ProjectListItem}
-                    onClick={() => setProjectIndex(i)}
-                    animate={{ scale: 1 }}
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <h2>{v.title[locale]}</h2>
-                    <div className={style.TagList}>
-                      {v.tags.map((v) => (
-                        <div key={v}>{v}</div>
-                      ))}
-                    </div>
-                  </motion.button>
-                ))}
-              </motion.div>
+              <div className="grow justify-center">
+                <motion.div
+                  className={style.Card}
+                  initial={{ x: "100vw" }}
+                  animate={{ x: "0" }}
+                  exit={{ x: "-100vw" }}
+                >
+                  {projects.map((v, i) => (
+                    <motion.button
+                      key={v.title.en}
+                      className={style.ProjectListItem}
+                      onClick={() => setProjectIndex(i)}
+                      animate={{ scale: 1 }}
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      <h2>{v.title[locale]}</h2>
+                      <div className={style.TagList}>
+                        {v.tags.map((v) => (
+                          <div key={v}>{v}</div>
+                        ))}
+                      </div>
+                    </motion.button>
+                  ))}
+                </motion.div>
+              </div>
               <AnimatePresence>
                 {projectIndex != null && shouldStay && (
                   <motion.div

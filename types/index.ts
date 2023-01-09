@@ -57,6 +57,7 @@ export type TimeTexts = {
 };
 
 export type Theme = {
+  particleColor: string;
   textColorClass: string;
   buttonTextColorClass: string;
   bgColorClass: string;

@@ -1,6 +1,7 @@
 import { Theme } from "./types";
 
 export const darkTheme: Theme = {
+  particleColor: "white",
   bgColorClass: "bg-gray-800",
   buttonTextColorClass: "text-white",
   highlightBgColorClass: "bg-black",
@@ -13,6 +14,7 @@ export const darkTheme: Theme = {
 };
 
 export const mainTheme: Theme = {
+  particleColor: "black",
   bgColorClass: "bg-gray-100",
   buttonTextColorClass: "text-black",
   highlightBgColorClass: "bg-white",

@@ -78,7 +78,7 @@ const TimeAgo = ({
         finalFormat.current
       ];
 
-  let finalTime = round === "none" ? time.toFixed(3) : time.toString();
+  const finalTime = round === "none" ? time.toFixed(3) : time.toString();
 
   const text = label.replace("_", finalTime);
 
