@@ -6,7 +6,7 @@ const generateTimes = () => {
   const secondsInMinute = 60;
   const minutesInHour = 60;
   const hoursInDay = 24;
-  const daysInMonth = 30;
+  const daysInMonth = 30.416666;
   const monthsInYear = 12;
 
   const msInMinute = msInSecond * secondsInMinute;
@@ -136,7 +136,15 @@ const getClosestFormat = (difference: number): DateFormat => {
   return "years";
 };
 
-const getTimeTexts = (lang: DateAgoTextBody) => {
+const getTimeTexts = (
+  lang: DateAgoTextBody
+): {
+  values: {
+    text: string;
+    value: number;
+    divide?: number;
+  }[];
+} => {
   const {
     secondsAgo,
     minuteAgo,

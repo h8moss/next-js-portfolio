@@ -3,7 +3,7 @@ import InfoDiv from "../../InfoDiv";
 import { Props } from "../Biography";
 
 const BiographyEn = ({ format, displayDecimal }: Props) => {
-  const birth = new Date(2002, 1, 11, 0, 0, 0, 0);
+  const birth = new Date(2002, 0, 11, 0, 0, 0, 0);
 
   return (
     <div className="flex flex-col m-5">
