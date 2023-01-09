@@ -136,7 +136,15 @@ const getClosestFormat = (difference: number): DateFormat => {
   return "years";
 };
 
-const getTimeTexts = (lang: DateAgoTextBody) => {
+const getTimeTexts = (
+  lang: DateAgoTextBody
+): {
+  values: {
+    text: string;
+    value: number;
+    divide?: number;
+  }[];
+} => {
   const {
     secondsAgo,
     minuteAgo,
