@@ -18,15 +18,13 @@ export default function Four0Four() {
         <title> 404 </title>
       </Head>
       <NavBar onClick={(route) => router.push(route)} />
-      <div className="overflow-hidden flex-col text-center justify-center">
+      <div className="overflow-hidden flex-col text-center h-screen content-end">
         {isLg ? (
           <ParticleText className="w-full h-full" text="404" />
         ) : (
           <h1>404</h1>
         )}
-        <div className="absolute bottom-20 w-full">
-          <h2 className="text-3xl  text-center mx-auto">{message}</h2>
-        </div>
+        <h2 className="text-3xl  text-center mx-auto">{message}</h2>
       </div>
     </>
   );
