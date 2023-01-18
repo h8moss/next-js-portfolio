@@ -16,7 +16,7 @@ const Toast = ({ className, message, onDismiss }: Props) => {
         {show && (
           <motion.div
             className={
-              "w-80 p-8 rounded-xl absolute flex flex-col pointer-events-auto left-5 bottom-5 " +
+              "w-80 p-4 rounded-xl absolute flex flex-col pointer-events-auto left-5 bottom-5 " +
               className
             }
             initial={{
