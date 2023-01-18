@@ -13,6 +13,14 @@ export type DarkModeService = {
   toggleValue: () => void;
 };
 
+export type KeyValueService<T, U> = {
+  setValue: (key: T, value: U) => void;
+  getValue: (key: T) => U | null;
+  addListener: (key: T, handler: (value: U) => unknown) => void;
+  removeListener: (key: T, handler: (value: U) => unknown) => void;
+  notifyListeners: (key: T) => void;
+};
+
 export type AppUser = {
   photoURL: string;
   displayName: string;
