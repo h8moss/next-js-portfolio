@@ -2,8 +2,8 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { MdContentCopy } from "react-icons/md";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import {
-  stackoverflowDark,
-  stackoverflowLight,
+  monokai,
+  paraisoLight,
 } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 import { stringNumberContext } from "../../../../context/keyValue";
@@ -43,7 +43,7 @@ const CodeComponent = ({
 
   const styleObj = useMemo(() => {
     const darkOrLight = {
-      ...(getValue() ? stackoverflowDark : stackoverflowLight),
+      ...(getValue() ? monokai : paraisoLight),
     };
 
     return {
