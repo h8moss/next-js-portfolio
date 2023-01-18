@@ -30,6 +30,11 @@ body {
   @apply text-white bg-zinc-800;
 }
 
+.dark-theme input, .dark-theme textarea {
+  @apply text-black;
+}
+
+
 .main-theme {
   @apply text-black bg-gray-300
 }
