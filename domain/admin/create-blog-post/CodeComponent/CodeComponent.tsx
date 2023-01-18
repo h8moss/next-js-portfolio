@@ -1,4 +1,5 @@
 import { useContext, useEffect, useMemo, useState } from "react";
+import { MdContentCopy } from "react-icons/md";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import {
   stackoverflowDark,
@@ -7,8 +8,6 @@ import {
 
 import { stringNumberContext } from "../../../../context/keyValue";
 import useDarkMode from "../../../../hooks/useDarkMode";
-
-import { MdContentCopy } from "react-icons/md";
 
 interface Props {
   textArray: string[];
