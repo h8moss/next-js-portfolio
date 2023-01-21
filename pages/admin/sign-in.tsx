@@ -1,14 +1,13 @@
 import { Form, Formik } from "formik";
-import { useContext, useEffect } from "react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import Button from "../../components/Button";
-import AuthContext from "../../context/auth";
-import TextField from "../../domain/contact/TextField/TextField";
-import Toast from "../../components/Toast";
-import useToastText from "../../hooks/useToastText";
 import NavBar from "../../components/NavBar";
-import { useRouter } from "next/router";
-import { SignInState } from "../../types";
+import Toast from "../../components/Toast";
+import TextField from "../../domain/contact/TextField/TextField";
+import useToastText from "../../hooks/useToastText";
+import useAuth from "../../services/firebase/hooks/useAuth";
 
 interface FormValues {
   email: string;
@@ -17,16 +16,10 @@ interface FormValues {
 
 const SignIn = () => {
   const router = useRouter();
-  const auth = useContext(AuthContext);
+  const auth = useAuth();
 
   useEffect(() => {
-    const handler = () => {
-      if (auth.signInState === SignInState.signedIn) {
-        router.push("/admin");
-      }
-    };
-    auth.addUserListener(handler, "sign-in-page");
-    return () => auth.removeUserListener(handler, "sign-in-page");
+    if (auth.isSignedIn) router.push("/admin");
   }, [auth, router]);
 
   const onSubmit = async (values: FormValues) => {

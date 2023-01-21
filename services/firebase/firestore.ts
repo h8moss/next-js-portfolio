@@ -1,16 +1,7 @@
-import { getFirestore,initializeFirestore } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
-import { app } from "./firebase";
+import app from "./firebase";
 
-// TODO: Figure out firebase db type
-// let db: Firestore // <-- this doesnt work (import { Firestore } from "@google-cloud/firestore";)
+const firestore = getFirestore(app);
 
-let db;
-
-try {
-  db = getFirestore();
-} catch {
-  db = initializeFirestore(app, {});
-}
-
-export { db };
+export default firestore;

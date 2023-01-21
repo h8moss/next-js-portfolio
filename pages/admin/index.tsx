@@ -3,23 +3,19 @@ import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 
 import Button from "../../components/Button";
-import AuthContext from "../../context/auth";
+import useAuth from "../../services/firebase/hooks/useAuth";
 
 const Admin = () => {
-  const auth = useContext(AuthContext);
   const router = useRouter();
 
-  useEffect(() => {
-    const handler = () => {
-      if (auth.user === null) router.push("/");
-    };
+  const auth = useAuth();
 
-    auth.addUserListener(handler, "admin-page-handler");
-    return () => auth.removeUserListener(handler, "admin-page-handler");
-  }, [auth, router]);
+  useEffect(() => {
+    if (auth.user === null) router.push("/");
+  }, [auth.user, router]);
 
   return (
-    <div className="h-screen flex flex-col  text-center">
+    <div className="h-screen flex flex-col  text-center w-[80%] mx-auto">
       <h1 className="p-8">Welcome Daniel</h1>
 
       <Button
