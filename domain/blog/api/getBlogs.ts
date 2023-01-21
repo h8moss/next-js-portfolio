@@ -1,7 +1,7 @@
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 
-import { db } from "../../../services/firebase/firestore";
 import { BlogPost } from "../../../types";
+import { firestore } from "../../../services/firebase";
 
 const getBlogs = async ({
   language = "en",
@@ -9,7 +9,10 @@ const getBlogs = async ({
   language: string;
 }): Promise<BlogPost[]> => {
   let docs = await getDocs(
-    query(collection(db, `blog-posts-${language}`), orderBy("created", "desc"))
+    query(
+      collection(firestore, `blog-posts-${language}`),
+      orderBy("created", "desc")
+    )
   );
   return docs.docs.map((doc) => {
     let data = doc.data();
@@ -17,7 +20,7 @@ const getBlogs = async ({
       id: doc.id,
       created: { seconds: data.created.seconds },
       tags: data.tags,
-      text: data.text,
+      body: data.body,
       title: data.title,
     };
   });
