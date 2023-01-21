@@ -10,6 +10,8 @@ import styles from "./BlogViewer.module.css";
 import CodeComponent from "./CodeComponent";
 import CodeComponentManager from "./CodeComponent/CodeComponentManager";
 import HeadingWithLink from "./HeadingWithLink/HeadingWithLink";
+import { HTMLAttributeAnchorTarget } from "react";
+import { server } from "../../config";
 
 interface Props {
   post: BlogPostData;
@@ -79,6 +81,24 @@ const BlogViewer = ({ post: { body, tags, title } }: Props) => {
                   h4: (props) => <HeadingWithLink element="h4" {...props} />,
                   h5: (props) => <HeadingWithLink element="h5" {...props} />,
                   h6: (props) => <HeadingWithLink element="h6" {...props} />,
+                  a: ({ children, href, target, ...props }) => {
+                    let finalTarget: HTMLAttributeAnchorTarget = "_self";
+
+                    const isRelative =
+                      href.indexOf("http://") !== 0 &&
+                      href.indexOf("https://") !== 0;
+
+                    if (!isRelative) {
+                      const url = new URL(href);
+                      if (url.hostname !== server) finalTarget = "_blank";
+                    }
+
+                    return (
+                      <a href={href} target={finalTarget} {...props}>
+                        {children}
+                      </a>
+                    );
+                  },
                 }}
               >
                 {body}
