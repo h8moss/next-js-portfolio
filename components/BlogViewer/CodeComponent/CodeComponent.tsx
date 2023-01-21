@@ -1,13 +1,13 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { MdContentCopy } from "react-icons/md";
-import SyntaxHighlighter from "react-syntax-highlighter";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import {
-  monokai,
-  paraisoLight,
-} from "react-syntax-highlighter/dist/esm/styles/hljs";
+  atomDark,
+  materialLight,
+} from "react-syntax-highlighter/dist/cjs/styles/prism";
 
-import { stringNumberContext } from "../../../../context/keyValue";
-import useDarkMode from "../../../../hooks/useDarkMode";
+import { stringNumberContext } from "../../../context/keyValue";
+import useDarkMode from "../../../hooks/useDarkMode";
 
 interface Props {
   textArray: string[];
@@ -43,7 +43,7 @@ const CodeComponent = ({
 
   const styleObj = useMemo(() => {
     const darkOrLight = {
-      ...(getValue() ? monokai : paraisoLight),
+      ...(getValue() ? atomDark : materialLight),
     };
 
     return {
@@ -59,7 +59,7 @@ const CodeComponent = ({
     <div
       className={`${
         getValue() ? "bg-gray-800" : "bg-white"
-      } m-3 rounded-xl w-min min-w-[80%] max-w-[95%]`}
+      } m-3 rounded-xl w-full mx-auto`}
     >
       <div
         className={`flex w-full
@@ -96,7 +96,7 @@ const CodeComponent = ({
       </div>
       <SyntaxHighlighter
         language={langArray[selectedIndex]}
-        className="bg-black text-white"
+        className="bg-black text-white text-sm overflow-auto p-4"
         style={styleObj}
       >
         {textArray[selectedIndex]}
