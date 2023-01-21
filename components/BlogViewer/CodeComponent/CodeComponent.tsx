@@ -48,19 +48,21 @@ const CodeComponent = ({
 
     console.log({ darkOrLight });
 
+    // Custom styles to code style
     return {
       ...darkOrLight,
       'code[class*="language-"]': {
-        ...darkOrLight['code[class*="language-"]'],
-        fontFamily: "'JetBrains Mono', monospace",
-        background: "transparent",
-        fontSize: undefined,
+        ...darkOrLight['code[class*="language-"]'], // on the text itself
+        fontFamily: "'JetBrains Mono', 'Roboto Mono', monospace", // set font
+        background: "transparent", // remove default background (behind text)
+        fontSize: undefined, // remove default font size (we'll pass one later with tailwind)
       },
       'pre[class*="language-"]': {
+        // On the div over the text
         ...darkOrLight['pre[class*="language-"]'],
-        background: "transparent",
+        background: "transparent", // Also remove bg
 
-        fontSize: undefined,
+        fontSize: undefined, // also remove font size
       },
     };
   }, [getValue]);
