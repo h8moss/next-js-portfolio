@@ -1,20 +1,16 @@
-import '../styles/globals.css'
+import "../styles/globals.css";
 
-import DarkModeProvider from '../components/DarkModeProvider';
-import MainDarkModeConsumer from '../components/MainDarkModeConsumer/MainDarkModeConsumer';
-import AuthContext from '../context/auth';
-import AuthService from '../services/firebase/auth';
+import DarkModeProvider from "../components/DarkModeProvider";
+import MainDarkModeConsumer from "../components/MainDarkModeConsumer/MainDarkModeConsumer";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <AuthContext.Provider value={new AuthService()}>
-      <DarkModeProvider>
-        <MainDarkModeConsumer>
-          <Component {...pageProps} />
-        </MainDarkModeConsumer>
-      </DarkModeProvider>
-    </AuthContext.Provider>
+    <DarkModeProvider>
+      <MainDarkModeConsumer>
+        <Component {...pageProps} />
+      </MainDarkModeConsumer>
+    </DarkModeProvider>
   );
 }
 
-export default MyApp
+export default MyApp;
