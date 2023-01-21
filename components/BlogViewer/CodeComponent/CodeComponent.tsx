@@ -46,11 +46,21 @@ const CodeComponent = ({
       ...(getValue() ? atomDark : materialLight),
     };
 
+    console.log({ darkOrLight });
+
     return {
       ...darkOrLight,
-      hljs: {
-        ...darkOrLight.hljs,
+      'code[class*="language-"]': {
+        ...darkOrLight['code[class*="language-"]'],
+        fontFamily: "'JetBrains Mono', monospace",
         background: "transparent",
+        fontSize: undefined,
+      },
+      'pre[class*="language-"]': {
+        ...darkOrLight['pre[class*="language-"]'],
+        background: "transparent",
+
+        fontSize: undefined,
       },
     };
   }, [getValue]);
@@ -96,7 +106,7 @@ const CodeComponent = ({
       </div>
       <SyntaxHighlighter
         language={langArray[selectedIndex]}
-        className="bg-black text-white text-sm overflow-auto p-4"
+        className={`bg-black text-white text-sm overflow-auto p-4 `}
         style={styleObj}
       >
         {textArray[selectedIndex]}
