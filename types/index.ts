@@ -1,3 +1,4 @@
+import { locales } from "../constants";
 import { ExtendedDateFormat } from "../services/dateOperations/types";
 
 export type Project = {
@@ -46,17 +47,20 @@ export type ImageLinkData = {
   url: string;
 };
 
-export type Locale = "en" | "es";
+export type Locale = typeof locales[number];
 
 export type I18n<T> = {
   [key in Locale]: T;
 };
 
-export type BlogPost = {
-  id: string;
+export type BlogPostData = {
   title: string;
   tags: string[];
-  text: string;
+  body: string;
+};
+
+export type BlogPost = BlogPostData & {
+  id: string;
   created: { seconds: number };
 };
 

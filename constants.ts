@@ -1,5 +1,7 @@
 import { Theme } from "./types";
 
+export const locales = ["en", "es"] as const;
+
 export const darkTheme: Theme = {
   particleColor: "white",
   bgColorClass: "bg-gray-800",
