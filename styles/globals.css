@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300&family=Quicksand&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+
+
+
+:root {
+  --accent: #b35afc;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -26,12 +35,16 @@ body {
   overflow-x-clip;
 }
 
+.dark-theme, .main-theme {
+  @apply -m-[1px];
+}
+
 .dark-theme {
   @apply text-white bg-zinc-800;
 }
 
-.dark-theme input, .dark-theme textarea {
-  @apply text-black;
+.dark-theme input, .dark-theme textarea, .dark-theme select {
+  @apply text-black bg-white;
 }
 
 
@@ -44,9 +57,9 @@ h1 {
 }
 
 .accent-text {
-  color: #b35afc;
+  color: var(--accent);
 }
 
 .accent-bg {
-  background-color: #b35afc;
+  background-color: var(--accent);
 }
