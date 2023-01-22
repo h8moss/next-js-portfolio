@@ -58,7 +58,9 @@ const ScrollToTop = ({ minScroll = 100, show }: Props) => {
     <AnimatePresence>
       {show && trueShow && (
         <motion.button
-          className="rounded-lg shadow-lg accent-bg fixed bottom-3 right-3"
+          className={`rounded-lg shadow-lg accent-bg fixed ${
+            tailwindSize.isLg ? "bottom-3" : "bottom-20"
+          } right-3`}
           onClick={scrollBack}
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
