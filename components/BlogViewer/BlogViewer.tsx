@@ -1,8 +1,9 @@
-import { BsLink45Deg } from "react-icons/bs";
+import { HTMLAttributeAnchorTarget } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkHeadingID from "remark-heading-id";
 
+import { server } from "../../config";
 import useToastText from "../../hooks/useToastText";
 import { BlogPostData } from "../../types";
 import Toast from "../Toast";
@@ -10,14 +11,12 @@ import styles from "./BlogViewer.module.css";
 import CodeComponent from "./CodeComponent";
 import CodeComponentManager from "./CodeComponent/CodeComponentManager";
 import HeadingWithLink from "./HeadingWithLink/HeadingWithLink";
-import { HTMLAttributeAnchorTarget } from "react";
-import { server } from "../../config";
 
 interface Props {
   post: BlogPostData;
 }
 
-const BlogViewer = ({ post: { body, tags, title } }: Props) => {
+const BlogViewer = ({ post: { body, title } }: Props) => {
   const [toastProps, setToastText] = useToastText({
     props: {
       className: "bg-gray-500 text-white",

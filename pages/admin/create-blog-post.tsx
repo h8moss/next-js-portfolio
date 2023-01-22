@@ -1,9 +1,9 @@
 import {
-  Timestamp,
   addDoc,
   collection,
   doc,
   getDoc,
+  Timestamp,
   updateDoc,
 } from "firebase/firestore";
 import { Field, Form, Formik } from "formik";
@@ -36,7 +36,7 @@ const CreateBlogPost = () => {
 
   const onSubmit = async (values: FormData) => {
     try {
-      const document = await addDoc(
+      const _document = await addDoc(
         collection(firestore, `blog-posts-${values.language}`),
         {
           body: values.body,

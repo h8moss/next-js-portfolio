@@ -6,9 +6,9 @@ import { useState } from "react";
 
 import BlogViewer from "../../components/BlogViewer";
 import NavBar from "../../components/NavBar";
+import ScrollToTop from "../../domain/about/ScrollToTop";
 import { getBlog, getBlogs } from "../../domain/blog/api";
 import { BlogPost } from "../../types";
-import ScrollToTop from "../../domain/about/ScrollToTop";
 
 interface Props {
   post: BlogPost;

@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 
 import Button from "../../components/Button";
 import useAuth from "../../services/firebase/hooks/useAuth";
