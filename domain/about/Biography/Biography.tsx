@@ -1,6 +1,8 @@
-import { PropsWithChildren, ReactNode } from "react";
+import { useRouter } from "next/router";
+import { ReactNode } from "react";
 
-import useLocale from "../../../hooks/useLocale";
+import FlatButton from "../../../components/FlatButton";
+import LocaleComponent from "../../../components/LocaleComponent";
 import { ExtendedDateFormat } from "../../../services/dateOperations/types";
 import { Locale } from "../../../types";
 import BiographyEn from "./BiographyEn/BiographyEn";
@@ -10,21 +12,25 @@ export interface Props {
   format: ExtendedDateFormat;
   displayDecimal: boolean;
 }
-
-const getLocaleBiography = (locale: Locale, props: Props): ReactNode => {
-  switch (locale) {
-    case "en":
-      return <BiographyEn {...props} />;
-    case "es":
-      return <BiographyEs {...props} />;
-    default:
-      return "UNIMPLEMENTED LOCALE, PLEASE CONTACT DEVELOPER";
-  }
-};
-
 const Biography = (props: Props) => {
-  const locale = useLocale();
+  const router = useRouter();
 
-  return <>{getLocaleBiography(locale, props)}</>;
+  return (
+    <>
+      <LocaleComponent
+        en={<BiographyEn {...props} />}
+        es={<BiographyEs {...props} />}
+      >
+        <p>
+          This locale&apos;s Biography has not been implemented yet.
+          <FlatButton
+            onClick={() => router.push("/about", "/about", { locale: "en" })}
+          >
+            Read it in english?
+          </FlatButton>
+        </p>
+      </LocaleComponent>
+    </>
+  );
 };
 export default Biography;

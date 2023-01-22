@@ -1,0 +1,107 @@
+.content {
+  width: clamp(100px, 80%, 900px);
+  @apply mx-auto text-justify;
+}
+
+.content h1 {
+  @apply text-5xl my-2 text-center border-gray-300 border-b-2;
+}
+
+.content h2 {
+  @apply text-4xl my-2;
+}
+
+.content h3 {
+  @apply text-3xl my-2;
+}
+
+.content h4 {
+  @apply text-2xl my-2;
+}
+
+.content h5 {
+  @apply text-xl my-2;
+}
+
+.content h6 {
+  @apply text-lg my-2;
+}
+
+.content p {
+  @apply py-2;
+}
+
+.content ul, .content ol {
+  @apply py-4;
+  list-style-position: inside;
+}
+
+.content li > ul, .content li > ol {
+  @apply py-0;
+}
+
+.content img {
+  @apply mx-auto;
+}
+
+.content li::marker {
+  color: var(--accent);
+}
+
+.content li > ul {
+  list-style-type: square;
+}
+
+.content li li > ul 
+{
+  list-style-type: circle;
+}
+
+.content li > ol {
+  list-style-type: upper-roman;
+}
+
+.content li li > ol {
+  list-style-type: lower-greek;
+}
+
+.content p, .content li {
+  @apply text-base lg:text-lg;
+}
+
+.content ul, .preview ol {
+  @apply list-inside;
+}
+
+.content ul {
+  list-style-type: disc;
+}
+
+.content ol {
+  list-style-type: decimal-leading-zero;
+}
+
+.content li li {
+  padding-inline-start: 1rem;
+}
+
+.content blockquote {
+  @apply border-l-8 p-2;
+}
+
+.content code {
+  
+  font-family: 'JetBrains Mono', sans-serif;
+}
+
+.content code.inlineCode {
+  @apply rounded-md bg-slate-800 text-gray-200 p-1 whitespace-nowrap text-sm;
+}
+
+.content hr {
+  @apply border-t-2 border-t-gray-500 my-2
+}
+
+.content a {
+  @apply underline visited:text-gray-400
+}

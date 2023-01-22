@@ -10,22 +10,22 @@ import { Props } from "../components/Toast";
 
 interface Arguments {
   props?: HTMLProps<HTMLButtonElement>;
-  timeout?: number;
+  milliseconds?: number;
 }
 
 const useToastText = ({
   props = {},
-  timeout = 3000,
+  milliseconds = 3000,
 }: Arguments): [Props, Dispatch<SetStateAction<string>>] => {
   const [text, setText] = useState("");
 
   useEffect(() => {
     let timeout: NodeJS.Timeout | null;
     if (text) {
-      timeout = setTimeout(() => setText(""), 3500);
+      timeout = setTimeout(() => setText(""), milliseconds);
     }
     return () => clearTimeout(timeout);
-  }, [text]);
+  }, [milliseconds, text]);
 
   return [
     {

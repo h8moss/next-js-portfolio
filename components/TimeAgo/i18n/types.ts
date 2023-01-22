@@ -1,4 +1,3 @@
-import { ExtendedDateFormat } from "../../../services/dateOperations/types";
 import { I18n, TimeTexts } from "../../../types";
 
 export type LanguageBody = {
