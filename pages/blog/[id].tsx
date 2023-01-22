@@ -56,7 +56,10 @@ function Blog({ post }: Props) {
 
 export default Blog;
 
-export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
+export const getStaticProps: GetStaticProps<Props, { id: string }> = async ({
+  params,
+  locale,
+}) => {
   let id = params.id as string;
 
   const response = await getBlog({ id: id, language: locale });
