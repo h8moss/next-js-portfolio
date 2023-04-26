@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { GetStaticProps } from "next";
+import { GetServerSideProps, GetStaticProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -12,7 +12,7 @@ import { BlogListTile, Tag } from "../../domain/blog/index/index";
 import styles from "../../domain/blog/index/style.module.css";
 import useI18n from "../../hooks/useI18n";
 import { dateFromSeconds } from "../../services/dateOperations";
-import { BlogPost } from "../../types";
+import { BlogPost, Locale } from "../../types";
 
 interface Props {
   posts: BlogPost[];
@@ -77,8 +77,18 @@ const Blogs = ({ posts }: Props) => {
 
 export default Blogs;
 
-export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => {
-  const blogs = await getBlogs({ language: locale });
+export const getServerSideProps: GetServerSideProps<Props> = async ({
+  locale,
+  query,
+}) => {
+  let tags: string[] = [];
+  if (typeof query.tags === "string") tags = [query.tags];
+  else tags = [...(query.tags || [])];
+
+  const blogs = await getBlogs({
+    language: locale as Locale,
+    tags: tags,
+  });
   return {
     props: {
       posts: blogs,
