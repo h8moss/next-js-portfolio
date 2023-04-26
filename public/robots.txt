@@ -6,5 +6,6 @@ Disallow: /api/*
 
 Disallow: /blog
 Disallow: /blog/create
+Disallow: /admin/*
 
 Disallow: /signin
