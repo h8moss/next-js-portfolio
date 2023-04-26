@@ -8,6 +8,7 @@ import NavBar from "../components/NavBar";
 import getProjects from "../domain/portfolio/api/getProjects";
 import i18n from "../domain/portfolio/i18n";
 import style from "../domain/portfolio/style.module.css";
+import Tag from "../domain/portfolio/Tag";
 import useI18n from "../hooks/useI18n";
 import useLocale from "../hooks/useLocale";
 
@@ -53,7 +54,7 @@ const Portfolio = () => {
                       <h2>{v.title[locale]}</h2>
                       <div className={style.TagList}>
                         {v.tags.map((v) => (
-                          <div key={v}>{v}</div>
+                          <Tag key={v} tag={v} />
                         ))}
                       </div>
                     </motion.button>
