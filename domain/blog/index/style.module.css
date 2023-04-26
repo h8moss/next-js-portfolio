@@ -1,0 +1,3 @@
+.cardDiv {
+  width: clamp(200px, 80%, 700px);
+}

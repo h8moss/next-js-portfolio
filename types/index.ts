@@ -1,3 +1,4 @@
+import { locales } from "../constants";
 import { ExtendedDateFormat } from "../services/dateOperations/types";
 
 export type Project = {
@@ -11,6 +12,14 @@ export type DarkModeService = {
   setValue: (v: boolean) => void;
   getValue: () => boolean;
   toggleValue: () => void;
+};
+
+export type KeyValueService<T, U> = {
+  setValue: (key: T, value: U) => void;
+  getValue: (key: T) => U | null;
+  addListener: (key: T, handler: (value: U) => unknown) => void;
+  removeListener: (key: T, handler: (value: U) => unknown) => void;
+  notifyListeners: (key: T) => void;
 };
 
 export type AppUser = {
@@ -38,17 +47,20 @@ export type ImageLinkData = {
   url: string;
 };
 
-export type Locale = "en" | "es";
+export type Locale = typeof locales[number];
 
 export type I18n<T> = {
   [key in Locale]: T;
 };
 
-export type BlogPost = {
-  id: string;
+export type BlogPostData = {
   title: string;
   tags: string[];
-  text: string;
+  body: string;
+};
+
+export type BlogPost = BlogPostData & {
+  id: string;
   created: { seconds: number };
 };
 
