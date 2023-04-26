@@ -23,10 +23,33 @@ const getProjects = (): Project[] => {
         "Javascript",
         "Firebase firestore",
         "Vercel-hosting",
-        "web",
+        "Web",
       ],
       links: [
         generateGithubLink("https://github.com/h8moss/next-js-portfolio"),
+      ],
+    },
+    {
+      description: {
+        en: "An online game that uses Chat-GPT to generate human-sounding quotes, in the game your job is to identify which quotes were written by Chat-GPT and which quotes were actually said by actual humans",
+        es: "Un juego web que utiliza Chat-GPT para generar citas. Tu objetivo en el juego es identificar que citas fueron dichas por personas reales y que citas fueron creadas por Chat-GPT",
+      },
+      tags: [
+        "Chat-GPT",
+        "Svelte",
+        "Sveltekit",
+        "Web",
+        "Vercel-hosting",
+        "Javascript",
+      ],
+      title: { en: '"Is it AI?" game', es: 'El juego "Is it AI?"' },
+      links: [
+        generateGithubLink("https://github.com/h8moss/is-it-ai"),
+        {
+          url: "https://is-it-ai-9mwi.vercel.app/",
+          alt: "Live website",
+          imageSource: "/social_icons/internet.png",
+        },
       ],
     },
     {
