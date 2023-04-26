@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -8,7 +8,7 @@ import BlogViewer from "../../components/BlogViewer";
 import NavBar from "../../components/NavBar";
 import ScrollToTop from "../../domain/about/ScrollToTop";
 import { getBlog, getBlogs } from "../../domain/blog/api";
-import { BlogPost } from "../../types";
+import { BlogPost, Locale } from "../../types";
 
 interface Props {
   post: BlogPost;
@@ -56,10 +56,10 @@ function Blog({ post }: Props) {
 
 export default Blog;
 
-export const getStaticProps: GetStaticProps<Props, { id: string }> = async ({
-  params,
-  locale,
-}) => {
+export const getServerSideProps: GetServerSideProps<
+  Props,
+  { id: string }
+> = async ({ params, locale }) => {
   let id = params.id as string;
 
   const response = await getBlog({ id: id, language: locale });
@@ -68,23 +68,5 @@ export const getStaticProps: GetStaticProps<Props, { id: string }> = async ({
     props: {
       post: response,
     },
-  };
-};
-
-export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
-  let paths = [];
-
-  for (let locale of locales) {
-    const posts = await getBlogs({ language: locale });
-    const ids = posts.map((post) => post.id);
-    paths = [
-      ...paths,
-      ...ids.map((id) => ({ params: { id: id }, locale: locale })),
-    ];
-  }
-
-  return {
-    fallback: false,
-    paths,
   };
 };
