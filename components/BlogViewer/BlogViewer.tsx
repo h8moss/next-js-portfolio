@@ -11,12 +11,18 @@ import styles from "./BlogViewer.module.css";
 import CodeComponent from "./CodeComponent";
 import CodeComponentManager from "./CodeComponent/CodeComponentManager";
 import HeadingWithLink from "./HeadingWithLink/HeadingWithLink";
+import AsyncImage from "./AsyncImage";
 
 interface Props {
   post: BlogPostData;
+
+  handleStorageImage: (id: string) => Promise<string>;
 }
 
-const BlogViewer = ({ post: { body, title } }: Props) => {
+const BlogViewer = ({
+  post: { body, title },
+  handleStorageImage = async (id) => id,
+}: Props) => {
   const [toastProps, setToastText] = useToastText({
     props: {
       className: "bg-gray-500 text-white",
@@ -35,6 +41,19 @@ const BlogViewer = ({ post: { body, title } }: Props) => {
                 remarkPlugins={[remarkHeadingID]}
                 rehypePlugins={[rehypeRaw]}
                 components={{
+                  img({ src, alt, width, height, ...props }) {
+                    const isStorage = src.startsWith("STORAGE::");
+                    return (
+                      <AsyncImage
+                        alt={alt}
+                        src={
+                          isStorage
+                            ? handleStorageImage(src.split("::")[1])
+                            : (async () => src)()
+                        }
+                      />
+                    );
+                  },
                   iframe({ node, width, height, className, ...props }) {
                     return (
                       <iframe
