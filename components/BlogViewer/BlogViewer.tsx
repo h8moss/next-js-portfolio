@@ -7,11 +7,11 @@ import { server } from "../../config";
 import useToastText from "../../hooks/useToastText";
 import { BlogPostData } from "../../types";
 import Toast from "../Toast";
+import AsyncImage from "./AsyncImage";
 import styles from "./BlogViewer.module.css";
 import CodeComponent from "./CodeComponent";
 import CodeComponentManager from "./CodeComponent/CodeComponentManager";
 import HeadingWithLink from "./HeadingWithLink/HeadingWithLink";
-import AsyncImage from "./AsyncImage";
 
 interface Props {
   post: BlogPostData;
