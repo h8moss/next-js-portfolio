@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { GetServerSideProps, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
