@@ -1,15 +1,11 @@
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  Timestamp,
-  updateDoc,
-} from "firebase/firestore";
-import { Field, Form, Formik } from "formik";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { httpsCallable } from "firebase/functions";
+import { getDownloadURL } from "firebase/storage";
+import { Field, Form, Formik, FormikHelpers } from "formik";
 import { useRouter } from "next/router";
 import React, {
   ChangeEvent,
+  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -19,9 +15,13 @@ import React, {
 import BlogViewer from "../../components/BlogViewer";
 import Button from "../../components/Button";
 import DarkModeSwitch from "../../components/NavBar/NavigationButtons/DarkModeSwitch/DarkModeSwitch";
+import Toast from "../../components/Toast";
 import { locales } from "../../constants";
 import styles from "../../domain/admin/create-blog-post/create-blog-post.module.css";
-import { firestore } from "../../services/firebase";
+import ImageManager from "../../domain/admin/create-blog-post/ImageManager";
+import useToastText from "../../hooks/useToastText";
+import { firestore, functions } from "../../services/firebase";
+import useStorageFolder from "../../services/firebase/hooks/useStorageFolder";
 import { Locale } from "../../types";
 
 interface FormData {
@@ -34,28 +34,58 @@ interface FormData {
 const CreateBlogPost = () => {
   const router = useRouter();
 
-  const onSubmit = async (values: FormData) => {
-    try {
-      const _document = await addDoc(
-        collection(firestore, `blog-posts-${values.language}`),
-        {
-          body: values.body,
-          tags: values.tags,
-          title: values.title,
-          created: Timestamp.now(),
-        }
-      );
-      await updateDoc(draftDoc, {
-        body: "",
-        title: "",
-        tags: [],
-      });
-    } catch (e) {
-      console.error({ e });
-      return;
-    }
+  const imageStorage = useStorageFolder("draft");
 
-    router.push(`/admin`);
+  const [images, setImages] = useState<{ src: string; name: string }[]>([]);
+
+  const getImages = useCallback<
+    () => Promise<{ src: string; name: string }[]>
+  >(async () => {
+    const downloadUrls = await Promise.all(
+      imageStorage.files.map((file) => getDownloadURL(file))
+    );
+
+    return imageStorage.files.map((file, i) => ({
+      src: downloadUrls[i],
+      name: file.name,
+    }));
+  }, [imageStorage.files]);
+
+  useEffect(() => {
+    getImages().then((v) => setImages(v));
+  }, [getImages]);
+
+  const [canUploadImage, setCanUploadImage] = useState(true);
+
+  const [toastProps, setToastText] = useToastText({});
+
+  const onUploadImage = async (file: File) => {
+    if (canUploadImage) {
+      setCanUploadImage(false);
+
+      await imageStorage.uploadFile(file);
+
+      setCanUploadImage(true);
+    }
+  };
+
+  const onSubmit = async (
+    values: FormData,
+    helpers: FormikHelpers<FormData>
+  ) => {
+    await saveStored(values);
+
+    helpers.setSubmitting(true);
+    const result = await httpsCallable<void, { id: string }>(
+      functions,
+      "createBlogPost"
+    )();
+    const id = result.data.id;
+    helpers.setSubmitting(false);
+
+    router.push(`/blog/${id}`, `/blog/${id}`, {
+      locale: stored.language,
+    });
   };
 
   const [showPreview, setShowPreview] = useState(false);
@@ -81,12 +111,12 @@ const CreateBlogPost = () => {
       if (sn.exists()) {
         const data = sn.data();
 
-        _setStored(({ language }) => ({
+        _setStored({
           tags: data.tags,
           body: data.body,
           title: data.title,
-          language,
-        }));
+          language: data.language,
+        });
       }
 
       setIsLoading(false);
@@ -128,21 +158,20 @@ const CreateBlogPost = () => {
     }
   };
 
-  const saveStored = (values: FormData) => {
+  const saveStored = async (values: FormData) => {
     _setStored(values);
 
-    // asynchronously save into database
-    (async () => {
-      await updateDoc(draftDoc, {
-        body: values.body,
-        title: values.title,
-        tags: values.tags,
-      });
-    })();
+    await updateDoc(draftDoc, {
+      body: values.body,
+      title: values.title,
+      tags: values.tags,
+      language: values.language,
+    });
   };
 
   return (
     <>
+      <Toast className="bg-green-500 text-white" {...toastProps} />
       <div className="h-screen overflow-auto p-8">
         {isLoading ? (
           <p>Loading...</p>
@@ -152,83 +181,114 @@ const CreateBlogPost = () => {
             {showPreview ? (
               <div>
                 <button onClick={() => setShowPreview(false)}>X</button>
-                <BlogViewer post={stored} />
+                <BlogViewer
+                  post={stored}
+                  handleStorageImage={async (name) =>
+                    images.find((v) => v.name === name).src
+                  }
+                />
               </div>
             ) : (
-              <Formik<FormData> initialValues={stored} onSubmit={onSubmit}>
-                {({ setFieldValue, values }) => (
-                  <Form className={`flex flex-col p-4 mx-auto ${styles.form}`}>
-                    {(() => {
-                      valuesChanged(values);
+              <>
+                <Formik<FormData> initialValues={stored} onSubmit={onSubmit}>
+                  {({ setFieldValue, values, isSubmitting }) => (
+                    <div className="flex">
+                      <Form
+                        className={`flex flex-col p-4 flex-[2] mx-auto ${styles.form}`}
+                      >
+                        {(() => {
+                          valuesChanged(values);
 
-                      return <></>;
-                    })()}
+                          return <></>;
+                        })()}
 
-                    <Field as="select" name="language">
-                      {locales.map((l) => (
-                        <option value={l} key={l}>
-                          {l}
-                        </option>
-                      ))}
-                    </Field>
+                        <Field as="select" name="language">
+                          {locales.map((l) => (
+                            <option value={l} key={l}>
+                              {l}
+                            </option>
+                          ))}
+                        </Field>
 
-                    <Field
-                      name="title"
-                      placeholder="Title"
-                      className="p-4 my-2 rounded-md"
-                    />
-                    <div className="bg-white rounded-md p-1 flex flex-col">
-                      <input
-                        placeholder="Write tags here"
-                        className="p-2 my-2"
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                          if (e.target.value.at(-1) === " ") {
-                            const value = e.target.value.trim();
-                            if (!values.tags.includes(value))
-                              setFieldValue("tags", [...values.tags, value]);
-                            e.target.value = "";
-                          }
-                        }}
-                      />
-                      <div className="flex">
-                        {values.tags.map((v, i) => (
-                          <div
-                            key={v}
-                            className="bg-gray-300 text-black p-1 rounded-md m-1 text-sm group cursor-pointer"
-                            onClick={() => {
-                              const l = [...values.tags];
-                              l.splice(i, 1);
-                              setFieldValue("tags", l);
+                        <Field
+                          name="title"
+                          placeholder="Title"
+                          className="p-4 my-2 rounded-md"
+                        />
+                        <div className="bg-white rounded-md p-1 flex flex-col">
+                          <input
+                            placeholder="Write tags here"
+                            className="p-2 my-2"
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                              if (e.target.value.at(-1) === " ") {
+                                const value = e.target.value.trim();
+                                if (!values.tags.includes(value))
+                                  setFieldValue("tags", [
+                                    ...values.tags,
+                                    value,
+                                  ]);
+                                e.target.value = "";
+                              }
                             }}
-                          >
-                            {v}{" "}
-                            <span className="group-hover:text-red-500">x</span>
+                          />
+                          <div className="flex">
+                            {values.tags.map((v, i) => (
+                              <div
+                                key={v}
+                                className="bg-gray-300 text-black p-1 rounded-md m-1 text-sm group cursor-pointer"
+                                onClick={() => {
+                                  const l = [...values.tags];
+                                  l.splice(i, 1);
+                                  setFieldValue("tags", l);
+                                }}
+                              >
+                                {v}{" "}
+                                <span className="group-hover:text-red-500">
+                                  x
+                                </span>
+                              </div>
+                            ))}
                           </div>
-                        ))}
+                        </div>
+                        <Field
+                          name="body"
+                          className="p-4 my-2 rounded-md"
+                          as="textarea"
+                          rows="10"
+                          placeholder="body"
+                        />
+                        <div className="flex justify-around">
+                          <Button disabled={isSubmitting} type="submit">
+                            Submit
+                          </Button>
+                          <Button
+                            onClick={async () => {
+                              await saveStored(values);
+                              setShowPreview(true);
+                            }}
+                            type="button"
+                          >
+                            Preview
+                          </Button>
+                        </div>
+                      </Form>
+                      <div className="flex-1">
+                        <ImageManager
+                          canUpload={canUploadImage}
+                          images={images}
+                          onImageClick={async ({ name }) => {
+                            await navigator.clipboard.writeText(
+                              `![Description here](STORAGE::${name}::)`
+                            );
+                            setToastText("Copied to clipboard!");
+                          }}
+                          onUpload={onUploadImage}
+                        />
                       </div>
                     </div>
-                    <Field
-                      name="body"
-                      className="p-4 my-2 rounded-md"
-                      as="textarea"
-                      rows="80"
-                      placeholder="body"
-                    />
-                    <div className="flex justify-around">
-                      <Button type="submit">Submit</Button>
-                      <Button
-                        onClick={() => {
-                          saveStored(values);
-                          setShowPreview(true);
-                        }}
-                        type="button"
-                      >
-                        Preview
-                      </Button>
-                    </div>
-                  </Form>
-                )}
-              </Formik>
+                  )}
+                </Formik>
+              </>
             )}
           </>
         )}
