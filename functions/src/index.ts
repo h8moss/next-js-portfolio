@@ -60,3 +60,17 @@ export const createBlogPost = functions.https.onCall(async (data, context) => {
 
   return { id: blogDoc.id };
 });
+
+export const deleteBlogPost = functions.https.onCall(async (data, context) => {
+  if (!context.auth) throw "Missing auth";
+
+  const { id, locale, isPrivate } = data;
+  if (!id || !locale || isPrivate === undefined) {
+    throw "Missing parameters, call this function with an id, a locale and an isPrivate field";
+  }
+  const isPrivateString = isPrivate ? "-private" : "";
+
+  await firestore.doc(`blog-posts-${locale}${isPrivateString}/${id}`).delete();
+
+  return { success: true };
+});
