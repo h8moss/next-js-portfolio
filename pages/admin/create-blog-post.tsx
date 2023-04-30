@@ -21,6 +21,8 @@ import styles from "../../domain/admin/create-blog-post/create-blog-post.module.
 import ImageManager from "../../domain/admin/create-blog-post/ImageManager";
 import useToastText from "../../hooks/useToastText";
 import { firestore, functions } from "../../services/firebase";
+import { createBlogPost } from "../../services/firebase/functions";
+import useAuth from "../../services/firebase/hooks/useAuth";
 import useStorageFolder from "../../services/firebase/hooks/useStorageFolder";
 import { Locale } from "../../types";
 
@@ -32,6 +34,8 @@ interface FormData {
 }
 
 const CreateBlogPost = () => {
+  const auth = useAuth({ required: true, loginPage: "/" });
+
   const router = useRouter();
 
   const imageStorage = useStorageFolder("draft");
@@ -76,14 +80,11 @@ const CreateBlogPost = () => {
     await saveStored(values);
 
     helpers.setSubmitting(true);
-    const result = await httpsCallable<void, { id: string }>(
-      functions,
-      "createBlogPost"
-    )();
+    const result = await createBlogPost();
     const id = result.data.id;
     helpers.setSubmitting(false);
 
-    router.push(`/blog/${id}`, `/blog/${id}`, {
+    router.push(`/admin/blog/private/${id}`, `/admin/blog/private/${id}`, {
       locale: stored.language,
     });
   };

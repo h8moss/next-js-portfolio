@@ -16,7 +16,7 @@ interface FormValues {
 
 const SignIn = () => {
   const router = useRouter();
-  const auth = useAuth();
+  const auth = useAuth({});
 
   useEffect(() => {
     if (auth.isSignedIn) router.push("/admin");
