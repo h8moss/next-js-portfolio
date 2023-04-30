@@ -74,3 +74,31 @@ export const deleteBlogPost = functions.https.onCall(async (data, context) => {
 
   return { success: true };
 });
+
+export const toggleBlogPrivacy = functions.https.onCall(
+  async (data, context) => {
+    if (!context.auth) throw "Missing auth";
+
+    const { id, locale, isPrivate } = data;
+    if (!id || !locale || isPrivate === undefined) {
+      throw "Missing parameters, call this function with an id, a locale and an isPrivate field";
+    }
+
+    const isPrivateString = (priv: boolean) => (priv ? "-private" : "");
+
+    const originalDoc = firestore.doc(
+      `blog-posts-${locale}${isPrivateString(isPrivate)}/${id}`
+    );
+
+    const newDoc = firestore.doc(
+      `blog-posts-${locale}${isPrivateString(!isPrivate)}/${id}`
+    );
+
+    const docData = (await originalDoc.get()).data();
+
+    if (!docData) throw "Original does not exist";
+
+    await newDoc.update(docData);
+    return { success: true };
+  }
+);
