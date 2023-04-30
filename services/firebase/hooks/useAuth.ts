@@ -7,9 +7,28 @@ import {
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { auth } from "../";
+import { useRouter } from "next/router";
 
-const useAuth = () => {
-  const [user, setUser] = useState<User | null>(auth.currentUser);
+interface Options {
+  required?: boolean;
+  loginPage?: string;
+}
+
+const useAuth = ({
+  required = false,
+  loginPage = "/admin/sign-in",
+}: Options) => {
+  const [user, _setUser] = useState<User | null>(auth.currentUser);
+
+  const router = useRouter();
+
+  const setUser = (u: User | null) => {
+    _setUser(u);
+
+    if (!u && required) {
+      router.push(loginPage);
+    }
+  };
 
   const signInWithMail = useCallback(async (mail: string, password: string) => {
     await signInWithEmailAndPassword(auth, mail, password);
