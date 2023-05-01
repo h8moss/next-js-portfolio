@@ -56,8 +56,8 @@ const BlogTile = ({
 
   const onSetDraft = async () => {
     setDoingWork(true);
-    const result = await setBlogAsDraft({ id, isPrivate, locale });
     try {
+    const result = await setBlogAsDraft({ id, isPrivate, locale });
       if (result.data.success && onSuccess) {
         onSuccess("/admin/create-blog-post");
       }
