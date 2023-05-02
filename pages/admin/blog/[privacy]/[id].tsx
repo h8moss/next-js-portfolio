@@ -12,6 +12,7 @@ import useLocale from "../../../../hooks/useLocale";
 import useTheme from "../../../../hooks/useTheme";
 import { storage } from "../../../../services/firebase";
 import useAuth from "../../../../services/firebase/hooks/useAuth";
+import BlogBodyDiv from "../../../../components/BlogBodyDiv";
 
 const AdminBlogPage = () => {
   const router = useRouter();
@@ -67,7 +68,7 @@ const AdminBlogPage = () => {
         <div>
           {!!post ? (
             <>
-              <div className="md:w-1/2 w-[95%] m-auto mt-10 min-h-screen">
+              <BlogBodyDiv>
                 <BlogViewer
                   post={post}
                   handleStorageImage={async (name) => {
@@ -76,8 +77,7 @@ const AdminBlogPage = () => {
                     );
                   }}
                 />
-              </div>
-
+              </BlogBodyDiv>
               <ScrollToTop show />
             </>
           ) : (

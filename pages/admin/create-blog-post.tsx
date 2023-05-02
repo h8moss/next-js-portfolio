@@ -106,8 +106,6 @@ const CreateBlogPost = () => {
     (async () => {
       const sn = await getDoc(draftDoc);
 
-      console.log({ exists: sn.exists(), data: sn.data() });
-
       if (sn.exists()) {
         const data = sn.data();
 
@@ -125,9 +123,6 @@ const CreateBlogPost = () => {
 
   const increaseCount = (amount: number) => {
     changeCounter.current = changeCounter.current + amount;
-    console.log({
-      changeCount: changeCounter.current,
-    });
     if (changeCounter.current >= 50) {
       changeCounter.current = 0;
 
