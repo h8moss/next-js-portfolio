@@ -72,12 +72,7 @@ const AdminBlogPage = () => {
                   post={post}
                   handleStorageImage={async (name) => {
                     return await getDownloadURL(
-                      ref(
-                        storage,
-                        `blog-posts-${locale}${isPrivate ? "-private" : ""}/${
-                          post.id
-                        }/${name}`
-                      )
+                      ref(storage, `blog-posts-${locale}/${post.id}/${name}`)
                     );
                   }}
                 />

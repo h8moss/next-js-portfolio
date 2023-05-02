@@ -1,6 +1,8 @@
+import noteDirective from "my-remark-plugin";
 import { HTMLAttributeAnchorTarget } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
+import directive from "remark-directive";
 import remarkHeadingID from "remark-heading-id";
 
 import { server } from "../../config";
@@ -38,7 +40,18 @@ const BlogViewer = ({
             <h1 className="p-2 m-2">{title}</h1>
             <div>
               <ReactMarkdown
-                remarkPlugins={[remarkHeadingID]}
+                remarkPlugins={[
+                  remarkHeadingID,
+                  directive,
+                  [
+                    noteDirective,
+                    {
+                      className: styles.note,
+                      tag: "div",
+                      titleClass: styles.title,
+                    },
+                  ],
+                ]}
                 rehypePlugins={[rehypeRaw]}
                 components={{
                   img({ src, alt, width, height, ...props }) {
