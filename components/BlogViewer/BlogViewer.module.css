@@ -105,3 +105,32 @@
 .content a {
   @apply underline visited:text-gray-400
 }
+
+.content .note {
+  color: white;
+  background-color: var(--accent);
+  padding: 1rem;
+  border-radius: 0.25rem;
+
+margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.content .note > .title {
+  font-size: 1.2rem;
+
+  border-bottom: 2px rgba(0,0,0,0.2) solid;
+  
+}
+
+.content .note:global(.warning), .content .note:global(.red) {
+  background-color: #ff4040;
+}
+
+.content .note:global(.green) {
+  background-color: #20dd20;
+}
+
+.content .note:global(.blue) {
+  background-color: #4040ff;
+}

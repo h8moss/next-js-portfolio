@@ -1,5 +1,4 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { httpsCallable } from "firebase/functions";
 import { getDownloadURL } from "firebase/storage";
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import { useRouter } from "next/router";
@@ -20,7 +19,7 @@ import { locales } from "../../constants";
 import styles from "../../domain/admin/create-blog-post/create-blog-post.module.css";
 import ImageManager from "../../domain/admin/create-blog-post/ImageManager";
 import useToastText from "../../hooks/useToastText";
-import { firestore, functions } from "../../services/firebase";
+import { firestore } from "../../services/firebase";
 import { createBlogPost } from "../../services/firebase/functions";
 import useAuth from "../../services/firebase/hooks/useAuth";
 import useStorageFolder from "../../services/firebase/hooks/useStorageFolder";
@@ -34,7 +33,7 @@ interface FormData {
 }
 
 const CreateBlogPost = () => {
-  const auth = useAuth({ required: true, loginPage: "/" });
+  const _ = useAuth({ required: true, loginPage: "/" });
 
   const router = useRouter();
 

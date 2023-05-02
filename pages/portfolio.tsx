@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
+import { BsEmojiNeutral } from "react-icons/bs";
 
 import ImageLink from "../components/ImageLink";
 import NavBar from "../components/NavBar";
@@ -11,7 +12,6 @@ import style from "../domain/portfolio/style.module.css";
 import Tag from "../domain/portfolio/Tag";
 import useI18n from "../hooks/useI18n";
 import useLocale from "../hooks/useLocale";
-import { BsEmojiNeutral } from "react-icons/bs";
 
 const Portfolio = () => {
   const projects = getProjects();

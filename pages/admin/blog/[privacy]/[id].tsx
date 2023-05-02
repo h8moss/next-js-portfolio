@@ -1,4 +1,5 @@
 import { getDownloadURL, ref } from "firebase/storage";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -11,7 +12,6 @@ import useLocale from "../../../../hooks/useLocale";
 import useTheme from "../../../../hooks/useTheme";
 import { storage } from "../../../../services/firebase";
 import useAuth from "../../../../services/firebase/hooks/useAuth";
-import Link from "next/link";
 
 const AdminBlogPage = () => {
   const router = useRouter();
@@ -72,12 +72,7 @@ const AdminBlogPage = () => {
                   post={post}
                   handleStorageImage={async (name) => {
                     return await getDownloadURL(
-                      ref(
-                        storage,
-                        `blog-posts-${locale}${isPrivate ? "-private" : ""}/${
-                          post.id
-                        }/${name}`
-                      )
+                      ref(storage, `blog-posts-${locale}/${post.id}/${name}`)
                     );
                   }}
                 />
