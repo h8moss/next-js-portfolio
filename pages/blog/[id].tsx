@@ -12,6 +12,7 @@ import { getBlog } from "../../domain/blog/api";
 import useLocale from "../../hooks/useLocale";
 import { storage } from "../../services/firebase";
 import { BlogPost } from "../../types";
+import BlogBodyDiv from "../../components/BlogBodyDiv";
 
 interface Props {
   post: BlogPost;
@@ -34,18 +35,7 @@ function Blog({ post }: Props) {
         <AnimatePresence onExitComplete={() => router.push(nextRoute)}>
           {shouldStay && (
             <>
-              <motion.div
-                className="md:w-1/2 w-[95%] m-auto mt-10 min-h-screen"
-                initial={{
-                  x: "100vw",
-                }}
-                animate={{
-                  x: "0",
-                }}
-                exit={{
-                  x: "-100vw",
-                }}
-              >
+              <BlogBodyDiv>
                 <BlogViewer
                   post={post}
                   handleStorageImage={async (name) => {
@@ -54,7 +44,7 @@ function Blog({ post }: Props) {
                     );
                   }}
                 />
-              </motion.div>
+              </BlogBodyDiv>
 
               <ScrollToTop show={shouldStay} />
             </>
