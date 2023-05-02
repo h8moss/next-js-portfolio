@@ -14,7 +14,7 @@ const BlogListTile = ({ dateCreated, title, tags, onClick }) => {
 
     return (
         <motion.button
-            className="flex flex-col mx-auto rounded-md shadow-2xl p-3 w-full my-2 bg-white group"
+            className="flex flex-col mx-auto rounded-md shadow-2xl p-3 w-full my-2 bg-white group overflow-x-hidden"
             initial={{ opacity: 0, scaleX: 0.5 }}
             animate={{ opacity: 1, scaleX: 1 }}
             whileHover={{ scale: 1.02 }}
@@ -25,7 +25,7 @@ const BlogListTile = ({ dateCreated, title, tags, onClick }) => {
                     {`${dateCreated.toLocaleDateString()} (${agoString})`}
                 </p>
             }
-            <h2 className="text-3xl transition-colors md:whitespace-nowrap group-hover:text-purple-400 text-left">
+            <h2 className="text-3xl transition-colors group-hover:text-purple-400 text-left">
                 {title}
             </h2>
             <div className="flex flex-row">

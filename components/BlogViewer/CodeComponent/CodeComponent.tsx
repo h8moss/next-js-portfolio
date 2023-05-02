@@ -46,8 +46,6 @@ const CodeComponent = ({
       ...(getValue() ? atomDark : materialLight),
     };
 
-    console.log({ darkOrLight });
-
     // Custom styles to code style
     return {
       ...darkOrLight,
