@@ -152,19 +152,24 @@ const AdminBlogPage = ({ id, isPrivate, locale }: Props) => {
           )}
         </div>
         <BlogBodyDiv>
-           <BlogViewer
-                  post={post}
-                  storageToUrl={async (name) => {
-                    return await getDownloadURL(
-                      ref(storage, `blog-posts-${locale}/${post.id}/${name}`)
-                    );
-                  }}
-                  storageToBytes={async (id) => {
-                    return await getBytes(
-                      ref(storage, `blog-posts-${locale}/${post.id}/${id}`)
-                    );
-                  }}
-                />
+          <BlogViewer
+            post={post}
+            storageToUrl={async (name) => {
+              return await getDownloadURL(
+                ref(storage, `blog-posts-${locale}/${post.id}/${name}`)
+              );
+            }}
+            storageToBytes={async (id) => {
+              return await getBytes(
+                ref(storage, `blog-posts-${locale}/${post.id}/${id}`)
+              );
+            }}
+            canEdit={isEditing}
+            onTitleEdited={(value) =>
+              setPost((post) => ({ ...post, title: value }))
+            }
+            onBodyEdited={(body) => setPost((post) => ({ ...post, body }))}
+          />
         </BlogBodyDiv>
         {isEditing && (
           <div>
