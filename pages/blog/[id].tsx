@@ -1,4 +1,4 @@
-import { getDownloadURL, ref } from "firebase/storage";
+import { getBytes, getDownloadURL, ref } from "firebase/storage";
 import { AnimatePresence } from "framer-motion";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
@@ -38,9 +38,14 @@ function Blog({ post }: Props) {
               <BlogBodyDiv>
                 <BlogViewer
                   post={post}
-                  handleStorageImage={async (name) => {
+                  storageToUrl={async (name) => {
                     return await getDownloadURL(
                       ref(storage, `blog-posts-${locale}/${post.id}/${name}`)
+                    );
+                  }}
+                  storageToBytes={async (id) => {
+                    return await getBytes(
+                      ref(storage, `blog-posts-${locale}/${post.id}/${id}`)
                     );
                   }}
                 />

@@ -1,5 +1,6 @@
-import noteDirective from "my-remark-plugin";
-import { HTMLAttributeAnchorTarget, useState } from "react";
+import download from "downloadjs";
+import { fileDirective, noteDirective } from "my-remark-plugin";
+import { HTMLAttributeAnchorTarget } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import directive from "remark-directive";
@@ -19,7 +20,9 @@ import HeadingWithLink from "./HeadingWithLink/HeadingWithLink";
 interface Props {
   post: BlogPostData;
 
-  handleStorageImage: (id: string) => Promise<string>;
+  storageToUrl: (id: string) => Promise<string>;
+  storageToBytes: (id: string) => Promise<ArrayBuffer>;
+
   canEdit?: boolean;
 
   onTitleEdited?: (title: string) => unknown;
@@ -28,7 +31,8 @@ interface Props {
 
 const BlogViewer = ({
   post: { body, title },
-  handleStorageImage = async (id) => id,
+  storageToUrl = async (id) => id,
+  storageToBytes = async (id) => new ArrayBuffer(0),
   canEdit = false,
   onTitleEdited,
   onBodyEdited,
@@ -91,37 +95,62 @@ const BlogViewer = ({
                         tag: "div",
                         titleClass: styles.title,
                       },
-                    ],
-                  ]}
-                  rehypePlugins={[rehypeRaw]}
-                  components={{
-                    img({ src, alt, width, height, ...props }) {
-                      const isStorage = src.startsWith("STORAGE::");
-                      return (
-                        <AsyncImage
-                          alt={alt}
-                          src={
-                            isStorage
-                              ? handleStorageImage(src.split("::")[1])
-                              : (async () => src)()
-                          }
-                        />
-                      );
+                  ],
+                  [
+                    fileDirective,
+                    {
+                      className: styles.file,
                     },
-                    iframe({ node, width, height, className, ...props }) {
-                      return (
-                        <iframe
-                          className={`aspect-video w-[90%] mx-auto ${className} `}
-                          {...props}
-                        />
-                      );
-                    },
-                    code({ inline, className, children, ...props }) {
-                      const body = String(children).replace(/\n$/, "");
-                      const classNameMatch = /language-(\w+)/.exec(
-                        className || ""
-                      );
+                  ],
+                ]}
+                rehypePlugins={[rehypeRaw]}
+                components={{
+                  button(props) {
+                    return (
+                      <button
+                        onClick={async () => {
+                          if ("data-storage" in props) {
+                            const dataStorage = props["data-storage"] as string;
 
+                            const bytes = await storageToBytes(dataStorage);
+                            const filename = (
+                              props as Record<string, any>
+                            ).children[0].toString();
+                            download(bytes, filename);
+                          }
+                        }}
+                        {...props}
+                      ></button>
+                    );
+                  },
+                  img({ src, alt, width, height, ...props }) {
+                    const isStorage = src.startsWith("STORAGE::");
+                    return (
+                      <AsyncImage
+                        alt={alt}
+                        src={
+                          isStorage
+                            ? storageToUrl(src.split("::")[1])
+                            : (async () => src)()
+                        }
+                      />
+                    );
+                  },
+                  iframe({ node, width, height, className, ...props }) {
+                    return (
+                      <iframe
+                        className={`aspect-video w-[90%] mx-auto ${className} `}
+                        {...props}
+                      />
+                    );
+                  },
+                  code({ inline, className, children, ...props }) {
+                    const body = String(children).replace(/\n$/, "");
+                    const classNameMatch = /language-(\w+)/.exec(
+                      className || ""
+                    );
+
+                    if (inline || !classNameMatch) {
                       if (inline || !classNameMatch) {
                         return (
                           <code
