@@ -1,6 +1,6 @@
 import download from "downloadjs";
 import { fileDirective, noteDirective } from "my-remark-plugin";
-import { HTMLAttributeAnchorTarget } from "react";
+import { HTMLAttributeAnchorTarget, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import directive from "remark-directive";
@@ -95,88 +95,91 @@ const BlogViewer = ({
                         tag: "div",
                         titleClass: styles.title,
                       },
-                  ],
-                  [
-                    fileDirective,
-                    {
-                      className: styles.file,
-                    },
-                  ],
-                ]}
-                rehypePlugins={[rehypeRaw]}
-                components={{
-                  button(props) {
-                    return (
-                      <button
-                        onClick={async () => {
-                          if ("data-storage" in props) {
-                            const dataStorage = props["data-storage"] as string;
-
-                            const bytes = await storageToBytes(dataStorage);
-                            const filename = (
-                              props as Record<string, any>
-                            ).children[0].toString();
-                            download(bytes, filename);
-                          }
-                        }}
-                        {...props}
-                      ></button>
-                    );
-                  },
-                  img({ src, alt, width, height, ...props }) {
-                    const isStorage = src.startsWith("STORAGE::");
-                    return (
-                      <AsyncImage
-                        alt={alt}
-                        src={
-                          isStorage
-                            ? storageToUrl(src.split("::")[1])
-                            : (async () => src)()
-                        }
-                      />
-                    );
-                  },
-                  iframe({ node, width, height, className, ...props }) {
-                    return (
-                      <iframe
-                        className={`aspect-video w-[90%] mx-auto ${className} `}
-                        {...props}
-                      />
-                    );
-                  },
-                  code({ inline, className, children, ...props }) {
-                    const body = String(children).replace(/\n$/, "");
-                    const classNameMatch = /language-(\w+)/.exec(
-                      className || ""
-                    );
-
-                    if (inline || !classNameMatch) {
-                      if (inline || !classNameMatch) {
-                        return (
-                          <code
-                            className={`${className || ""} ${
-                              styles.inlineCode
-                            }`}
-                            {...props}
-                          >
-                            {children}
-                          </code>
-                        );
-                      }
-
-                      let split = body.split(/\n---(\w+)\n/g);
-
-                      split = [classNameMatch[1], ...split];
-                      let splitTxt = split.filter((v, i) => i % 2 == 1);
-                      let splitLang = split.filter((v, i) => i % 2 == 0);
-
+                    ],
+                    [
+                      fileDirective,
+                      {
+                        className: styles.file,
+                      },
+                    ],
+                  ]}
+                  rehypePlugins={[rehypeRaw]}
+                  components={{
+                    button(props) {
                       return (
-                        <CodeComponent
-                          langArray={splitLang}
-                          textArray={splitTxt}
-                          onCopySuccess={() => setToastText("copied code!")}
+                        <button
+                          onClick={async () => {
+                            if ("data-storage" in props) {
+                              const dataStorage = props[
+                                "data-storage"
+                              ] as string;
+
+                              const bytes = await storageToBytes(dataStorage);
+                              const filename = (
+                                props as Record<string, any>
+                              ).children[0].toString();
+                              download(bytes, filename);
+                            }
+                          }}
+                          {...props}
+                        ></button>
+                      );
+                    },
+                    img({ src, alt, width, height, ...props }) {
+                      const isStorage = src.startsWith("STORAGE::");
+                      return (
+                        <AsyncImage
+                          alt={alt}
+                          src={
+                            isStorage
+                              ? storageToUrl(src.split("::")[1])
+                              : (async () => src)()
+                          }
                         />
                       );
+                    },
+                    iframe({ node, width, height, className, ...props }) {
+                      return (
+                        <iframe
+                          className={`aspect-video w-[90%] mx-auto ${className} `}
+                          {...props}
+                        />
+                      );
+                    },
+                    code({ inline, className, children, ...props }) {
+                      const body = String(children).replace(/\n$/, "");
+                      const classNameMatch = /language-(\w+)/.exec(
+                        className || ""
+                      );
+
+                      if (inline || !classNameMatch) {
+                        if (inline || !classNameMatch) {
+                          return (
+                            <code
+                              className={`${className || ""} ${
+                                styles.inlineCode
+                              }`}
+                              {...props}
+                            >
+                              {children}
+                            </code>
+                          );
+                        }
+
+                        let split = body.split(/\n---(\w+)\n/g);
+
+                        split = [classNameMatch[1], ...split];
+                        let splitTxt = split.filter((v, i) => i % 2 == 1);
+                        let splitLang = split.filter((v, i) => i % 2 == 0);
+
+                        return (
+                          <CodeComponent
+                            langArray={splitLang}
+                            textArray={splitTxt}
+                            onCopySuccess={() => setToastText("copied code!")}
+                          />
+                        );
+                      }
                     },
                     h1: (props) => <HeadingWithLink element="h1" {...props} />,
                     h2: (props) => <HeadingWithLink element="h2" {...props} />,
