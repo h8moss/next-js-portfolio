@@ -5,6 +5,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
+import BlogBodyDiv from "../../components/BlogBodyDiv";
 import BlogViewer from "../../components/BlogViewer";
 import NavBar from "../../components/NavBar";
 import ScrollToTop from "../../domain/about/ScrollToTop";
@@ -12,7 +13,6 @@ import { getBlog } from "../../domain/blog/api";
 import useLocale from "../../hooks/useLocale";
 import { storage } from "../../services/firebase";
 import { BlogPost } from "../../types";
-import BlogBodyDiv from "../../components/BlogBodyDiv";
 
 interface Props {
   post: BlogPost;
