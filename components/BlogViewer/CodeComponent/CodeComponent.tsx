@@ -108,6 +108,7 @@ const CodeComponent = ({
         language={langArray[selectedIndex]}
         className={`bg-black text-white text-sm overflow-auto p-4 `}
         style={styleObj}
+        showLineNumbers
       >
         {textArray[selectedIndex]}
       </SyntaxHighlighter>
