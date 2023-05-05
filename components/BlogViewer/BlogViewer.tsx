@@ -71,7 +71,9 @@ const BlogViewer = ({
                             const dataStorage = props["data-storage"] as string;
 
                             const bytes = await storageToBytes(dataStorage);
-                            const filename = props.children[0].toString();
+                            const filename = (
+                              props as Record<string, any>
+                            ).children[0].toString();
                             download(bytes, filename);
                           }
                         }}
