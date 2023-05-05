@@ -10,6 +10,7 @@
   "dependencies": {
     "@agentofuser/remark-oembed": "^1.0.4",
     "@hcaptcha/react-hcaptcha": "^1.1.1",
+    "downloadjs": "^1.4.7",
     "firebase": "^9.4.1",
     "formik": "^2.2.9",
     "framer-motion": "^6.2.4",

@@ -134,3 +134,20 @@ margin-top: 1rem;
 .content .note:global(.blue) {
   background-color: #4040ff;
 }
+
+.content .file {
+  display: flex;
+  flex-direction: column;
+
+  background-color: #404040;
+  padding: 1rem;
+}
+
+.content .file:hover {
+  background-color: #505050;
+}
+
+.content .file img {
+  width: 50px;
+  height: 50px;
+}

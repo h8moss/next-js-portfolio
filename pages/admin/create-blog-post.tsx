@@ -1,5 +1,5 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { getDownloadURL } from "firebase/storage";
+import { getBytes, getDownloadURL, ref } from "firebase/storage";
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import { useRouter } from "next/router";
 import React, {
@@ -19,7 +19,7 @@ import { locales } from "../../constants";
 import styles from "../../domain/admin/create-blog-post/create-blog-post.module.css";
 import ImageManager from "../../domain/admin/create-blog-post/ImageManager";
 import useToastText from "../../hooks/useToastText";
-import { firestore } from "../../services/firebase";
+import { firestore, storage } from "../../services/firebase";
 import { createBlogPost } from "../../services/firebase/functions";
 import useAuth from "../../services/firebase/hooks/useAuth";
 import useStorageFolder from "../../services/firebase/hooks/useStorageFolder";
@@ -178,9 +178,12 @@ const CreateBlogPost = () => {
                 <button onClick={() => setShowPreview(false)}>X</button>
                 <BlogViewer
                   post={stored}
-                  handleStorageImage={async (name) =>
+                  storageToUrl={async (name) =>
                     images.find((v) => v.name === name).src
                   }
+                  storageToBytes={async (id) => {
+                    return await getBytes(ref(storage, "draft/" + id));
+                  }}
                 />
               </div>
             ) : (
