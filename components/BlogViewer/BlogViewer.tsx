@@ -1,4 +1,5 @@
-import noteDirective from "my-remark-plugin";
+import download from "downloadjs";
+import { fileDirective, noteDirective } from "my-remark-plugin";
 import { HTMLAttributeAnchorTarget } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
@@ -18,12 +19,14 @@ import HeadingWithLink from "./HeadingWithLink/HeadingWithLink";
 interface Props {
   post: BlogPostData;
 
-  handleStorageImage: (id: string) => Promise<string>;
+  storageToUrl: (id: string) => Promise<string>;
+  storageToBytes: (id: string) => Promise<ArrayBuffer>;
 }
 
 const BlogViewer = ({
   post: { body, title },
-  handleStorageImage = async (id) => id,
+  storageToUrl = async (id) => id,
+  storageToBytes = async (id) => new ArrayBuffer(0),
 }: Props) => {
   const [toastProps, setToastText] = useToastText({
     props: {
@@ -51,9 +54,31 @@ const BlogViewer = ({
                       titleClass: styles.title,
                     },
                   ],
+                  [
+                    fileDirective,
+                    {
+                      className: styles.file,
+                    },
+                  ],
                 ]}
                 rehypePlugins={[rehypeRaw]}
                 components={{
+                  button(props) {
+                    return (
+                      <button
+                        onClick={async () => {
+                          if ("data-storage" in props) {
+                            const dataStorage = props["data-storage"] as string;
+
+                            const bytes = await storageToBytes(dataStorage);
+                            const filename = props.children[0].toString();
+                            download(bytes, filename);
+                          }
+                        }}
+                        {...props}
+                      ></button>
+                    );
+                  },
                   img({ src, alt, width, height, ...props }) {
                     const isStorage = src.startsWith("STORAGE::");
                     return (
@@ -61,7 +86,7 @@ const BlogViewer = ({
                         alt={alt}
                         src={
                           isStorage
-                            ? handleStorageImage(src.split("::")[1])
+                            ? storageToUrl(src.split("::")[1])
                             : (async () => src)()
                         }
                       />
