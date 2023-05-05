@@ -13,9 +13,8 @@ import AsyncImage from "./AsyncImage";
 import styles from "./BlogViewer.module.css";
 import CodeComponent from "./CodeComponent";
 import CodeComponentManager from "./CodeComponent/CodeComponentManager";
-import HeadingWithLink from "./HeadingWithLink/HeadingWithLink";
-import { FiEdit } from "react-icons/fi";
 import EditableH1 from "./EditableH1";
+import HeadingWithLink from "./HeadingWithLink/HeadingWithLink";
 
 interface Props {
   post: BlogPostData;
