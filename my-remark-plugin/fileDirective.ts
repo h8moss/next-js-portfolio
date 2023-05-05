@@ -19,7 +19,7 @@ const fileDirective: Plugin<[Props], Root> = ({ className }) => {
 
       data.hName = "button";
       data.hProperties = node.attributes;
-      data.hProperties.class += ` ${className}`;
+      (data.hProperties as Record<string, any>).class += ` ${className}`;
 
       node.children.push({
         value: "",
