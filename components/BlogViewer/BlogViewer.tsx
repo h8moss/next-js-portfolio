@@ -153,33 +153,31 @@ const BlogViewer = ({
                       );
 
                       if (inline || !classNameMatch) {
-                        if (inline || !classNameMatch) {
-                          return (
-                            <code
-                              className={`${className || ""} ${
-                                styles.inlineCode
-                              }`}
-                              {...props}
-                            >
-                              {children}
-                            </code>
-                          );
-                        }
-
-                        let split = body.split(/\n---(\w+)\n/g);
-
-                        split = [classNameMatch[1], ...split];
-                        let splitTxt = split.filter((v, i) => i % 2 == 1);
-                        let splitLang = split.filter((v, i) => i % 2 == 0);
-
                         return (
-                          <CodeComponent
-                            langArray={splitLang}
-                            textArray={splitTxt}
-                            onCopySuccess={() => setToastText("copied code!")}
-                          />
+                          <code
+                            className={`${className || ""} ${
+                              styles.inlineCode
+                            }`}
+                            {...props}
+                          >
+                            {children}
+                          </code>
                         );
                       }
+
+                      let split = body.split(/\n---(\w+)\n/g);
+
+                      split = [classNameMatch[1], ...split];
+                      let splitTxt = split.filter((v, i) => i % 2 == 1);
+                      let splitLang = split.filter((v, i) => i % 2 == 0);
+
+                      return (
+                        <CodeComponent
+                          langArray={splitLang}
+                          textArray={splitTxt}
+                          onCopySuccess={() => setToastText("copied code!")}
+                        />
+                      );
                     },
                     h1: (props) => <HeadingWithLink element="h1" {...props} />,
                     h2: (props) => <HeadingWithLink element="h2" {...props} />,
