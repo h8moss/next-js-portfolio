@@ -15,18 +15,28 @@ import styles from "./BlogViewer.module.css";
 import CodeComponent from "./CodeComponent";
 import CodeComponentManager from "./CodeComponent/CodeComponentManager";
 import HeadingWithLink from "./HeadingWithLink/HeadingWithLink";
+import { FiEdit } from "react-icons/fi";
+import EditableH1 from "./EditableH1";
 
 interface Props {
   post: BlogPostData;
 
   storageToUrl: (id: string) => Promise<string>;
   storageToBytes: (id: string) => Promise<ArrayBuffer>;
+
+  canEdit?: boolean;
+
+  onTitleEdited?: (title: string) => unknown;
+  onBodyEdited?: (value: string) => unknown;
 }
 
 const BlogViewer = ({
   post: { body, title },
   storageToUrl = async (id) => id,
   storageToBytes = async (id) => new ArrayBuffer(0),
+  canEdit = false,
+  onTitleEdited,
+  onBodyEdited,
 }: Props) => {
   const [toastProps, setToastText] = useToastText({
     props: {
@@ -34,25 +44,58 @@ const BlogViewer = ({
     },
   });
 
+  const [isEditingBody, setIsEditingBody] = useState(false);
+  const [bodyValue, setBodyValue] = useState(body);
+
   return (
     <>
       <Toast {...toastProps} />
       <CodeComponentManager>
         <div className={styles.content}>
           <div>
-            <h1 className="p-2 m-2">{title}</h1>
-            <div>
-              <ReactMarkdown
-                remarkPlugins={[
-                  remarkHeadingID,
-                  directive,
-                  [
-                    noteDirective,
-                    {
-                      className: styles.note,
-                      tag: "div",
-                      titleClass: styles.title,
-                    },
+            <div className="flex">
+              {canEdit ? (
+                <EditableH1
+                  className="p-2 m-2"
+                  text={title}
+                  onEditDone={onTitleEdited}
+                />
+              ) : (
+                <h1 className="p-2 m-2">{title}</h1>
+              )}
+            </div>
+            {isEditingBody ? (
+              <div className="flex flex-col">
+                <textarea
+                  value={bodyValue}
+                  onChange={(e) => setBodyValue(e.target.value)}
+                  rows={10}
+                />
+                <button
+                  onClick={() => {
+                    onBodyEdited(bodyValue);
+                    setIsEditingBody(false);
+                  }}
+                >
+                  Done
+                </button>
+              </div>
+            ) : (
+              <div>
+                {canEdit && (
+                  <button onClick={() => setIsEditingBody(true)}>Edit</button>
+                )}
+                <ReactMarkdown
+                  remarkPlugins={[
+                    remarkHeadingID,
+                    directive,
+                    [
+                      noteDirective,
+                      {
+                        className: styles.note,
+                        tag: "div",
+                        titleClass: styles.title,
+                      },
                   ],
                   [
                     fileDirective,
@@ -109,59 +152,63 @@ const BlogViewer = ({
                     );
 
                     if (inline || !classNameMatch) {
+                      if (inline || !classNameMatch) {
+                        return (
+                          <code
+                            className={`${className || ""} ${
+                              styles.inlineCode
+                            }`}
+                            {...props}
+                          >
+                            {children}
+                          </code>
+                        );
+                      }
+
+                      let split = body.split(/\n---(\w+)\n/g);
+
+                      split = [classNameMatch[1], ...split];
+                      let splitTxt = split.filter((v, i) => i % 2 == 1);
+                      let splitLang = split.filter((v, i) => i % 2 == 0);
+
                       return (
-                        <code
-                          className={`${className || ""} ${styles.inlineCode}`}
-                          {...props}
-                        >
-                          {children}
-                        </code>
+                        <CodeComponent
+                          langArray={splitLang}
+                          textArray={splitTxt}
+                          onCopySuccess={() => setToastText("copied code!")}
+                        />
                       );
-                    }
+                    },
+                    h1: (props) => <HeadingWithLink element="h1" {...props} />,
+                    h2: (props) => <HeadingWithLink element="h2" {...props} />,
+                    h3: (props) => <HeadingWithLink element="h3" {...props} />,
+                    h4: (props) => <HeadingWithLink element="h4" {...props} />,
+                    h5: (props) => <HeadingWithLink element="h5" {...props} />,
+                    h6: (props) => <HeadingWithLink element="h6" {...props} />,
+                    a: ({ children, href, target, ...props }) => {
+                      let finalTarget: HTMLAttributeAnchorTarget = "_self";
 
-                    let split = body.split(/\n---(\w+)\n/g);
+                      const isRelative =
+                        href.indexOf("http://") !== 0 &&
+                        href.indexOf("https://") !== 0;
 
-                    split = [classNameMatch[1], ...split];
-                    let splitTxt = split.filter((v, i) => i % 2 == 1);
-                    let splitLang = split.filter((v, i) => i % 2 == 0);
+                      if (!isRelative) {
+                        const url = new URL(href);
+                        if (url.hostname !== server) finalTarget = "_blank";
+                      }
 
-                    return (
-                      <CodeComponent
-                        langArray={splitLang}
-                        textArray={splitTxt}
-                        onCopySuccess={() => setToastText("copied code!")}
-                      />
-                    );
-                  },
-                  h1: (props) => <HeadingWithLink element="h1" {...props} />,
-                  h2: (props) => <HeadingWithLink element="h2" {...props} />,
-                  h3: (props) => <HeadingWithLink element="h3" {...props} />,
-                  h4: (props) => <HeadingWithLink element="h4" {...props} />,
-                  h5: (props) => <HeadingWithLink element="h5" {...props} />,
-                  h6: (props) => <HeadingWithLink element="h6" {...props} />,
-                  a: ({ children, href, target, ...props }) => {
-                    let finalTarget: HTMLAttributeAnchorTarget = "_self";
-
-                    const isRelative =
-                      href.indexOf("http://") !== 0 &&
-                      href.indexOf("https://") !== 0;
-
-                    if (!isRelative) {
-                      const url = new URL(href);
-                      if (url.hostname !== server) finalTarget = "_blank";
-                    }
-
-                    return (
-                      <a href={href} target={finalTarget} {...props}>
-                        {children}
-                      </a>
-                    );
-                  },
-                }}
-              >
-                {body}
-              </ReactMarkdown>
-            </div>
+                      return (
+                        <a href={href} target={finalTarget} {...props}>
+                          {children}
+                        </a>
+                      );
+                    },
+                  }}
+                >
+                  {body}
+                </ReactMarkdown>
+              </div>
+            )}
           </div>
         </div>
       </CodeComponentManager>
