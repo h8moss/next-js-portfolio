@@ -1,4 +1,4 @@
-import { getDownloadURL, ref } from "firebase/storage";
+import { getBytes, getDownloadURL, ref } from "firebase/storage";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -71,9 +71,14 @@ const AdminBlogPage = () => {
               <BlogBodyDiv>
                 <BlogViewer
                   post={post}
-                  handleStorageImage={async (name) => {
+                  storageToUrl={async (name) => {
                     return await getDownloadURL(
                       ref(storage, `blog-posts-${locale}/${post.id}/${name}`)
+                    );
+                  }}
+                  storageToBytes={async (id) => {
+                    return await getBytes(
+                      ref(storage, `blog-posts-${locale}/${post.id}/${id}`)
                     );
                   }}
                 />
