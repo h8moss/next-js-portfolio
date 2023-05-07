@@ -1,6 +1,5 @@
-import { getBytes, getDownloadURL, ref } from "firebase/storage";
-import Link from "next/link";
 import { doc, getDoc, Timestamp, updateDoc } from "firebase/firestore";
+import { getBytes, getDownloadURL, ref } from "firebase/storage";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
