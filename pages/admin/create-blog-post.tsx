@@ -10,7 +10,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Linter, LintError } from "remark-linter";
+import { Linter, LintError } from "remark-linter/dist";
 
 import BlogViewer from "../../components/BlogViewer";
 import Button from "../../components/Button";
