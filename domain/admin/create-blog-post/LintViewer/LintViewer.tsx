@@ -1,4 +1,4 @@
-import { LintError } from "remark-linter/lib";
+import { LintError } from "remark-linter";
 
 import style from "./LintViewer.module.css";
 
