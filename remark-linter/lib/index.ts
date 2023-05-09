@@ -10,10 +10,11 @@ import spellCheck from "./spellCheck.js";
 export {
   ensureAltInImages,
   Linter,
-  LintError,
   noDoubleSpaces,
   noH1,
   noLanguagelessCode,
   noLeadingOrTrailingSpaces,
   spellCheck,
 };
+
+export type { LintError };
