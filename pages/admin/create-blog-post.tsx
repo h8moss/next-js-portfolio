@@ -10,6 +10,8 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { Linter } from "remark-linter";
+import { LintError } from "remark-linter/lib";
 
 import BlogViewer from "../../components/BlogViewer";
 import Button from "../../components/Button";
@@ -18,6 +20,7 @@ import Toast from "../../components/Toast";
 import { locales } from "../../constants";
 import styles from "../../domain/admin/create-blog-post/create-blog-post.module.css";
 import ImageManager from "../../domain/admin/create-blog-post/ImageManager";
+import LintViewer from "../../domain/admin/create-blog-post/LintViewer";
 import useToastText from "../../hooks/useToastText";
 import { firestore, storage } from "../../services/firebase";
 import { createBlogPost } from "../../services/firebase/functions";
@@ -40,6 +43,7 @@ const CreateBlogPost = () => {
   const imageStorage = useStorageFolder("draft");
 
   const [images, setImages] = useState<{ src: string; name: string }[]>([]);
+  const [lints, setLints] = useState<LintError[]>([]);
 
   const getImages = useCallback<
     () => Promise<{ src: string; name: string }[]>
@@ -164,6 +168,15 @@ const CreateBlogPost = () => {
     });
   };
 
+  const linter = useMemo(() => new Linter(), []);
+
+  const onLint = async () => {
+    setLints([]);
+    const result = await linter.lint(stored.body);
+    console.log({ lint: result });
+    setLints(result);
+  };
+
   return (
     <>
       <Toast className="bg-green-500 text-white" {...toastProps} />
@@ -262,6 +275,15 @@ const CreateBlogPost = () => {
                           <Button
                             onClick={async () => {
                               await saveStored(values);
+                              onLint();
+                            }}
+                            type="button"
+                          >
+                            Lint
+                          </Button>
+                          <Button
+                            onClick={async () => {
+                              await saveStored(values);
                               setShowPreview(true);
                             }}
                             type="button"
@@ -270,7 +292,8 @@ const CreateBlogPost = () => {
                           </Button>
                         </div>
                       </Form>
-                      <div className="flex-1">
+                      <div className="flex-1 flex flex-col">
+                        <LintViewer lints={lints} />
                         <ImageManager
                           canUpload={canUploadImage}
                           images={images}
