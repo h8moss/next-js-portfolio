@@ -3,18 +3,21 @@ import Image from "next/image";
 import { useState } from "react";
 
 import Button from "../../../../components/Button";
+import isFilenameImage from "../../../../services/isFilenameImage";
+import { AiFillFile } from "react-icons/ai";
+import { StorageFile } from "../types";
 
 interface Props {
-  onImageClick: (img: { name: string; src: string }) => unknown;
-  images: { name: string; src: string }[];
+  onFileClick: (file: StorageFile) => unknown;
+  files: StorageFile[];
   onUpload: (f: File) => unknown;
   canUpload: boolean;
-  onDelete?: null | ((img: { name: string; src: string }) => unknown);
+  onDelete?: null | ((file: StorageFile) => unknown);
 }
 
-const ImageManager = ({
-  images,
-  onImageClick,
+const FileManager = ({
+  files,
+  onFileClick,
   onDelete = null,
   onUpload,
   canUpload,
@@ -23,11 +26,10 @@ const ImageManager = ({
   const [isDeleting, setIsDeleting] = useState(false);
 
   return (
-    <div className="flex flex-col h-80 overflow-y-auto overflow-x-hidden">
+    <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
       <div>
         <input
           type="file"
-          accept="image/*"
           onChange={(e) => {
             if (e.target.files) setCurrentFile(e.target.files[0]);
           }}
@@ -35,19 +37,25 @@ const ImageManager = ({
       </div>
       {currentFile !== null && (
         <div className="flex flex-col flex-1">
-          <div className="relative flex-1 w-full h-10">
+          <div className="relative w-full h-36 ">
             <button
-              className="absolute top-2 left-2 z-10"
+              className="absolute top-2 left-2 z-10 text-red-500"
               onClick={() => setCurrentFile(null)}
             >
               X
             </button>
-            <Image
-              src={URL.createObjectURL(currentFile)}
-              layout="fill"
-              objectFit="contain"
-              alt=""
-            />
+            {currentFile &&
+            currentFile.name &&
+            isFilenameImage(currentFile.name) ? (
+              <Image
+                src={URL.createObjectURL(currentFile)}
+                layout="fill"
+                objectFit="contain"
+                alt=""
+              />
+            ) : (
+              <AiFillFile size={80} />
+            )}
           </div>
 
           <div className="flex">
@@ -73,10 +81,10 @@ const ImageManager = ({
           Delete
         </Button>
       )}
-      {images.map((v) => (
+      {files.map((v) => (
         <motion.div
-          key={v.src}
-          className="relative w-full flex-1 my-1 cursor-pointer min-h-[40px]"
+          key={v.url}
+          className="relative w-full my-1 cursor-pointer min-h-[80px] border-2"
           animate={{ scale: 1 }}
           whileHover={{ scale: 1.025 }}
           onClick={() => {
@@ -84,15 +92,22 @@ const ImageManager = ({
               onDelete(v);
               setIsDeleting(false);
             } else {
-              onImageClick(v);
+              onFileClick(v);
             }
           }}
         >
-          <Image src={v.src} alt="" layout="fill" objectFit="contain" />
+          {isFilenameImage(v.name) ? (
+            <Image src={v.url} alt="" layout="fill" objectFit="contain" />
+          ) : (
+            <div className="flex flex-col justify-center text-center">
+              <AiFillFile size={80} className="mx-auto" />
+              {v.name}
+            </div>
+          )}
         </motion.div>
       ))}
     </div>
   );
 };
 
-export default ImageManager;
+export default FileManager;
