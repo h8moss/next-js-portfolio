@@ -65,11 +65,14 @@ const BlogViewer = ({
             </div>
             {isEditingBody ? (
               <div className="flex flex-col">
-                <textarea
-                  value={bodyValue}
-                  onChange={(e) => setBodyValue(e.target.value)}
-                  rows={10}
-                />
+                <div className="relative w-full flex flex-col">
+                  <textarea
+                    className="p-2 text-sm"
+                    value={bodyValue}
+                    onChange={(e) => setBodyValue(e.target.value)}
+                    rows={20}
+                  />
+                </div>
                 <button
                   onClick={() => {
                     onBodyEdited(bodyValue);
