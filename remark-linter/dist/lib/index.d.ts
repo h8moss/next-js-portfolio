@@ -6,15 +6,5 @@ import noH1 from "./noH1.js";
 import noLanguagelessCode from "./noLanguagelessCode.js";
 import noLeadingOrTrailingSpaces from "./noLeadingOrTrailingSpaces.js";
 import spellCheck from "./spellCheck.js";
-
-export {
-  ensureAltInImages,
-  Linter,
-  noDoubleSpaces,
-  noH1,
-  noLanguagelessCode,
-  noLeadingOrTrailingSpaces,
-  spellCheck,
-};
-
+export { ensureAltInImages, Linter, noDoubleSpaces, noH1, noLanguagelessCode, noLeadingOrTrailingSpaces, spellCheck, };
 export type { LintError };
