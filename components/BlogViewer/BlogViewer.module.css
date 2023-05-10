@@ -138,6 +138,10 @@ margin-top: 1rem;
 .content .file {
   display: flex;
   flex-direction: column;
+  margin: 0.25rem;
+
+  justify-content: center;
+
 
   background-color: rgba(0,0,0,0.2);
   padding: 1rem;
@@ -155,5 +159,8 @@ margin-top: 1rem;
 
 .content .file img {
   width: 50px;
-  height: 50px;
+}
+
+.content .file img, .content .file svg {
+  margin: 0px auto;
 }
