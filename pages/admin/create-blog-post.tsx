@@ -262,9 +262,9 @@ const CreateBlogPost = () => {
                         </div>
                         <Field
                           name="body"
-                          className="p-4 my-2 rounded-md"
+                          className="p-4 my-2 rounded-md text-sm"
                           as="textarea"
-                          rows="10"
+                          rows="20"
                           placeholder="body"
                         />
                         <div className="flex justify-around">
