@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { ComponentProps, useEffect, useMemo, useState } from "react";
 
-interface Props {
+interface Props extends Omit<ComponentProps<"img">, "src"> {
   src: Promise<string>;
 
   alt: string;

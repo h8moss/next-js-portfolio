@@ -8,9 +8,11 @@ import BlogBodyDiv from "../../../../components/BlogBodyDiv";
 import BlogViewer from "../../../../components/BlogViewer";
 import Button from "../../../../components/Button";
 import Toast from "../../../../components/Toast";
-import ImageManager from "../../../../domain/admin/create-blog-post/ImageManager";
+import FileManager from "../../../../domain/admin/create-blog-post/FileManager";
+import { StorageFile } from "../../../../domain/admin/create-blog-post/types";
 import useToastText from "../../../../hooks/useToastText";
 import { firestore, storage } from "../../../../services/firebase";
+import useAuth from "../../../../services/firebase/hooks/useAuth";
 import useStorageFolder from "../../../../services/firebase/hooks/useStorageFolder";
 import { BlogPost, BlogPostData, Locale } from "../../../../types";
 
@@ -21,40 +23,43 @@ interface Props {
 }
 
 const AdminBlogPage = ({ id, isPrivate, locale }: Props) => {
+  const _ = useAuth({
+    required: true,
+    loginPage: isPrivate ? "/" : `/blog/${id}`,
+  });
+
   const [post, setPost] = useState<BlogPost | null>(null);
   const [ogPost, setOgPost] = useState<BlogPostData | null>(null);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
   const [canUploadImage, setCanUploadImage] = useState(true);
-  const [images, setImages] = useState<{ src: string; name: string }[]>([]);
+  const [files, setFiles] = useState<StorageFile[]>([]);
   const router = useRouter();
 
   const [toastProps, setToastText] = useToastText({});
 
-  const imageStorage = useStorageFolder(`blog-posts-${locale}/${id}`);
+  const fileStorage = useStorageFolder(`blog-posts-${locale}/${id}`);
 
-  const getImages = useCallback<
-    () => Promise<{ src: string; name: string }[]>
-  >(async () => {
+  const getFiles = useCallback<() => Promise<StorageFile[]>>(async () => {
     const downloadUrls = await Promise.all(
-      imageStorage.files.map((file) => getDownloadURL(file))
+      fileStorage.files.map((file) => getDownloadURL(file))
     );
 
-    return imageStorage.files.map((file, i) => ({
-      src: downloadUrls[i],
+    return fileStorage.files.map((file, i) => ({
+      url: downloadUrls[i],
       name: file.name,
     }));
-  }, [imageStorage.files]);
+  }, [fileStorage.files]);
 
   useEffect(() => {
-    getImages().then((v) => setImages(v));
-  }, [getImages]);
+    getFiles().then((v) => setFiles(v));
+  }, [getFiles]);
 
   const onUploadImage = async (file: File) => {
     if (canUploadImage) {
       setCanUploadImage(false);
 
-      await imageStorage.uploadFile(file);
+      await fileStorage.uploadFile(file);
 
       setCanUploadImage(true);
     }
@@ -172,15 +177,15 @@ const AdminBlogPage = ({ id, isPrivate, locale }: Props) => {
         </BlogBodyDiv>
         {isEditing && (
           <div>
-            <ImageManager
+            <FileManager
               canUpload={canUploadImage}
               onDelete={async (img) => {
-                imageStorage.deleteFile(
+                fileStorage.deleteFile(
                   ref(storage, `blog-posts-${locale}/${id}/${img.name}`)
                 );
               }}
-              images={images}
-              onImageClick={async ({ name }) => {
+              files={files}
+              onFileClick={async ({ name }) => {
                 await navigator.clipboard.writeText(
                   `![Description here](STORAGE::${name}::)`
                 );
