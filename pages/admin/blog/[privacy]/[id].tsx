@@ -13,6 +13,7 @@ import useToastText from "../../../../hooks/useToastText";
 import { firestore, storage } from "../../../../services/firebase";
 import useStorageFolder from "../../../../services/firebase/hooks/useStorageFolder";
 import { BlogPost, BlogPostData, Locale } from "../../../../types";
+import useAuth from "../../../../services/firebase/hooks/useAuth";
 
 interface Props {
   locale: Locale;
@@ -21,6 +22,11 @@ interface Props {
 }
 
 const AdminBlogPage = ({ id, isPrivate, locale }: Props) => {
+  const _ = useAuth({
+    required: true,
+    loginPage: isPrivate ? "/" : `/blog/${id}`,
+  });
+
   const [post, setPost] = useState<BlogPost | null>(null);
   const [ogPost, setOgPost] = useState<BlogPostData | null>(null);
   const [error, setError] = useState("");
