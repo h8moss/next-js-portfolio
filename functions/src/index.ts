@@ -73,11 +73,11 @@ export const createBlogPost = functions.https.onCall(async (data, context) => {
     const basename = file.name.split("/").at(-1);
 
     functions.logger.debug(`SEARCHING FOR "STORAGE::${basename}::"`);
-    if (body.includes(`STORAGE::${basename}::`)) {
-      functions.logger.debug(`FOUND "STORAGE::${basename}::"`);
+    if (basename && body.includes(basename)) {
+      functions.logger.debug(`FOUND "${basename}"`);
       await file.move(`blog-posts-${language}/${blogDoc.id}/${basename}`);
     } else {
-      functions.logger.debug(`DID NOT FIND "STORAGE::${basename}::"`);
+      functions.logger.debug(`DID NOT FIND "${basename}"`);
       await file.delete();
     }
   }
