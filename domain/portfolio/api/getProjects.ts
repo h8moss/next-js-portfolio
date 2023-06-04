@@ -100,6 +100,18 @@ const getProjects = (): Project[] => {
     },
     {
       title: {
+        en: "Progress tracker",
+        es: "Seguidor de progreso",
+      },
+      description: {
+        en: "A simple windows desktop progress tracker for tasks, complete with child-tasks and weights.",
+        es: "Esta aplicación de escritorio para windows permite seguir el progreso de una lista de cosas que hacer.",
+      },
+      tags: ["JavaScript", "Rust", "Tauri", "Windows"],
+      links: [generateGithubLink("https://github.com/h8moss/progress-tracker")],
+    },
+    {
+      title: {
         en: "Flutter anime identifier",
         es: "Identificador de Anime Flutter",
       },
