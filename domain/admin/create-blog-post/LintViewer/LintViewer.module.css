@@ -1,0 +1,7 @@
+.lint {
+  @apply text-sm;
+}
+
+.lint > li {
+  @apply border-b-[1px] border-white border-solid p-2;
+}

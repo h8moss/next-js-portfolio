@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build":  "next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -24,6 +24,7 @@
     "rehype-raw": "^6.1.1",
     "remark-directive": "^2.0.1",
     "remark-heading-id": "^1.0.0",
+    "remark-linter": "file:remark-linter",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

@@ -18,9 +18,9 @@ const BlogAdminPage = () => {
   }, [auth.user]);
 
   return (
-    <div className="h-screen text-center flex flex-col justify-between p-2">
+    <div className="h-screen text-center flex flex-col justify-between p-2 overflow-y-hidden">
       <h1 className="p-8">Blog posts</h1>
-      <div className="shadow-md bg-white text-black w-[50%] p-2 mx-auto text-left flex-1">
+      <div className="shadow-md bg-white text-black w-[50%] p-2 mx-auto text-left flex-1 overflow-y-auto">
         {blogs.map((v) => (
           <BlogTile
             post={v}

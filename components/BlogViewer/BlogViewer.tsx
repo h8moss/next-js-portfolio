@@ -15,6 +15,7 @@ import styles from "./BlogViewer.module.css";
 import CodeComponent from "./CodeComponent";
 import CodeComponentManager from "./CodeComponent/CodeComponentManager";
 import EditableH1 from "./EditableH1";
+import FileButton from "./FileButton";
 import HeadingWithLink from "./HeadingWithLink/HeadingWithLink";
 
 interface Props {
@@ -65,11 +66,14 @@ const BlogViewer = ({
             </div>
             {isEditingBody ? (
               <div className="flex flex-col">
-                <textarea
-                  value={bodyValue}
-                  onChange={(e) => setBodyValue(e.target.value)}
-                  rows={10}
-                />
+                <div className="relative w-full flex flex-col">
+                  <textarea
+                    className="p-2 text-sm"
+                    value={bodyValue}
+                    onChange={(e) => setBodyValue(e.target.value)}
+                    rows={20}
+                  />
+                </div>
                 <button
                   onClick={() => {
                     onBodyEdited(bodyValue);
@@ -105,24 +109,32 @@ const BlogViewer = ({
                   ]}
                   rehypePlugins={[rehypeRaw]}
                   components={{
-                    button(props) {
-                      return (
-                        <button
-                          onClick={async () => {
-                            if ("data-storage" in props) {
-                              const dataStorage = props[
-                                "data-storage"
-                              ] as string;
+                    button({ children, ...props }) {
+                      let dataStorage: string | null = null;
+                      if ("data-storage" in props) {
+                        dataStorage = props["data-storage"] as string;
+                      }
+                      const filename = children
+                        .map((v) => v.toString())
+                        .join(" ");
 
+                      if (!dataStorage) {
+                        return <button {...props}>{children}</button>;
+                      }
+
+                      return (
+                        <FileButton
+                          filename={filename}
+                          asyncUrl={storageToUrl(dataStorage)}
+                          onClick={async () => {
+                            if (dataStorage) {
                               const bytes = await storageToBytes(dataStorage);
-                              const filename = (
-                                props as Record<string, any>
-                              ).children[0].toString();
+
                               download(bytes, filename);
                             }
                           }}
                           {...props}
-                        ></button>
+                        />
                       );
                     },
                     img({ src, alt, width, height, ...props }) {

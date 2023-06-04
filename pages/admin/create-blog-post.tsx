@@ -10,6 +10,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { Linter, LintError } from "remark-linter/dist";
 
 import BlogViewer from "../../components/BlogViewer";
 import Button from "../../components/Button";
@@ -17,7 +18,9 @@ import DarkModeSwitch from "../../components/NavBar/NavigationButtons/DarkModeSw
 import Toast from "../../components/Toast";
 import { locales } from "../../constants";
 import styles from "../../domain/admin/create-blog-post/create-blog-post.module.css";
-import ImageManager from "../../domain/admin/create-blog-post/ImageManager";
+import FileManager from "../../domain/admin/create-blog-post/FileManager";
+import LintViewer from "../../domain/admin/create-blog-post/LintViewer";
+import { StorageFile } from "../../domain/admin/create-blog-post/types";
 import useToastText from "../../hooks/useToastText";
 import { firestore, storage } from "../../services/firebase";
 import { createBlogPost } from "../../services/firebase/functions";
@@ -37,26 +40,25 @@ const CreateBlogPost = () => {
 
   const router = useRouter();
 
-  const imageStorage = useStorageFolder("draft");
+  const fileStorage = useStorageFolder("draft");
 
-  const [images, setImages] = useState<{ src: string; name: string }[]>([]);
+  const [files, setFiles] = useState<StorageFile[]>([]);
+  const [lints, setLints] = useState<LintError[]>([]);
 
-  const getImages = useCallback<
-    () => Promise<{ src: string; name: string }[]>
-  >(async () => {
+  const getFiles = useCallback<() => Promise<StorageFile[]>>(async () => {
     const downloadUrls = await Promise.all(
-      imageStorage.files.map((file) => getDownloadURL(file))
+      fileStorage.files.map((file) => getDownloadURL(file))
     );
 
-    return imageStorage.files.map((file, i) => ({
-      src: downloadUrls[i],
+    return fileStorage.files.map((file, i) => ({
+      url: downloadUrls[i],
       name: file.name,
     }));
-  }, [imageStorage.files]);
+  }, [fileStorage.files]);
 
   useEffect(() => {
-    getImages().then((v) => setImages(v));
-  }, [getImages]);
+    getFiles().then((v) => setFiles(v));
+  }, [getFiles]);
 
   const [canUploadImage, setCanUploadImage] = useState(true);
 
@@ -66,7 +68,7 @@ const CreateBlogPost = () => {
     if (canUploadImage) {
       setCanUploadImage(false);
 
-      await imageStorage.uploadFile(file);
+      await fileStorage.uploadFile(file);
 
       setCanUploadImage(true);
     }
@@ -164,6 +166,15 @@ const CreateBlogPost = () => {
     });
   };
 
+  const linter = useMemo(() => new Linter(), []);
+
+  const onLint = async () => {
+    setLints([]);
+    const result = await linter.lint(stored.body);
+    console.log({ lint: result });
+    setLints(result);
+  };
+
   return (
     <>
       <Toast className="bg-green-500 text-white" {...toastProps} />
@@ -179,7 +190,7 @@ const CreateBlogPost = () => {
                 <BlogViewer
                   post={stored}
                   storageToUrl={async (name) =>
-                    images.find((v) => v.name === name).src
+                    files.find((v) => v.name === name).url
                   }
                   storageToBytes={async (id) => {
                     return await getBytes(ref(storage, "draft/" + id));
@@ -250,14 +261,23 @@ const CreateBlogPost = () => {
                         </div>
                         <Field
                           name="body"
-                          className="p-4 my-2 rounded-md"
+                          className="p-4 my-2 rounded-md text-sm"
                           as="textarea"
-                          rows="10"
+                          rows="20"
                           placeholder="body"
                         />
                         <div className="flex justify-around">
                           <Button disabled={isSubmitting} type="submit">
                             Submit
+                          </Button>
+                          <Button
+                            onClick={async () => {
+                              await saveStored(values);
+                              onLint();
+                            }}
+                            type="button"
+                          >
+                            Lint
                           </Button>
                           <Button
                             onClick={async () => {
@@ -270,11 +290,12 @@ const CreateBlogPost = () => {
                           </Button>
                         </div>
                       </Form>
-                      <div className="flex-1">
-                        <ImageManager
+                      <div className="flex-1 flex flex-col">
+                        <LintViewer lints={lints} />
+                        <FileManager
                           canUpload={canUploadImage}
-                          images={images}
-                          onImageClick={async ({ name }) => {
+                          files={files}
+                          onFileClick={async ({ name }) => {
                             await navigator.clipboard.writeText(
                               `![Description here](STORAGE::${name}::)`
                             );
